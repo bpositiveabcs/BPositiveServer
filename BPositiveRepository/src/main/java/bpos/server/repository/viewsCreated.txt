@@ -1,0 +1,272 @@
+--done
+Create view View_Adresa AS
+SELECT
+    id as id_Adresa,
+    tara as tara_Adresa,
+    judet as judet_Adresa,
+    localitate as localitate_Adresa,
+    strada as strada_Adresa,
+    numar as numar_Adresa,
+    bloc as bloc_Adresa,
+    etaj as etaj_Adresa,
+    apartament as apartament_Adresa
+FROM
+    Adresa;
+select * from View_Adresa;
+
+
+CREATE VIEW View_Institutie AS
+SELECT
+    id AS id_Institutie,
+    nume AS nume_Institutie,
+    email AS email_Institutie,
+    adresa AS adresa_Institutie
+FROM
+    Institutie;
+
+--done
+CREATE VIEW View_TipDonatie AS
+SELECT
+    id AS id_TipDonatie,
+    nume AS nume_TipDonatie,
+    interval_asteptare AS interval_asteptare_TipDonatie
+FROM
+    TipDonatie;
+
+
+drop view View_DatePersonale;
+create view View_DatePersonale as
+SELECT
+    id as id_DatePersonale,
+    nume as nume_DatePersonale,
+    prenume as prenume_DatePersonale,
+    data_nasterii as data_nastere_DatePersonale,
+    cnp as cnp_DatePersonale,
+    sex as sex_DatePersonale,
+    telefon as telefon_DatePersonale,
+    a.id as id_Adresa,
+    a.tara as tara_Adresa,
+    a.judet as judet_Adresa,
+    a.localitate as localitate_Adresa,
+    a.strada as strada_Adresa,
+    a.numar as numar_Adresa,
+    a.bloc as bloc_Adresa,
+    a.etaj as etaj_Adresa,
+    a.apartament as apartament_Adresa
+FROM DatePersonale d, Adresa a
+WHERE d.id_adresa = a.id;
+
+
+create View View_CupoaneRetrieved as
+SELECT
+    id as id_CupoaneRetrieved,
+    preluat_la_data_de as preluat_la_data_de_CupoaneRetrieved,
+    expira_la as expira_la_CupoaneRetrieved,
+    c.id as id_Cupon,
+    c.nume as nume_Cupon,
+    c.puncte_necesare as puncte_necesare_Cupon,
+    c.provider as provider_Cupon,
+    c.oferta as oferta_Cupon,
+    c.timp_valabilitate as timp_valabilitate_Cupon
+FROM CupoaneRetrieved
+         JOIN Cupon as c ON CupoaneRetrieved.id_cupon = c.id;
+create view View_Eveniment as
+SELECT
+    id as id_Eveniment,
+    nume as nume_Eveniment,
+    data_anunt as data_anunt_Eveniment,
+    data_incepere as data_incepere_Eveniment,
+    data_sfarsit as data_sfarsit_Eveniment,
+    max_participanti as max_participanti_Eveniment,
+    cerinte as cerinte_Eveniment,
+    descriere as descriere_Eveniment,
+    c.credentiale_logare as id_centru,
+    c.nume as nume_Centru,
+    c.informatii as informatii_Centru,
+    c.adresa as adresa_Centru,
+    u.username as username_LogInInfo,
+    u.email as email_LogInInfo,
+    u.seed as seed_LogInInfo,
+    u.password as password_LogInInfo
+FROM Eveniment e, Centru c, LogInInfo u
+WHERE e.id_centru = c.credentiale_logare AND c.credentiale_logare = u.id;
+
+
+
+
+CREATE VIEW VIEW_Cupon as
+SELECT
+    id as id_Cupon,
+    nume as nume_Cupon,
+    puncte_necesare as puncte_necesare_Cupon,
+    provider as provider_Cupon,
+    oferta as oferta_Cupon,
+    serieCupon as serieCupon_Cupon,
+    timp_valabilitate as timp_valabilitate_Cupon,
+    unavailable_to_claim_from as unavailable_to_claim_from_Cupon
+FROM Cupon;
+drop view View_Cupon;
+
+
+
+CREATE VIEW View_Analiza as
+SELECT
+    id as id_Analiza,
+    nume as nume_Analiza,
+    cale as cale_Analiza
+FROM
+    Analiza;
+
+
+CREATE VIEW View_MedicalInformation as
+SELECT
+    id as id_MedicalInformation,
+    eligibilitateDonare as eligibilitateDonare_MedicalInformation,
+    grupaSange as grupaSange_MedicalInformation,
+    rh as rh_MedicalInformation,
+    b.id as id_Analiza,
+    b.nume as nume_Analiza,
+    b.cale as cale_Analiza
+FROM InformatiiMedicale , Analiza b
+WHERE InformatiiMedicale.id = b.id;
+
+
+
+CREATE VIEW View_LogInInfo as
+SELECT
+    id as id_LogInInfo,
+    username as username_LogInInfo,
+    password as password_LogInInfo,
+    email as email_LogInInfo,
+    seed as seed_LogInInfo
+FROM LogInInfo;
+
+
+
+
+CREATE VIEW View_Centru as
+SELECT
+    credentiale_logare as id_Centru,
+    nume as nume_Centru,
+    informatii as informatii_Centru,
+    adresa as adresa_Centru,
+    u.username as username_LogInInfo,
+    u.password as password_LogInInfo,
+    u.email as email_LogInInfo,
+    u.seed as seed_LogInInfo
+FROM Centru , LogInInfo u
+WHERE Centru.credentiale_logare = u.id;
+
+
+
+CREATE VIEW View_Donatie as
+SELECT
+    id as id_Donatie,
+    puncte as puncte_Donatie,
+    t.id AS id_TipDonatie,
+    t.nume AS nume_TipDonatie,
+    t.interval_asteptare AS interval_asteptare_TipDonatie
+FROM Donatie d, TipDonatie t
+WHERE d.id_TipDonatie = t.id;
+
+
+
+create view View_Persoana as
+SELECT
+    id as id_Persoana,
+    puncte as puncte_Persoana,
+    --institutie--
+    i.id as id_Institutie,
+    i.nume AS nume_Institutie,
+    i.email AS email_Institutie,
+    i.adresa AS adresa_Institutie,
+    --acum preluam medical info--
+    m.id as id_MedicalInformation,
+    m.eligibilitateDonare as eligibilitateDonare_MedicalInformation,
+    m.grupaSange as grupaSange_MedicalInformation,
+    m.rh as rh_MedicalInformation,
+    b.id as id_Analiza,
+    b.nume as nume_Analiza,
+    b.cale as cale_Analiza,
+    --acum preluam datele personale--
+    d.id as id_DatePersonale,
+    d.nume as nume_DatePersonale,
+    d.prenume as prenume_DatePersonale,
+    d.data_nasterii as data_nastere_DatePersonale,
+    d.cnp as cnp_DatePerson,
+    d.sex as sex_DatePersonale,
+    a.id as id_Adresa,
+    a.tara as tara_Adresa,
+    a.judet as judet_Adresa,
+    a.localitate as localitate_Adresa,
+    a.strada as strada_Adresa,
+    a.numar as numar_Adresa,
+    a.bloc as bloc_Adresa,
+    a.etaj as etaj_Adresa,
+    a.apartament as apartament_Adresa,
+    --acum preluam log in info--
+    l.id as id_LogInInfo,
+    l.username as username_LogInInfo,
+    l.password as password_LogInInfo,
+    l.email as email_LogInInfo,
+    l.seed as seed_LogInInfo
+--la cupoane le iau doar cand am nevoie de ele-
+--la donatii la fel ba nu ca imi tre etrieve--
+
+FROM Persoana p, Institutie i, InformatiiMedicale m, Analiza b, DatePersonale d, Adresa a, LogInInfo l
+WHERE p.id_institutie = i.id AND p.id= m.id AND m.id = b.id AND p.id = d.id AND d.id_adresa = a.id AND p.id = l.id;
+
+
+
+create view View_Student as
+SELECT
+    s.id as id_Student,
+    s.departament as departament_Student,
+    s.facultate as facultate_Student,
+    s.an as an_Student,
+    s.grupa as grupa_Student,
+    p.puncte as puncte_Persoana,
+
+    --institutie--
+    i.id as id_Institutie,
+    i.nume AS nume_Institutie,
+    i.email AS email_Institutie,
+    i.adresa AS adresa_Institutie,
+    --acum preluam medical info--
+    m.id as id_MedicalInformation,
+    m.eligibilitateDonare as eligibilitateDonare_MedicalInformation,
+    m.grupaSange as grupaSange_MedicalInformation,
+    m.rh as rh_MedicalInformation,
+    b.id as id_Analiza,
+    b.nume as nume_Analiza,
+    b.cale as cale_Analiza,
+    --acum preluam datele personale--
+    d.id as id_DatePersonale,
+    d.nume as nume_DatePersonale,
+    d.prenume as prenume_DatePersonale,
+    d.data_nasterii as data_nastere_DatePersonale,
+    d.cnp as cnp_DatePerson,
+    d.sex as sex_DatePersonale,
+    a.id as id_Adresa,
+    a.tara as tara_Adresa,
+    a.judet as judet_Adresa,
+    a.localitate as localitate_Adresa,
+    a.strada as strada_Adresa,
+    a.numar as numar_Adresa,
+    a.bloc as bloc_Adresa,
+    a.etaj as etaj_Adresa,
+    a.apartament as apartament_Adresa,
+    --acum preluam log in info--
+    l.id as id_LogInInfo,
+    l.username as username_LogInInfo,
+    l.password as password_LogInInfo,
+    l.email as email_LogInInfo,
+    l.seed as seed_LogInInfo
+FROM Student s
+         JOIN Persoana p ON s.id = p.id
+         JOIN Institutie i ON p.id_institutie = i.id
+         JOIN InformatiiMedicale m ON p.id = m.id
+         JOIN Analiza b ON m.id = b.id
+         JOIN DatePersonale d ON p.id = d.id
+         JOIN Adresa a ON d.id_adresa = a.id
+         JOIN LogInInfo l ON p.id = l.id;
