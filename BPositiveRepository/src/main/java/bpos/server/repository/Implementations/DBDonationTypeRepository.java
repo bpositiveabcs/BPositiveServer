@@ -1,10 +1,11 @@
-package bpos.repository.Implementations;
+package bpos.server.repository.Implementations;
 
-import bpos.model.DonationType;
-import bpos.model.Validators.Implementation.DonationTypeValidator;
-import bpos.repository.Interfaces.DonationTypeRepository;
-import bpos.repository.Utils.DBGetters;
-import bpos.repository.Utils.DBUtils;
+
+import bpos.common.model.DonationType;
+import bpos.common.model.Validators.Implementation.DonationTypeValidator;
+import bpos.server.repository.Interfaces.DonationTypeRepository;
+import bpos.server.repository.Utils.DBGetters;
+import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +16,7 @@ public class DBDonationTypeRepository implements DonationTypeRepository {
     private DBUtils dbUtils;
     private static final Logger logger= LogManager.getLogger();
     private DonationTypeValidator donationTypeValidator;
-    public DBDonationTypeRepository(Properties properties,DonationTypeValidator donationTypeValidator){
+    public DBDonationTypeRepository(Properties properties, DonationTypeValidator donationTypeValidator){
         this.donationTypeValidator=donationTypeValidator;
         this.dbUtils=new DBUtils(properties);
     }

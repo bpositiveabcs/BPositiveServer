@@ -1,2 +1,6 @@
 rootProject.name = 'BPositiveRepository'
 
+include ':BPositiveCommon:BPositiveModel'
+project(':BPositiveCommon:BPositiveModel').projectDir = new File('../BPositiveCommon/BPositiveModel')
+include ':BPositiveCommon'
+project(':BPositiveCommon').projectDir = new File('../BPositiveCommon')

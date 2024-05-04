@@ -1,8 +1,9 @@
-package bpos.repository.Utils;
+package bpos.server.repository.Utils;
 
-import bpos.model.*;
-import bpos.model.Enums.BloodType;
-import bpos.model.Enums.Rh;
+
+import bpos.common.model.*;
+import bpos.common.model.Enums.BloodType;
+import bpos.common.model.Enums.Rh;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

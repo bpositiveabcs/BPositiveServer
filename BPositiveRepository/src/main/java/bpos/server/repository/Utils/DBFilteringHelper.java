@@ -1,4 +1,4 @@
-package bpos.repository.Utils;
+package bpos.server.repository.Utils;
 
 public class DBFilteringHelper {
 }

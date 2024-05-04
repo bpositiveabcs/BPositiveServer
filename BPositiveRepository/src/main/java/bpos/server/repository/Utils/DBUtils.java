@@ -1,4 +1,4 @@
-package bpos.repository.Utils;
+package bpos.server.repository.Utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,8 +21,8 @@ public class DBUtils {
         {
 
             logger.traceEntry();
-            String driver=jdbcProps.getProperty("jdbc.driver");
-            String url=jdbcProps.getProperty("jdbc.url");
+            String driver=jdbcProps.getProperty("bpositive.jdbc.driver");
+            String url=jdbcProps.getProperty("bpositive.jdbc.url");
             String user=jdbcProps.getProperty("bpositive.jdbc.user");
             String pass=jdbcProps.getProperty("bpositive.jdbc.password");
             try

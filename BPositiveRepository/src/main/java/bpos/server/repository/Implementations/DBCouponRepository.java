@@ -1,10 +1,11 @@
-package bpos.repository.Implementations;
+package bpos.server.repository.Implementations;
 
-import bpos.model.Coupon;
-import bpos.model.Validators.Implementation.CouponValidator;
-import bpos.repository.Interfaces.CouponRepository;
-import bpos.repository.Utils.DBGetters;
-import bpos.repository.Utils.DBUtils;
+
+import bpos.common.model.Coupon;
+import bpos.common.model.Validators.Implementation.CouponValidator;
+import bpos.server.repository.Interfaces.CouponRepository;
+import bpos.server.repository.Utils.DBGetters;
+import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,7 +21,7 @@ public class DBCouponRepository implements CouponRepository {
     private DBUtils dbUtils;
     private static final Logger logger= LogManager.getLogger();
     private CouponValidator couponValidator;
-    public DBCouponRepository(Properties properties,CouponValidator couponValidator){
+    public DBCouponRepository(Properties properties, CouponValidator couponValidator){
         this.couponValidator=couponValidator;
         this.dbUtils=new DBUtils(properties);
     }

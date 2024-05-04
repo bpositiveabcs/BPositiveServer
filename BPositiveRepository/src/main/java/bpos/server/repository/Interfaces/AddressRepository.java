@@ -1,6 +1,6 @@
-package bpos.repository.Interfaces;
+package bpos.server.repository.Interfaces;
 
-import bpos.model.Address;
+import bpos.common.model.Address;
 
 public interface AddressRepository extends IRepository<Integer, Address> {
 }

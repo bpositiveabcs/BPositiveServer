@@ -1,10 +1,11 @@
-package bpos.repository.Implementations;
+package bpos.server.repository.Implementations;
 
-import bpos.model.*;
-import bpos.model.Validators.Implementation.PersonValidator;
-import bpos.repository.Interfaces.PersonRepository;
-import bpos.repository.Utils.DBGetters;
-import bpos.repository.Utils.DBUtils;
+
+import bpos.common.model.*;
+import bpos.common.model.Validators.Implementation.PersonValidator;
+import bpos.server.repository.Interfaces.PersonRepository;
+import bpos.server.repository.Utils.DBGetters;
+import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

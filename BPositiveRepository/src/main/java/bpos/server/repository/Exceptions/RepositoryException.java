@@ -1,4 +1,4 @@
-package bpos.repository.Exceptions;
+package bpos.server.repository.Exceptions;
 
 public class RepositoryException extends RuntimeException {
     public RepositoryException()

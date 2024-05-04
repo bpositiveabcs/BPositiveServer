@@ -1,7 +1,8 @@
-package bpos.repository;
+package bpos.server.repository;
 
-import bpos.model.*;
-import bpos.repository.Implementations.*;
+
+import bpos.common.model.*;
+import bpos.server.repository.Implementations.*;
 
 import java.io.FileReader;
 import java.io.IOException;

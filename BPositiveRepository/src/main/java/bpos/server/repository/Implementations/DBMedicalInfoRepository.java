@@ -1,18 +1,20 @@
-package bpos.repository.Implementations;
+package bpos.server.repository.Implementations;
 
-import bpos.model.BloodTest;
-import bpos.model.MedicalInfo;
-import bpos.model.Validators.Implementation.MedicalInfoValidator;
-import bpos.repository.Interfaces.MedicalInfoRepository;
-import bpos.repository.Utils.DBGetters;
-import bpos.repository.Utils.DBUtils;
+
+import bpos.common.model.BloodTest;
+import bpos.common.model.MedicalInfo;
+import bpos.common.model.Validators.Implementation.MedicalInfoValidator;
+import bpos.server.repository.Interfaces.MedicalInfoRepository;
+import bpos.server.repository.Utils.DBGetters;
+import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.*;
 
-public class DBMedicalInfoRepository implements MedicalInfoRepository {
+public class DBMedicalInfoRepository implements
+        MedicalInfoRepository {
     private DBUtils dbUtils;
 
     public DBMedicalInfoRepository(Properties properties, MedicalInfoValidator medicalInfoValidator) {

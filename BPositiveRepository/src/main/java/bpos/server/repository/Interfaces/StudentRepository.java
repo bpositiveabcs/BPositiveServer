@@ -1,6 +1,7 @@
-package bpos.repository.Interfaces;
+package bpos.server.repository.Interfaces;
 
-import bpos.model.Student;
+
+import bpos.common.model.Student;
 
 public interface StudentRepository extends IRepository<Integer, Student>{
     Iterable<Student> findByFirstName(String firstName);

@@ -1,10 +1,11 @@
-package bpos.repository.Implementations;
+package bpos.server.repository.Implementations;
 
-import bpos.model.RetrievedCoupons;
-import bpos.model.Validators.Implementation.RetrievedCouponsValidator;
-import bpos.repository.Interfaces.RetrievedCouponsRepository;
-import bpos.repository.Utils.DBGetters;
-import bpos.repository.Utils.DBUtils;
+
+import bpos.common.model.RetrievedCoupons;
+import bpos.common.model.Validators.Implementation.RetrievedCouponsValidator;
+import bpos.server.repository.Interfaces.RetrievedCouponsRepository;
+import bpos.server.repository.Utils.DBGetters;
+import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

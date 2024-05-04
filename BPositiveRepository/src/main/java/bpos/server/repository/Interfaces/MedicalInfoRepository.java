@@ -1,6 +1,7 @@
-package bpos.repository.Interfaces;
+package bpos.server.repository.Interfaces;
 
-import bpos.model.MedicalInfo;
+
+import bpos.common.model.MedicalInfo;
 
 public interface MedicalInfoRepository  extends IRepository<Integer, MedicalInfo>{
     Iterable<MedicalInfo> findByBloodType(String bloodType);

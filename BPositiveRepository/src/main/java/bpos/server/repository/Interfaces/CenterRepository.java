@@ -1,6 +1,7 @@
-package bpos.repository.Interfaces;
+package bpos.server.repository.Interfaces;
 
-import bpos.model.Center;
+
+import bpos.common.model.Center;
 
 public interface CenterRepository extends IRepository<Integer, Center> {
     Center findByUsername(String username);

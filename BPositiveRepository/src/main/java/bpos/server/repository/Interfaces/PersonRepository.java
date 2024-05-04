@@ -1,6 +1,7 @@
-package bpos.repository.Interfaces;
+package bpos.server.repository.Interfaces;
 
-import bpos.model.Person;
+
+import bpos.common.model.Person;
 
 public interface PersonRepository  extends IRepository<Integer, Person>{
     Iterable<Person> findByFirstName(String firstName);

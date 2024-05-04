@@ -1,6 +1,7 @@
-package bpos.repository.Interfaces;
+package bpos.server.repository.Interfaces;
 
-import bpos.model.PersonalData;
+
+import bpos.common.model.PersonalData;
 
 public interface PersonalDataRepository extends IRepository<Integer, PersonalData>
 {

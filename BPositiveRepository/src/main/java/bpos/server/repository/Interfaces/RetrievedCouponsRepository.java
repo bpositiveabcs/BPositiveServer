@@ -1,6 +1,7 @@
-package bpos.repository.Interfaces;
+package bpos.server.repository.Interfaces;
 
-import bpos.model.RetrievedCoupons;
+
+import bpos.common.model.RetrievedCoupons;
 
 public interface RetrievedCouponsRepository extends IRepository<Integer, RetrievedCoupons>
 {

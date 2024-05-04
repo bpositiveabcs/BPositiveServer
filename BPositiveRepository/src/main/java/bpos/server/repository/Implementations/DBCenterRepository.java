@@ -1,9 +1,10 @@
-package bpos.repository.Implementations;
+package bpos.server.repository.Implementations;
 
-import bpos.model.Center;
-import bpos.model.Validators.Implementation.CenterValidator;
-import bpos.repository.Interfaces.CenterRepository;
-import bpos.repository.Utils.DBUtils;
+import bpos.common.model.Center;
+import bpos.common.model.Validators.Implementation.CenterValidator;
+import bpos.server.repository.Interfaces.CenterRepository;
+import bpos.server.repository.Utils.DBGetters;
+import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -54,7 +55,7 @@ public class DBCenterRepository implements CenterRepository {
             {
                 while(resultSet.next())
                 {
-                    Center center= bpos.repository.Utils.DBGetters.getCenter(resultSet);
+                    Center center= DBGetters.getCenter(resultSet);
                     centers.add(center);
                 }
             }

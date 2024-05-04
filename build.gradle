@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.1'
+    id 'org.springframework.boot' version '2.7.18'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'application'
 }
@@ -24,7 +24,7 @@ dependencies {
 
     // Spring Boot starter for creating web applications
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
+    implementation project(':BPositiveCommon')
     // Spring Boot starter for testing, includes JUnit, Mockito, Hamcrest, and more
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 

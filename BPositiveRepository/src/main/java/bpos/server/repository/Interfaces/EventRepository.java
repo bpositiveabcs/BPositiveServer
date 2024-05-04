@@ -1,6 +1,7 @@
-package bpos.repository.Interfaces;
+package bpos.server.repository.Interfaces;
 
-import bpos.model.Event;
+
+import bpos.common.model.Event;
 
 import java.time.LocalDate;
 

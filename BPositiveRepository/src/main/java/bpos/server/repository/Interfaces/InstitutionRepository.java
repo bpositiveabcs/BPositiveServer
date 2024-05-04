@@ -1,6 +1,7 @@
-package bpos.repository.Interfaces;
+package bpos.server.repository.Interfaces;
 
-import bpos.model.Institution;
+
+import bpos.common.model.Institution;
 
 public interface InstitutionRepository extends IRepository<Integer, Institution>{
     Iterable<Institution> findByName(String name);

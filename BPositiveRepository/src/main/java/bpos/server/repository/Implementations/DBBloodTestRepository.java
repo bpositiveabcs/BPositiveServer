@@ -1,10 +1,11 @@
-package bpos.repository.Implementations;
+package bpos.server.repository.Implementations;
 
-import bpos.model.BloodTest;
-import bpos.model.Validators.Implementation.BloodTestValidator;
-import bpos.repository.Interfaces.BloodTestRepository;
-import bpos.repository.Utils.DBGetters;
-import bpos.repository.Utils.DBUtils;
+
+import bpos.common.model.BloodTest;
+import bpos.common.model.Validators.Implementation.BloodTestValidator;
+import bpos.server.repository.Interfaces.BloodTestRepository;
+import bpos.server.repository.Utils.DBGetters;
+import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

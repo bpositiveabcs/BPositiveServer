@@ -1,7 +1,8 @@
-package bpos.repository.Interfaces;
+package bpos.server.repository.Interfaces;
 
 
-import bpos.model.Entity;
+
+import bpos.common.model.Entity;
 
 import java.util.Optional;
 

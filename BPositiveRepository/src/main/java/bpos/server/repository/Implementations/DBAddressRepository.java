@@ -1,11 +1,11 @@
-package bpos.repository.Implementations;
+package bpos.server.repository.Implementations;
 
-import bpos.model.Address;
-import bpos.model.Validators.Implementation.AddressValidator;
-import bpos.repository.Exceptions.RepositoryException;
-import bpos.repository.Interfaces.AddressRepository;
-import bpos.repository.Utils.DBGetters;
-import bpos.repository.Utils.DBUtils;
+import bpos.common.model.Address;
+import bpos.common.model.Validators.Implementation.AddressValidator;
+import bpos.server.repository.Exceptions.RepositoryException;
+import bpos.server.repository.Interfaces.AddressRepository;
+import bpos.server.repository.Utils.DBGetters;
+import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +19,7 @@ public class DBAddressRepository implements AddressRepository {
     private DBUtils dbUtils;
     private static final Logger logger= LogManager.getLogger();
     private AddressValidator addressValidator;
-    public DBAddressRepository(Properties properties,AddressValidator addressValidator){
+    public DBAddressRepository(Properties properties, AddressValidator addressValidator){
         dbUtils=new DBUtils(properties);
         this.addressValidator=addressValidator;
     }

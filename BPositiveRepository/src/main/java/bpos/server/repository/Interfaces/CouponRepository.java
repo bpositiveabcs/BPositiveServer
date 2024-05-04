@@ -1,6 +1,7 @@
-package bpos.repository.Interfaces;
+package bpos.server.repository.Interfaces;
 
-import bpos.model.Coupon;
+
+import bpos.common.model.Coupon;
 
 import java.time.LocalDate;
 
