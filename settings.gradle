@@ -1,1 +1,8 @@
 rootProject.name = 'BPositiveServer'
+include 'BPositiveRepository'
+include 'BPositiveCommon'
+include 'BPositiveCommon:BPositiveModel'
+include 'BPositiveController'
+include 'BPositiveConfig'
+include 'BPositiveService'
+project(':BPositiveCommon:BPositiveModel').projectDir = new File('BPositiveCommon/BPositiveModel')

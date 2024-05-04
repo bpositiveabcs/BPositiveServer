@@ -1,34 +1,61 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.5'
+    id 'org.springframework.boot' version '3.2.1'
     id 'io.spring.dependency-management' version '1.1.4'
+    id 'application'
 }
 
 group = 'bpos.server'
 version = '0.0.1-SNAPSHOT'
+description = 'BPositive Server Application'
 
 java {
-    sourceCompatibility = '17'
-}
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
-    mavenCentral()
+    mavenCentral()  // Ensures all dependencies are pulled from Maven Central
 }
 
 dependencies {
+    // Spring Boot starter for data JPA which includes Hibernate + Spring Data JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Spring Boot starter for creating web applications
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Spring Boot starter for testing, includes JUnit, Mockito, Hamcrest, and more
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Lombok for simplifying boilerplate code; compile-only since it's a build-time dependency
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Hibernate Validator for validation; ensure compatibility with your Spring Boot version
+    implementation 'org.hibernate.validator:hibernate-validator'
+
+    // Jakarta Persistence API which replaces javax.persistence
+    implementation 'jakarta.persistence:jakarta.persistence-api:3.0.0'
+
+    // Database runtime driver
+    runtimeOnly 'org.xerial:sqlite-jdbc:3.41.2.2'
+}
+
+// Customizes the jar task provided by the Java plugin to package our application
+jar {
+    archivesBaseName = 'BPositiveServer'
+    version = '0.1.0'
 }
 
 tasks.named('test') {
-    useJUnitPlatform()
+    useJUnitPlatform()  // Specifies that JUnit Platform is used for unit tests
+}
+
+// Make sure to apply default configurations for Spring Boot applications
+bootJar {
+    mainClassName = 'bpos.server.BPositiveServerApplication'
+}
+bootRun {
+    mainClassName = 'bpos.server.BPositiveServerApplication'
 }
