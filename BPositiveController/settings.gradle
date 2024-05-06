@@ -1,1 +1,9 @@
 rootProject.name = 'BPositiveController'
+include ':BPositiveCommon:BPositiveModel'
+project(':BPositiveCommon:BPositiveModel').projectDir = new File('../BPositiveCommon/BPositiveModel')
+include ':BPositiveCommon'
+project(':BPositiveCommon').projectDir = new File('../BPositiveCommon')
+include ':BPositiveService'
+project (':BPositiveService').projectDir=new File('../BPositiveService')
+include ':BPositiveRepository'
+project(':BPositiveRepository').projectDir=new File('../BPositiveRepository')
