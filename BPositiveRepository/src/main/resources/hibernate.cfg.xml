@@ -9,10 +9,10 @@
         </property>
         <property name="connection.url">
             jdbc.url=jdbc:sqlite:../bpositive.db
-
+        </property>
         <!-- Dialect -->
         <property name = "hibernate.dialect">
-            org.hibernate.dialect.SQLiteDialect
+            org.hibernate.community.dialect.SQLiteDialect
         </property>
 
         <!-- Echo all executed SQL to stdout -->
