@@ -9,5 +9,9 @@ public class BPositiveServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(BPositiveServiceApplication.class, args);
     }
+    public void init()
+    {
+
+    }
 
 }
