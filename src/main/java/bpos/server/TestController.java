@@ -192,187 +192,187 @@ public class TestController {
         return service.findOneLogInfo(integer);
     }
 
-
+    @GetMapping("/findAllLogInfos")
     public Iterable<LogInfo> findAllLogInfos() throws ServicesExceptions {
         return service.findAllLogInfos();
     }
 
-
+    @GetMapping("/findByUsernameLogInfo")
     public LogInfo findByUsernameLogInfo(@RequestParam(value="username",required = true)String username) throws ServicesExceptions {
         return service.findByUsernameLogInfo(username);
     }
 
-
+    @GetMapping("/findByEmailLogInfo")
     public LogInfo findByEmailLogInfo(@RequestParam(value="email",required = true)String email) throws ServicesExceptions {
         return service.findByEmailLogInfo(email);
     }
 
 
 
-
+    @GetMapping("/findOneMedicalInfo")
     public Optional<MedicalInfo> findOneMedicalInfo(@RequestParam(value="id_medical_info",required = true)Integer integer) throws ServicesExceptions {
         return service.findOneMedicalInfo(integer);
     }
 
-
+    @GetMapping("/findAllMedicalInfos")
     public Iterable<MedicalInfo> findAllMedicalInfos() throws ServicesExceptions {
         return service.findAllMedicalInfos();
     }
 
-
+    @GetMapping("/findByBloodTypeMedicalInfo")
     public Iterable<MedicalInfo> findByBloodTypeMedicalInfo(@RequestParam(value="blood_type",required = true)String bloodType) throws ServicesExceptions {
         return service.findByBloodTypeMedicalInfo(bloodType);
     }
 
-
+    @GetMapping("/findByRhMedicalInfo")
     public Iterable<MedicalInfo> findByRhMedicalInfo(@RequestParam(value="rh",required = true)String rh) throws ServicesExceptions {
         return service.findByRhMedicalInfo(rh);
     }
 
-
-    public Iterable<MedicalInfo> findByBloodTypeAndRhMedicalInfo(String bloodType, String rh) throws ServicesExceptions {
+    @GetMapping("/findByBloodTypeAndRhMedicalInfo")
+    public Iterable<MedicalInfo> findByBloodTypeAndRhMedicalInfo(@RequestParam(value="bloodType",required = true)String bloodType,@RequestParam(value="rh",required = true) String rh) throws ServicesExceptions {
         return service.findByBloodTypeAndRhMedicalInfo(bloodType, rh);
     }
 
-
-    public Optional<PersonalData> findOnePersonalData(Integer integer) throws ServicesExceptions {
+    @GetMapping("/findOnePersonalData")
+    public Optional<PersonalData> findOnePersonalData(@RequestParam(value="id_personal_data",required = true)Integer integer) throws ServicesExceptions {
         return service.findOnePersonalData(integer);
     }
 
-
+    @GetMapping("/findAllPersonalDatas")
     public Iterable<PersonalData> findAllPersonalDatas() throws ServicesExceptions {
         return service.findAllPersonalDatas();
     }
 
-
+    @GetMapping("/findByFirstNamePersonalData")
     public Iterable<PersonalData> findByFirstNamePersonalData(String firstName) throws ServicesExceptions {
         return service.findByFirstNamePersonalData(firstName);
     }
 
-
+    @GetMapping("/findByLastNamePersonalData")
     public Iterable<PersonalData> findByLastNamePersonalData(String lastName) throws ServicesExceptions {
         return service.findByLastNamePersonalData(lastName);
     }
 
-
+    @GetMapping("/findByCnpPersonalData")
     public PersonalData findByCnpPersonalData(String cnp) throws ServicesExceptions {
         return service.findByCnpPersonalData(cnp);
     }
 
-
+    @GetMapping("/findByEmailPersonalData")
     public Optional<Person> findOnePerson(Integer integer) throws ServicesExceptions {
         return service.findOnePerson(integer);
     }
 
 
 
-
+    @GetMapping("/findByFirstNamePerson")
     public Iterable<Person> findByFirstNamePerson(String firstName) throws ServicesExceptions {
         return service.findByFirstNamePerson(firstName);
     }
 
-
+    @GetMapping("/findByLastNamePerson")
     public Iterable<Person> findByLastNamePerson(String lastName) throws ServicesExceptions {
         return service.findByLastNamePerson(lastName);
     }
 
-
+    @GetMapping("/findByCnpPerson")
     public Iterable<Person> findByCnpPerson(String cnp) throws ServicesExceptions {
         return service.findByCnpPerson(cnp);
     }
 
-
+    @GetMapping("/findByEmailPerson")
     public Person findByEmailPerson(String email) throws ServicesExceptions {
         return service.findByEmailPerson(email);
     }
 
-
+    @GetMapping("/findByPhoneNumberPerson")
     public Iterable<Person> findByPhoneNumberPerson(String phoneNumber) throws ServicesExceptions {
         return service.findByPhoneNumberPerson(phoneNumber);
     }
 
-
+    @GetMapping("/findByUsernamePerson")
     public Person findByUsernamePerson(String username) throws ServicesExceptions {
         return service.findByUsernamePerson(username);
     }
 
 
-
+    @GetMapping("/findOneRetrieved")
     public Optional<RetrievedCoupons> findOneRetrieved(Integer integer) throws ServicesExceptions {
         return service.findOneRetrieved(integer);
     }
 
-
+    @GetMapping("/findAllRetrieved")
     public Iterable<RetrievedCoupons> findAllRetrieved() throws ServicesExceptions {
         return service.findAllRetrieved();
     }
 
-
+    @GetMapping("/findByCouponIdRetrieved")
     public Iterable<RetrievedCoupons> findByCouponIdRetrieved(Integer couponId) throws ServicesExceptions {
         return service.findByCouponIdRetrieved(couponId);
     }
 
-
+    @GetMapping("/findByPersonIdRetrieved")
     public Iterable<RetrievedCoupons> findByPersonIdRetrieved(Integer personId) throws ServicesExceptions {
         return service.findByPersonIdRetrieved(personId);
     }
 
-
+    @GetMapping("/findByDateRetrieved")
     public Iterable<RetrievedCoupons> findByDateRetrieved(String date) throws ServicesExceptions {
         return service.findByDateRetrieved(date);
     }
 
-
+    @GetMapping("/findOneStudent")
     public Optional<Student> findOneStudent(Integer integer) throws ServicesExceptions {
         return service.findOneStudent(integer);
     }
 
-
+    @GetMapping("/findAllStudent")
     public Iterable<Student> findAllStudent() throws ServicesExceptions {
         return service.findAllStudent();
     }
 
-
+//    @GetMapping("/saveStudent")
     public Optional<Student> saveStudent(Student entity) throws ServicesExceptions {
         return service.saveStudent(entity);
     }
 
-
+//    @GetMapping("/deleteStudent")
     public Optional<Student> deleteStudent(Student entity) throws ServicesExceptions {
         return service.deleteStudent(entity);
     }
 
-
+//    @GetMapping("/updateStudent")
     public Optional<Student> updateStudent(Student entity) throws ServicesExceptions {
         return service.updateStudent(entity);
     }
 
-
+    @GetMapping("/findByFirstNameStudent")
     public Iterable<Student> findByFirstNameStudent(String firstName) throws ServicesExceptions {
         return service.findByFirstNameStudent(firstName);
     }
 
-
+    @GetMapping("/findByLastNameStudent")
     public Iterable<Student> findByLastNameStudent(String lastName) throws ServicesExceptions {
         return service.findByLastNameStudent(lastName);
     }
 
-
+    @GetMapping("/findByCnpStudent")
     public Iterable<Student> findByCnpStudent(String cnp) throws ServicesExceptions {
         return service.findByCnpStudent(cnp);
     }
 
-
+    @GetMapping("/findByEmailStudent")
     public Student findByEmailStudent(String email) throws ServicesExceptions {
         return service.findByEmailStudent(email);
     }
 
-
+    @GetMapping("/findByPhoneNumberStudent")
     public Iterable<Student> findByPhoneNumberStudent(String phoneNumber) throws ServicesExceptions {
         return service.findByPhoneNumberStudent(phoneNumber);
     }
 
-
+    @GetMapping("/findByUsernameStudent")
     public Student findByUsernameStudent(String username) throws ServicesExceptions {
         return service.findByUsernameStudent(username);
     }
