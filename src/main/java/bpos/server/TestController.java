@@ -1,8 +1,11 @@
 package bpos.server;
 
 import bpos.common.model.*;
+import bpos.server.service.IObserver;
 import bpos.server.service.IServiceImpl;
 import bpos.server.service.ServicesExceptions;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -276,22 +279,22 @@ public class TestController {
     public Iterable<Person> findByLastNamePerson(@RequestParam(value="lastName",required = true)String lastName) throws ServicesExceptions {
         return service.findByLastNamePerson(lastName);
     }
-
+    //merge
     @GetMapping("/findByCnpPerson")
     public Iterable<Person> findByCnpPerson(@RequestParam(value="cnp",required = true)String cnp) throws ServicesExceptions {
         return service.findByCnpPerson(cnp);
     }
-
+    //asta nu merge da eroare in db
     @GetMapping("/findByEmailPerson")
     public Person findByEmailPerson(@RequestParam(value="id_email",required = true)String email) throws ServicesExceptions {
         return service.findByEmailPerson(email);
     }
-
+    //merge
     @GetMapping("/findByPhoneNumberPerson")
     public Iterable<Person> findByPhoneNumberPerson(@RequestParam(value="phoneNumber",required = true)String phoneNumber) throws ServicesExceptions {
         return service.findByPhoneNumberPerson(phoneNumber);
     }
-
+    //merge
     @GetMapping("/findByUsernamePerson")
     public Person findByUsernamePerson(@RequestParam(value="usernamePerson",required = true)String username) throws ServicesExceptions {
         return service.findByUsernamePerson(username);
@@ -302,17 +305,18 @@ public class TestController {
     public Optional<RetrievedCoupons> findOneRetrieved(@RequestParam(value="id_retrieved",required = true)Integer integer) throws ServicesExceptions {
         return service.findOneRetrieved(integer);
     }
-
+    //merge
     @GetMapping("/findAllRetrieved")
     public Iterable<RetrievedCoupons> findAllRetrieved() throws ServicesExceptions {
         return service.findAllRetrieved();
     }
+    //merge
 
     @GetMapping("/findByCouponIdRetrieved")
     public Iterable<RetrievedCoupons> findByCouponIdRetrieved(@RequestParam(value="couponId",required = true)Integer couponId) throws ServicesExceptions {
         return service.findByCouponIdRetrieved(couponId);
     }
-
+    //nu merge
     @GetMapping("/findByPersonIdRetrieved")
     public Iterable<RetrievedCoupons> findByPersonIdRetrieved(@RequestParam(value="personId",required = true)Integer personId) throws ServicesExceptions {
         return service.findByPersonIdRetrieved(personId);
@@ -327,16 +331,23 @@ public class TestController {
     public Optional<Student> findOneStudent(@RequestParam(value="id_student",required = true)Integer integer) throws ServicesExceptions {
         return service.findOneStudent(integer);
     }
-
+    //nu merge
     @GetMapping("/findAllStudent")
     public Iterable<Student> findAllStudent() throws ServicesExceptions {
         return service.findAllStudent();
     }
 
 //    @GetMapping("/saveStudent")
-    public Optional<Student> saveStudent(Student entity) throws ServicesExceptions {
-        return service.saveStudent(entity);
+@PostMapping("/students")
+public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
+    try {
+        Optional<Student> savedStudent = service.saveStudent(student);
+        return new ResponseEntity<>(savedStudent.get(), HttpStatus.CREATED);
+    } catch (ServicesExceptions e) {
+        // Handle exception
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+}
 
 //    @GetMapping("/deleteStudent")
     public Optional<Student> deleteStudent(Student entity) throws ServicesExceptions {
@@ -344,9 +355,16 @@ public class TestController {
     }
 
 //    @GetMapping("/updateStudent")
-    public Optional<Student> updateStudent(Student entity) throws ServicesExceptions {
-        return service.updateStudent(entity);
+    @PutMapping("/students/{id}")
+    public ResponseEntity<Student> updateStudent(@RequestBody Student student) {
+    try {
+        Optional<Student> updatedStudent = service.updateStudent(student);
+        return updatedStudent.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    } catch (ServicesExceptions e) {
+        // Handle exception
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+}
 
     @GetMapping("/findByFirstNameStudent")
     public Iterable<Student> findByFirstNameStudent(@RequestParam(value="firstName",required = true)String firstName) throws ServicesExceptions {
@@ -378,26 +396,21 @@ public class TestController {
         return service.findByUsernameStudent(username);
     }
 
-//
-//        public  synchronized  Optional<Person> login(LogInfo logInfo, IObserver observer) throws ServicesExceptions {
-//            if(dbLogInfo.findByUsername(logInfo.getUsername())==null)
-//            {
-//                throw new ServicesExceptions("Username does not exist");
-//            }
-//            Person person = dbPerson.findByUsername(logInfo.getUsername());
-//            //Person person1=dbPerson.findByEmail(logInfo.getEmail());
-//            if(person!=null /*&& person.equals(person1)*/){
-//                if(loggedClients.get(person.getId())!=null){
-//                    throw new ServicesExceptions("User already logged in.");
-//                }
-//            }
-//            else{
-//                throw new ServicesExceptions("Authentication failed.");
-//            }
-//            loggedClients.put(person.getId(), observer);
-//            notifyTheOthersLogInPerson(person);
-//            return Optional.of(person);
-//        }
+
+    @PostMapping("/login")
+    public ResponseEntity<Person> login(@RequestBody LogInfo logInfo, @RequestBody IObserver observer) {
+        try {
+            Optional<Person> loggedInPerson = service.login(logInfo, observer);
+            if (loggedInPerson.isPresent()) {
+                return new ResponseEntity<>(loggedInPerson.get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 //
 //
 //
@@ -442,235 +455,546 @@ public class TestController {
 //        }
 //
 //
-//        public void donationRegister(Donation donation, Person person, Event event) {
-//            service.donationRegister(donation,person,event);
-//        }
-//
-//
-//
-//
-//
-//
-//
-//        public Optional<RetrievedCoupons> updateRetrieved(RetrievedCoupons entity) throws ServicesExceptions {
-//            return dbRetrievedCoupons.update(entity);
-//        }
-//
-//
-//        public Optional<RetrievedCoupons> deleteRetrieved(RetrievedCoupons entity) throws ServicesExceptions {
-//            return  dbRetrievedCoupons.delete(entity);
-//        }
-//
-//
-//        public Optional<RetrievedCoupons> saveRetrieved(RetrievedCoupons entity) throws ServicesExceptions {
-//            return dbRetrievedCoupons.save(entity);
-//        }
-//
-//
-//        public Optional<Person> updatePerson(Person entity) throws ServicesExceptions {
-//            return service.updatePerson(entity);
-//        }
-//
-//
-//        public Optional<Person> deletePerson(Person entity) throws ServicesExceptions {
-//
-//        }
-//
-//
-//        public Optional<Person> savePerson(Person entity) throws ServicesExceptions {
-//            return dbPerson.save(entity);
-//        }
-//
-//
-//        public Optional<PersonalData> updatePersonalData(PersonalData entity) throws ServicesExceptions {
-//
-//            return dbPersonalData.update(entity);
-//        }
-//
-//
-//        public Optional<PersonalData> deletePersonalData(PersonalData entity) throws ServicesExceptions {
-//            return dbPersonalData.delete(entity);
-//        }
-//
-//
-//        public Optional<PersonalData> savePersonalData(PersonalData entity) throws ServicesExceptions {
-//            return  dbPersonalData.save(entity);
-//        }
-//
-//
-//        public Optional<MedicalInfo> updateMedicalInfo(MedicalInfo entity) throws ServicesExceptions {
-//            return dbMedicalInfo.update(entity);
-//        }
-//
-//
-//        public Optional<MedicalInfo> deleteMedicalInfo(MedicalInfo entity) throws ServicesExceptions {
-//            return dbMedicalInfo.delete(entity);
-//        }
-//
-//
-//        public Optional<MedicalInfo> saveMedicalInfo(MedicalInfo entity) throws ServicesExceptions {
-//            return dbMedicalInfo.save(entity);
-//        }
-//
-//
-//        public Optional<LogInfo> updateLogInfo(LogInfo entity) throws ServicesExceptions {
-//            return dbLogInfo.update(entity);
-//        }
-//
-//
-//        public Optional<LogInfo> deleteLogInfo(LogInfo entity) throws ServicesExceptions {
-//            return dbLogInfo.delete(entity);
-//        }
-//
-//
-//        public Optional<LogInfo> saveLogInfo(LogInfo entity) throws ServicesExceptions {
-//            return dbLogInfo.save(entity);
-//        }
-//
-//
-//        public Optional<Institution> updateInstitution(Institution entity) throws ServicesExceptions {
-//            return dbInstitution.update(entity);
-//        }
-//
-//
-//        public Optional<Institution> deleteInstitution(Institution entity) throws ServicesExceptions {
-//            return dbInstitution.delete(entity);
-//        }
-//
-//
-//        public Optional<Institution> saveInstitution(Institution entity) throws ServicesExceptions {
-//            return dbInstitution.save(entity);
-//        }
-//
-//
-//        public Optional<Event> updateEvent(Event entity) throws ServicesExceptions {
-//            return dbEvent.update(entity);
-//        }
-//
-//
-//        public Optional<Event> deleteEvent(Event entity) throws ServicesExceptions {
-//            return dbEvent.delete(entity);
-//        }
-//
-//
-//        public Optional<Event> saveEvent(Event entity) throws ServicesExceptions {
-//            Optional<Event> event = dbEvent.save(entity);
-//            event.ifPresent(this::notifyTheOthers);
-//            return event;
-//        }
-//
-//        private void notifyTheOthers(Event event) {
-//            Iterable<Person> personIterable=dbPerson.findAll();
-//            Iterable<Center>personCenter=dbCenter.findAll();
-//            personIterable.forEach(person -> {
-//                IObserver client=loggedClients.get(person.getPersonLogInfo().getPassword());
-//                if(client!=null){
-//                    try {
-//                        client.eventHappened( event);
-//                    } catch (ServicesExceptions e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-//            });
-//            personCenter.forEach(center -> {
-//                IObserver client=loggedClients.get(center.getLogInfo().getPassword());
-//                if(client!=null){
-//                    try {
-//                        client.eventHappened(event);
-//                    } catch (ServicesExceptions e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-//            });
-//        }
-//
-//
-//        public Optional<DonationType> updateDonationType(DonationType entity) throws ServicesExceptions {
-//            return dbDonationType.update(entity);
-//        }
-//
-//
-//        public Optional<DonationType> deleteDonationType(DonationType entity) throws ServicesExceptions {
-//            return dbDonationType.delete(entity);
-//        }
-//
-//
-//        public Optional<DonationType> saveDonationType(DonationType entity) throws ServicesExceptions {
-//            return dbDonationType.save(entity);
-//        }
-//
-//
-//        public Optional<Donation> updateDonation(Donation entity) throws ServicesExceptions {
-//            return dbDonation.update(entity);
-//        }
-//
-//
-//        public Optional<Donation> deleteDonation(Donation entity) throws ServicesExceptions {
-//            return dbDonation.delete(entity);
-//        }
-//
-//
-//        public Optional<Donation> saveDonation(Donation entity) throws ServicesExceptions {
-//            return dbDonation.save(entity);
-//        }
-//
-//
-//        public Optional<Coupon> updateCoupon(Coupon entity) throws ServicesExceptions {
-//            return dbCoupon.update(entity);
-//        }
-//
-//
-//        public Optional<Coupon> deleteCoupon(Coupon entity) throws ServicesExceptions {
-//            return dbCoupon.delete(entity);
-//        }
-//
-//
-//        public Optional<Coupon> saveCoupon(Coupon entity) throws ServicesExceptions {
-//            return dbCoupon.save(entity);
-//        }
-//
-//
-//        public Optional<Center> updateCenter(Center entity) throws ServicesExceptions {
-//            return dbCenter.update(entity);
-//        }
-//
-//
-//        public Optional<Center> deleteCenter(Center entity) throws ServicesExceptions {
-//            return dbCenter.delete(entity);
-//        }
-//
-//
-//        public Optional<Center> saveCenter(Center entity) throws ServicesExceptions {
-//            return dbCenter.save(entity);
-//        }
-//
-//
-//        public Optional<BloodTest> updateBloodTest(BloodTest entity) throws ServicesExceptions {
-//            return dbBloodTest.update(entity);
-//        }
-//
-//
-//        public Optional<BloodTest> deleteBloodTest(BloodTest entity) throws ServicesExceptions {
-//            return dbBloodTest.delete(entity);
-//        }
-//
-//
-//        public Optional<BloodTest> saveBloodTest(BloodTest entity) throws ServicesExceptions {
-//            return dbBloodTest.save(entity);
-//        }
-//
-//
-//        public Optional<Address> updateAddress(Address entity) throws ServicesExceptions {
-//            return dbAddress.update(entity );
-//        }
-//
-//
-//        public Optional<Address> deleteAddress(Address entity) throws ServicesExceptions {
-//            return dbAddress.delete(entity);
-//        }
-//
-//
-//        public Optional<Address> saveAddress(Address entity) throws ServicesExceptions {
-//            return dbAddress.save(entity);
-//        }
+@PostMapping("/registerDonation")
+public ResponseEntity<?> donationRegister(@RequestBody Donation donation, @RequestBody Person person, @RequestBody Event event) {
+    try {
+        service.donationRegister(donation, person, event);
+        return new ResponseEntity<>(HttpStatus.OK);
+    } catch (ServicesExceptions e) {
+        // Handle exception
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
+    @PutMapping("/updateRetrieved")
+    public ResponseEntity<?> updateRetrieved(@RequestBody RetrievedCoupons entity) {
+        try {
+            Optional<RetrievedCoupons> updatedEntity = service.updateRetrieved(entity);
+            if (updatedEntity.isPresent()) {
+                return new ResponseEntity<>(updatedEntity.get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/deleteRetrieved")
+    public ResponseEntity<?> deleteRetrieved(@RequestBody RetrievedCoupons entity) {
+        try {
+            Optional<RetrievedCoupons> deletedEntity = service.deleteRetrieved(entity);
+            if (deletedEntity.isPresent()) {
+                return new ResponseEntity<>(deletedEntity.get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("/retrieved/save")
+    public ResponseEntity<?> saveRetrieved(@RequestBody RetrievedCoupons entity) {
+        try {
+            Optional<RetrievedCoupons> savedEntity = service.saveRetrieved(entity);
+            return new ResponseEntity<>(savedEntity.orElse(null), HttpStatus.CREATED);
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/person/update")
+    public ResponseEntity<?> updatePerson(@RequestBody Person entity) {
+        try {
+            Optional<Person> updatedEntity = service.updatePerson(entity);
+            return new ResponseEntity<>(updatedEntity.orElse(null), HttpStatus.OK);
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @DeleteMapping("/person/delete")
+    public ResponseEntity<?> deletePerson(@RequestBody Person entity) {
+        try {
+            service.deletePerson(entity);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/person/save")
+    public ResponseEntity<?> savePerson(@RequestBody Person entity) {
+        try {
+            Optional<Person> savedEntity = service.savePerson(entity);
+            return new ResponseEntity<>(savedEntity.orElse(null), HttpStatus.CREATED);
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping("/personaldata/update")
+    public ResponseEntity<?> updatePersonalData(@RequestBody PersonalData entity) {
+        try {
+            Optional<PersonalData> updatedEntity = service.updatePersonalData(entity);
+            return new ResponseEntity<>(updatedEntity.orElse(null), HttpStatus.OK);
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/personaldata/delete")
+    public ResponseEntity<?> deletePersonalData(@RequestBody PersonalData entity) {
+        try {
+            service.deletePersonalData(entity);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PostMapping("/personaldata/save")
+    public ResponseEntity<?> savePersonalData(@RequestBody PersonalData entity) {
+        try {
+            Optional<PersonalData> savedEntity = service.savePersonalData(entity);
+            return new ResponseEntity<>(savedEntity.orElse(null), HttpStatus.CREATED);
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PutMapping("/medicalinfo/update")
+    public ResponseEntity<?> updateMedicalInfo(@RequestBody MedicalInfo entity) {
+        try {
+            Optional<MedicalInfo> updatedEntity = service.updateMedicalInfo(entity);
+            return new ResponseEntity<>(updatedEntity.orElse(null), HttpStatus.OK);
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/medicalinfo/delete")
+    public ResponseEntity<?> deleteMedicalInfo(@RequestBody MedicalInfo entity) {
+        try {
+            service.deleteMedicalInfo(entity);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PostMapping("/medicalinfo/save")
+    public ResponseEntity<?> saveMedicalInfo(@RequestBody MedicalInfo entity) {
+        try {
+            Optional<MedicalInfo> savedInfo = service.saveMedicalInfo(entity);
+            if (savedInfo.isPresent()) {
+                return new ResponseEntity<>(savedInfo.get(), HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/loginfo/update")
+    public ResponseEntity<?> updateLogInfo(@RequestBody LogInfo entity) {
+        try {
+            Optional<LogInfo> updatedInfo = service.updateLogInfo(entity);
+            if (updatedInfo.isPresent()) {
+                return new ResponseEntity<>(updatedInfo.get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/loginfo/delete")
+    public ResponseEntity<?> deleteLogInfo(LogInfo entity) {
+        try {
+            Optional<LogInfo> deleted = service.deleteLogInfo(entity);
+            if (deleted.isPresent()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/loginfo/save")
+    public ResponseEntity<LogInfo> saveLogInfo(@RequestBody LogInfo logInfo) {
+        try {
+            Optional<LogInfo> savedLogInfo = service.saveLogInfo(logInfo);
+            if(savedLogInfo.isPresent()) {
+                return new ResponseEntity<>(savedLogInfo.get(), HttpStatus.CREATED);
+            }
+        }
+        catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PutMapping("/institution/update")
+    public ResponseEntity<Institution> updateInstitution(@RequestBody Institution institution) {
+        try {
+            Optional<Institution> updatedInstitution = service.updateInstitution(institution);
+            if(updatedInstitution.isPresent()) {
+                return new ResponseEntity<>(updatedInstitution.get(), HttpStatus.OK);
+            }
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @DeleteMapping("/institution/delete")
+    public ResponseEntity<Void> deleteInstitution(@RequestParam Institution entity) {
+        try {
+            service.deleteInstitution(entity);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PostMapping("/institution/save")
+    public ResponseEntity<Institution> saveInstitution(@RequestBody Institution institution) {
+        try {
+            Optional<Institution> savedInstitution = service.saveInstitution(institution);
+            if(savedInstitution.isPresent()){
+                return new ResponseEntity<>(savedInstitution.get(), HttpStatus.CREATED);
+            }
+            //return new ResponseEntity<>(savedInstitution, HttpStatus.CREATED);
+        } catch (ServicesExceptions e) {
+            // Tratați cazurile în care salvarea a eșuat din motive diverse
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PutMapping("/event/update")
+    public ResponseEntity<Event> updateEvent(@RequestBody Event event) {
+        try {
+            Optional<Event> updatedEvent = service.updateEvent(event);
+            if(updatedEvent.isPresent()) {
+                return new ResponseEntity<>(updatedEvent.get(), HttpStatus.OK);
+            }
+        } catch (ServicesExceptions e) {
+            // Tratarea cazurilor în care actualizarea a eșuat din diverse motive
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    @DeleteMapping("/events/delete")
+    public ResponseEntity<Void> deleteEvent(@RequestBody Event event) {
+        try {
+            service.deleteEvent(event);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ServicesExceptions e) {
+            // Tratarea cazurilor în care ștergerea a eșuat din diverse motive
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @PostMapping("/events/save")
+    public Optional<Event> saveEvent(@RequestBody Event entity) throws ServicesExceptions {
+        return service.saveEvent(entity);
+    }
+
+
+    @PutMapping("/donation-types/update")
+    public ResponseEntity<?> updateDonationType(@RequestBody DonationType entity) {
+        try {
+            Optional<DonationType> updatedDonationType = service.updateDonationType(entity);
+            if (updatedDonationType.isPresent()) {
+                return ResponseEntity.ok(updatedDonationType.get());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+    @DeleteMapping("/donation-types/delete")
+    public ResponseEntity<?> deleteDonationType(@RequestBody DonationType entity) {
+        try {
+            Optional<DonationType> deletedDonationType = service.deleteDonationType(entity);
+            if (deletedDonationType.isPresent()) {
+                return ResponseEntity.ok(deletedDonationType.get());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+    @PostMapping("/donation-types/save")
+    public ResponseEntity<?> saveDonationType(@RequestBody DonationType entity) {
+        try {
+            Optional<DonationType> savedDonationType = service.saveDonationType(entity);
+            if (savedDonationType.isPresent()) {
+                return ResponseEntity.ok(savedDonationType.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save donation type");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+    @PutMapping("/donations/updateDonation")
+    public ResponseEntity<?> updateDonation(@RequestBody Donation entity) {
+        try {
+            Optional<Donation> updatedDonation = service.updateDonation(entity);
+            if (updatedDonation.isPresent()) {
+                return ResponseEntity.ok(updatedDonation.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update donation");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+    @DeleteMapping("/donations/deleteDonation")
+    public ResponseEntity<?> deleteDonation(@RequestBody Donation entity) {
+        try {
+            Optional<Donation> deletedDonation = service.deleteDonation(entity);
+            if (deletedDonation.isPresent()) {
+                return ResponseEntity.ok("Donation deleted successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete donation");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+
+    @PostMapping("/donations/saveDonation")
+    public ResponseEntity<?> saveDonation(@RequestBody Donation entity) {
+        try {
+            Optional<Donation> savedDonation = service.saveDonation(entity);
+            if (savedDonation.isPresent()) {
+                return ResponseEntity.ok("Donation saved successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save donation");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+    @PutMapping("/coupons/updateCoupon")
+    public ResponseEntity<?> updateCoupon(@RequestBody Coupon entity) {
+        try {
+            Optional<Coupon> updatedCoupon = service.updateCoupon(entity);
+            if (updatedCoupon.isPresent()) {
+                return ResponseEntity.ok("Coupon updated successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update coupon");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+    @DeleteMapping("/coupons/deleteCoupon")
+    public ResponseEntity<?> deleteCoupon(@RequestBody Coupon entity) {
+        try {
+            Optional<Coupon> deletedCoupon = service.deleteCoupon(entity);
+            if (deletedCoupon.isPresent()) {
+                return ResponseEntity.ok("Coupon deleted successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete coupon");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+
+    @PostMapping("/coupons/saveCoupon")
+    public ResponseEntity<?> saveCoupon(@RequestBody Coupon entity) {
+        try {
+            Optional<Coupon> savedCoupon = service.saveCoupon(entity);
+            if (savedCoupon.isPresent()) {
+                return ResponseEntity.ok(savedCoupon.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save coupon");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+
+    @PutMapping("/centers/updateCenter")
+    public ResponseEntity<?> updateCenter(@RequestBody Center entity) {
+        try {
+            Optional<Center> updatedCenter = service.updateCenter(entity);
+            if (updatedCenter.isPresent()) {
+                return ResponseEntity.ok(updatedCenter.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update center");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+    @DeleteMapping("/centers/deleteCenter/{id}")
+    public ResponseEntity<?> deleteCenter(@RequestParam Center entity) {
+        try {
+            Optional<Center> deletedCenter = service.deleteCenter(entity);
+            if (deletedCenter.isPresent()) {
+                return ResponseEntity.ok("Center deleted successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Center not found");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+    @PostMapping("/centers/saveCenter")
+    public ResponseEntity<?> saveCenter(@RequestBody Center entity) {
+        try {
+            Optional<Center> savedCenter = service.saveCenter(entity);
+            if (savedCenter.isPresent()) {
+                return ResponseEntity.status(HttpStatus.CREATED).body(savedCenter.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Center could not be saved");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+    @PutMapping("/bloodtests/updateBloodTest")
+    public ResponseEntity<?> updateBloodTest(@RequestBody BloodTest entity) {
+        try {
+            Optional<BloodTest> updatedBloodTest = service.updateBloodTest(entity);
+            if (updatedBloodTest.isPresent()) {
+                return ResponseEntity.ok(updatedBloodTest.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Blood test could not be updated");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+    @DeleteMapping("/bloodtests/deleteBloodTest")
+    public ResponseEntity<?> deleteBloodTest(@RequestBody BloodTest entity) {
+        try {
+            Optional<BloodTest> deletedBloodTest = service.deleteBloodTest(entity);
+            if (deletedBloodTest.isPresent()) {
+                return ResponseEntity.ok("Blood test deleted successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Blood test could not be deleted");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+    @PostMapping("/bloodtests")
+    public ResponseEntity<?> saveBloodTest(@RequestBody BloodTest entity) {
+        try {
+            Optional<BloodTest> savedBloodTest = service.saveBloodTest(entity);
+            if (savedBloodTest.isPresent()) {
+                return ResponseEntity.ok("Blood test saved successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Blood test could not be saved");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+    @PutMapping("/addresses/updateAddress")
+    public ResponseEntity<?> updateAddress(@RequestBody Address entity) {
+        try {
+            Optional<Address> updatedAddress = service.updateAddress(entity);
+            if (updatedAddress.isPresent()) {
+                return ResponseEntity.ok("Address updated successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Address could not be updated");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+
+    @DeleteMapping("/addresses/deleteAddress")
+    public ResponseEntity<?> deleteAddress(@RequestParam Address id) {
+        try {
+            Optional<Address> deletedAddress = service.deleteAddress(id);
+            if (deletedAddress.isPresent()) {
+                return ResponseEntity.ok("Address deleted successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Address not found");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+
+
+    @PostMapping("/addresses/saveAddress")
+    public ResponseEntity<?> saveAddress(@RequestBody Address entity) {
+        try {
+            Optional<Address> savedAddress = service.saveAddress(entity);
+            if (savedAddress.isPresent()) {
+                return ResponseEntity.ok("Address saved successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save address");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
 }
