@@ -24,6 +24,7 @@ public class DBEventRepository implements EventRepository {
         this.dbUtils = new DBUtils(properties);
         this.eventValidator = eventValidator;
     }
+    public DBEventRepository(){}
 
     private Iterable<Event> findAllUtilitary(List<String> attributes, List<Object> values)
     {

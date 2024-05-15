@@ -21,6 +21,7 @@ public class DBLogInfoRepository implements LogInfoRepository {
         this.dbUtils = new DBUtils(properties);
         this.logInfoValidator = logInfoValidator;
     }
+    public DBLogInfoRepository(){}
 
     private static final Logger logger= LogManager.getLogger();
     private LogInfoValidator logInfoValidator;

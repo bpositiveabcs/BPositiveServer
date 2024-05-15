@@ -25,6 +25,7 @@ public class DBCouponRepository implements CouponRepository {
         this.couponValidator=couponValidator;
         this.dbUtils=new DBUtils(properties);
     }
+    public DBCouponRepository(){}
 
     private Iterable<Coupon> findAllUtilitary(List<String> attributes, List<Object> values)
     {

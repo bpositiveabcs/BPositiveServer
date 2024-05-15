@@ -19,6 +19,9 @@ public class DBAddressRepository implements AddressRepository {
     private DBUtils dbUtils;
     private static final Logger logger= LogManager.getLogger();
     private AddressValidator addressValidator;
+    public DBAddressRepository(){
+
+    }
     public DBAddressRepository(Properties properties, AddressValidator addressValidator){
         dbUtils=new DBUtils(properties);
         this.addressValidator=addressValidator;

@@ -20,6 +20,7 @@ public class DBDonationTypeRepository implements DonationTypeRepository {
         this.donationTypeValidator=donationTypeValidator;
         this.dbUtils=new DBUtils(properties);
     }
+    public DBDonationTypeRepository(){}
     private Iterable<DonationType> findAllUtilitary(List<String> attributes, List<Object> values)
     {
         Connection connection=dbUtils.getConnection();

@@ -21,7 +21,7 @@ public class DBPersonalDataRepository implements PersonalDataRepository {
         this.dbUtils = new DBUtils(properties);
         this.personalDataValidator = personalDataValidator;
     }
-
+    public DBPersonalDataRepository(){}
     private static final Logger logger= LogManager.getLogger();
     private PersonalDataValidator personalDataValidator;
     private Iterable<PersonalData> findAllUtilitary(List<String> attributes, List<Object> values)

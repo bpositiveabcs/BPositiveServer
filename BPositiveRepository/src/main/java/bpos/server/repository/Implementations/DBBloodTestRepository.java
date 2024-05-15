@@ -22,9 +22,25 @@ public class DBBloodTestRepository implements BloodTestRepository {
     private DBUtils dbUtils;
     private static final Logger logger= LogManager.getLogger();
     BloodTestValidator bloodTestValidator;
+    private Properties properties;
     public DBBloodTestRepository(Properties properties,BloodTestValidator bloodTestValidator){
         this.bloodTestValidator=bloodTestValidator;
         this.dbUtils=new DBUtils(properties);
+        this.properties=properties;
+    }
+    public void testMethod() {
+        logger.info("DBBloodTestRepository bean is working correctly.");
+    }
+    public DBBloodTestRepository() {
+        logger.info("DBBloodTestRepository default constructor called");
+    }
+    public void init() {
+        try {
+            logger.info("DBBloodTestRepository bean initialized with properties: " + properties);
+            // any additional initialization code
+        } catch (Exception e) {
+            logger.error("Error during bean initialization", e);
+        }
     }
     @Override
     public Optional<BloodTest> findOne(Integer integer) {

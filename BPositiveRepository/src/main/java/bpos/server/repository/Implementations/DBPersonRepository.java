@@ -24,6 +24,7 @@ public class DBPersonRepository implements PersonRepository {
         this.dbUtils = new DBUtils(properties);
         this.personValidator = personValidator;
     }
+    public DBPersonRepository(){}
 
     private Iterable<Person> findAllUtilitary(List<String> attributes, List<Object> values)
     {

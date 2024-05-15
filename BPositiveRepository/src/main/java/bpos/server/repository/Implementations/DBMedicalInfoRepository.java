@@ -21,7 +21,7 @@ public class DBMedicalInfoRepository implements
         this.dbUtils = new DBUtils(properties);
         this.medicalInfoValidator = medicalInfoValidator;
     }
-
+    public DBMedicalInfoRepository(){}
     private static final Logger logger= LogManager.getLogger();
     private MedicalInfoValidator medicalInfoValidator;
     private Iterable<MedicalInfo> findAllUtilitary(List<String> attributes, List<Object> values)

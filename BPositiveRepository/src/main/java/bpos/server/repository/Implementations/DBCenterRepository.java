@@ -24,6 +24,7 @@ public class DBCenterRepository implements CenterRepository {
         this.centerValidator=centerValidator;
         this.dbUtils=new DBUtils(properties);
     }
+    public DBCenterRepository(){}
     private Iterable<Center> findAllUtilitary(List<String > attributes, List<Object> values)
     {
         Connection con=dbUtils.getConnection();

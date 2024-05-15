@@ -17,12 +17,13 @@ import java.util.Properties;
 public class DBStudentRepository implements StudentRepository {
     private DBUtils dbUtils;
     private static final Logger logger= LogManager.getLogger();
-    private final StudentValidator studentValidator;
+    private  StudentValidator studentValidator;
 
     public DBStudentRepository(Properties properties, StudentValidator studentValidator) {
         this.dbUtils = new DBUtils(properties);
         this.studentValidator = studentValidator;
     }
+    public DBStudentRepository(){}
 
     private Iterable<Student> findAllUtilitary(List<String> attributes, List<Object> values)
     {

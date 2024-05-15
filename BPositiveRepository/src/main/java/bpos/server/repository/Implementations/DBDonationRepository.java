@@ -25,6 +25,7 @@ public class DBDonationRepository implements DonationRepository {
         this.dbUtils = new DBUtils(properties);
         this.donationValidator = donationValidator;
     }
+    public DBDonationRepository(){}
 
     private Iterable<Donation> findAllUtilitary(List<String> attributes, List<Object> values)
     {

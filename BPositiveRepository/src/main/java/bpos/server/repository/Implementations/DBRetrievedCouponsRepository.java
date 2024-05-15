@@ -23,6 +23,7 @@ public class DBRetrievedCouponsRepository implements RetrievedCouponsRepository 
         this.dbUtils = new DBUtils(properties);
         this.retrievedCouponsValidator = retrievedCouponsValidator;
     }
+    public DBRetrievedCouponsRepository(){}
 
     private Iterable<RetrievedCoupons> findAllUtilitary(List<String> attributes, List<Object> values)
     {

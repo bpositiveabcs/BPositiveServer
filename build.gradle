@@ -24,12 +24,15 @@ dependencies {
 
     // Spring Boot starter for creating web applications
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
     implementation project(':BPositiveCommon')
     implementation project(':BPositiveRepository')
     implementation project(':BPositiveService')
     implementation project(':BPositiveController')
+    implementation project(path: ':BPositiveCommon:BPositiveModel')
+    implementation project(path: ':BPositiveCommon:BPositiveModel')
 
-   // Spring Boot starter for testing, includes JUnit, Mockito, Hamcrest, and more
+    // Spring Boot starter for testing, includes JUnit, Mockito, Hamcrest, and more
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // Lombok for simplifying boilerplate code; compile-only since it's a build-time dependency

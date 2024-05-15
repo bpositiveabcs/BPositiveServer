@@ -42,6 +42,7 @@ configurations.all {
 
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation project(':BPositiveCommon')
     implementation project(':BPositiveCommon:BPositiveModel')
     implementation 'jakarta.persistence:jakarta.persistence-api:3.0.0'
