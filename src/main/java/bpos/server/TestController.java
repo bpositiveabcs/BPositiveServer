@@ -244,22 +244,22 @@ public class TestController {
     public Iterable<PersonalData> findAllPersonalDatas() throws ServicesExceptions {
         return service.findAllPersonalDatas();
     }
-
+    // e nula functia din repo
     @GetMapping("/findByFirstNamePersonalData")
     public Iterable<PersonalData> findByFirstNamePersonalData(@RequestParam(value="firstName",required = true)String firstName) throws ServicesExceptions {
         return service.findByFirstNamePersonalData(firstName);
     }
-
+    // e nula functia din repo
     @GetMapping("/findByLastNamePersonalData")
     public Iterable<PersonalData> findByLastNamePersonalData(@RequestParam(value="id_personal_data",required = true)String lastName) throws ServicesExceptions {
         return service.findByLastNamePersonalData(lastName);
     }
-
+    // TO DO - nula functia din repo
     @GetMapping("/findByCnpPersonalData")
     public PersonalData findByCnpPersonalData(@RequestParam(value="cnp",required = true)String cnp) throws ServicesExceptions {
         return service.findByCnpPersonalData(cnp);
     }
-
+    //e nula functia din repo
     @GetMapping("/findByEmailPersonalData")
     public Optional<Person> findOnePerson(@RequestParam(value="id_person",required = true)Integer integer) throws ServicesExceptions {
         return service.findOnePerson(integer);
