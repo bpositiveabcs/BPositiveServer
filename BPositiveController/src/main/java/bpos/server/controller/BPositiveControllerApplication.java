@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@ImportResource("classpath:App.xml")
+//@ImportResource("classpath:App.xml")
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 //@RestController
 public class BPositiveControllerApplication {
