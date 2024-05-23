@@ -18,8 +18,9 @@
 <!--        <prop key="jdbc.url">jdbc:sqlite:C:\Users\bianc\IdeaProjects\BPositiveServer3\bpositive.db</prop>-->
 <!--    </util:properties>-->
     <util:properties id="jdbcProps" location="classpath:bd.config"/>
-    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
-
+<!--    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>-->
+<!--    <bean id="authentificationManger" class="org.springframework.security.authentication.AuthenticationManager"-->
+<!--          abstract="true"/>-->
     <!-- Define the WebSocketHandler bean -->
     <bean id="webSocketHandler" class="bpos.server.service.WebSockets.WebSocketHandler"/>
 
@@ -145,26 +146,26 @@
         <constructor-arg ref="medicalInfoRepository"/>
         <constructor-arg ref="bloodTestRepository"/>
     </bean>
-    <bean id="jwtUserDetailsService" class="bpos.server.service.WebSockets.JwtUserDetailsService">
-        <constructor-arg ref="personRepository"/>
-    </bean>
-    <context:property-placeholder location="classpath:application.properties"/>
-    <bean id="jwtTokenUtil" class="bpos.server.service.WebSockets.JwtTokenUtil"
-          p:secret="${jwt.secret}">
-    </bean>
-    <bean id="jwtRequestFilter" class="bpos.server.service.WebSockets.JwtRequestFilter">
-        <constructor-arg ref="jwtUserDetailsService"/>
-        <constructor-arg ref="jwtTokenUtil"/>
-    </bean>
-    <bean id="userDetailsService" class="bpos.server.service.WebSockets.JwtUserDetailsService">
-        <constructor-arg ref="personRepository"/>
-    </bean>
-    <bean id="jwtAuthenticationEntryPoint" class="bpos.server.service.WebSockets.JwtAuthenticationEntryPoint"/>
-    <bean id="webSecurityConfig" class="bpos.server.service.WebSockets.WebSecurityConfig">
-        <constructor-arg ref="jwtRequestFilter"/>
-        <constructor-arg ref="userDetailsService"/>
-        <constructor-arg ref="jwtAuthenticationEntryPoint"/>
-    </bean>
+<!--    <bean id="jwtUserDetailsService" class="bpos.server.service.WebSockets.JwtUserDetailsService">-->
+<!--        <constructor-arg ref="personRepository"/>-->
+<!--    </bean>-->
+<!--    <context:property-placeholder location="classpath:application.properties"/>-->
+<!--    <bean id="jwtTokenUtil" class="bpos.server.service.WebSockets.JwtTokenUtil"-->
+<!--          p:secret="${jwt.secret}">-->
+<!--    </bean>-->
+<!--    <bean id="jwtRequestFilter" class="bpos.server.service.WebSockets.JwtRequestFilter">-->
+<!--        <constructor-arg ref="jwtUserDetailsService"/>-->
+<!--        <constructor-arg ref="jwtTokenUtil"/>-->
+<!--    </bean>-->
+<!--    <bean id="userDetailsService" class="bpos.server.service.WebSockets.JwtUserDetailsService">-->
+<!--        <constructor-arg ref="personRepository"/>-->
+<!--    </bean>-->
+<!--    <bean id="jwtAuthenticationEntryPoint" class="bpos.server.service.WebSockets.JwtAuthenticationEntryPoint"/>-->
+<!--    <bean id="webSecurityConfig" class="bpos.server.service.WebSockets.WebSecurityConfig">-->
+<!--        <constructor-arg ref="jwtRequestFilter"/>-->
+<!--        <constructor-arg ref="userDetailsService"/>-->
+<!--        <constructor-arg ref="jwtAuthenticationEntryPoint"/>-->
+<!--    </bean>-->
     <bean id="personActor" class="bpos.server.service.Implementation.PersonActorService">
         <constructor-arg ref="personalDataRepository"/>
         <constructor-arg ref="personRepository"/>
@@ -172,8 +173,8 @@
         <constructor-arg ref="logInfoRepository"/>
         <constructor-arg ref="institutionRepository"/>
         <constructor-arg ref="webSocketHandler"/>
-        <constructor-arg ref="objectMapper"/>
-        <constructor-arg ref="jwtUserDetailsService"/>
+<!--        <constructor-arg ref="objectMapper"/>-->
+<!--        <constructor-arg ref="jwtUserDetailsService"/>-->
 
     </bean>
 <!--    &lt;!&ndash;controller &ndash;&gt;-->

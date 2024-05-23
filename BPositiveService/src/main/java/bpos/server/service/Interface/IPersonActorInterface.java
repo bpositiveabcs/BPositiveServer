@@ -3,7 +3,7 @@ package bpos.server.service.Interface;
 import bpos.common.model.*;
 import bpos.server.service.IObserver;
 import bpos.server.service.ServicesExceptions;
-import bpos.server.service.WebSockets.JwtResponse;
+//import bpos.server.service.WebSockets.JwtResponse;
 
 import java.util.Optional;
 
@@ -39,7 +39,7 @@ public interface IPersonActorInterface {
     Student findByEmailStudent(String email) throws ServicesExceptions;
     Iterable<Student> findByPhoneNumberStudent(String phoneNumber) throws ServicesExceptions;
     Student findByUsernameStudent(String username) throws ServicesExceptions;
-    Optional<JwtResponse> login(LogInfo logInfo, IObserver observer) throws ServicesExceptions;
+    //Optional<JwtResponse> login(LogInfo logInfo, IObserver observer) throws ServicesExceptions;
 
     void  logoutPerson(Person center,IObserver observer) throws ServicesExceptions;
     Optional<Institution> findOneInstitution(Integer integer) throws ServicesExceptions;

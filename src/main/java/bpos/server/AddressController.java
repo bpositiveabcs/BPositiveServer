@@ -9,7 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-
+@CrossOrigin
+@RestController
 @RequestMapping("/addresses")
 public class AddressController {
     private IAddressService service;
@@ -27,7 +28,7 @@ public class AddressController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<?> findAllAddresses() {
         try {
             Iterable<Address> addresses = service.findAllAddresses();

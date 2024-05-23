@@ -34,7 +34,7 @@ dependencies {
 
     // Spring Boot starter for testing, includes JUnit, Mockito, Hamcrest, and more
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
 
 
     // Lombok for simplifying boilerplate code; compile-only since it's a build-time dependency

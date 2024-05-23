@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Optional;
-@RestController("/events")
+@RestController
+
 public class EventController {
     public EventController(IEventService service) {
         this.service = service;

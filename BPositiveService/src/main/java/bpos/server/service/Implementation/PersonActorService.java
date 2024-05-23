@@ -5,13 +5,13 @@ import bpos.server.repository.Interfaces.*;
 import bpos.server.service.IObserver;
 import bpos.server.service.Interface.IPersonActorInterface;
 import bpos.server.service.ServicesExceptions;
-import bpos.server.service.WebSockets.JwtResponse;
-import bpos.server.service.WebSockets.JwtTokenUtil;
+//import bpos.server.service.WebSockets.JwtResponse;
+//import bpos.server.service.WebSockets.JwtTokenUtil;
 import bpos.server.service.WebSockets.WebSocketHandler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Map;
 import java.util.Optional;
@@ -24,13 +24,13 @@ public class PersonActorService implements IPersonActorInterface {
     private final InstitutionRepository dbInstitution;
     private final WebSocketHandler webSocketHandler;
     private final Map<Integer, Object> loggedEntities;
-    private  UserDetailsService userDetailsService;
-    private  JwtTokenUtil jwtTokenUtil;
+//    private  UserDetailsService userDetailsService;
+//    private  JwtTokenUtil jwtTokenUtil;
 
     private ObjectMapper objectMapper;
 
 
-    public PersonActorService(PersonalDataRepository personalDataRepository, PersonRepository personRepository, StudentRepository studentRepository, LogInfoRepository logInfoRepository, InstitutionRepository institutionRepository, WebSocketHandler webSocketHandler, ObjectMapper objectMapper, UserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil) {
+    public PersonActorService(PersonalDataRepository personalDataRepository, PersonRepository personRepository, StudentRepository studentRepository, LogInfoRepository logInfoRepository, InstitutionRepository institutionRepository, WebSocketHandler webSocketHandler /*ObjectMapper objectMapper, UserDetailsService userDetailsService*//*, JwtTokenUtil jwtTokenUtil*/) {
         this.dbPersonalData = personalDataRepository;
         this.dbPerson=personRepository;
         this.dbStudent=studentRepository;
@@ -39,8 +39,8 @@ public class PersonActorService implements IPersonActorInterface {
         //vad daca trebuie sa initilaizesz si pt observer
         this.webSocketHandler = webSocketHandler;
         this.objectMapper = objectMapper;
-        this.userDetailsService = userDetailsService;
-        this.jwtTokenUtil = jwtTokenUtil;
+//        this.userDetailsService = userDetailsService;
+//        this.jwtTokenUtil = jwtTokenUtil;
         this.loggedEntities = new java.util.concurrent.ConcurrentHashMap<>();
     }
 
@@ -195,39 +195,39 @@ public class PersonActorService implements IPersonActorInterface {
     }
 
 
-    @Override
-    public Optional<JwtResponse> login(LogInfo logInfo, IObserver observer) throws ServicesExceptions {
-        if(dbLogInfo.findByUsername(logInfo.getUsername())==null) {
-            throw new ServicesExceptions("Username does not exist");
-        }
-        Person person = dbPerson.findByUsername(logInfo.getUsername());
-        if(person != null) {
-            if(loggedEntities.get(person.getId()) != null) {
-                throw new ServicesExceptions("User already logged in.");
-            }
-        } else {
-            throw new ServicesExceptions("Authentication failed.");
-        }
-        loggedEntities.put(person.getId(), person);
-
-        String json = null;
-        try {
-            json = objectMapper.writeValueAsString(person);
-        } catch (Exception e) {
-            throw new ServicesExceptions("Error sending message to all clients");
-        }
-        try {
-            webSocketHandler.sendMessageToAll(json);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        // Generate JWT token
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(logInfo.getUsername());
-        final String token = jwtTokenUtil.generateToken(userDetails);
-
-        return Optional.of(new JwtResponse(token));
-    }
+//    @Override
+//    public Optional<JwtResponse> login(LogInfo logInfo, IObserver observer) throws ServicesExceptions {
+//        if(dbLogInfo.findByUsername(logInfo.getUsername())==null) {
+//            throw new ServicesExceptions("Username does not exist");
+//        }
+//        Person person = dbPerson.findByUsername(logInfo.getUsername());
+//        if(person != null) {
+//            if(loggedEntities.get(person.getId()) != null) {
+//                throw new ServicesExceptions("User already logged in.");
+//            }
+//        } else {
+//            throw new ServicesExceptions("Authentication failed.");
+//        }
+//        loggedEntities.put(person.getId(), person);
+//
+//        String json = null;
+//        try {
+//            json = objectMapper.writeValueAsString(person);
+//        } catch (Exception e) {
+//            throw new ServicesExceptions("Error sending message to all clients");
+//        }
+//        try {
+//            webSocketHandler.sendMessageToAll(json);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        // Generate JWT token
+//        final UserDetails userDetails = userDetailsService.loadUserByUsername(logInfo.getUsername());
+//        final String token = jwtTokenUtil.generateToken(userDetails);
+//
+//        return Optional.of(new JwtResponse(token));
+//    }
 //    private void notifyTheOthersLogInPerson(Person person) {
 //        Iterable<Person> personIterable=dbPerson.findAll();
 //        personIterable.forEach(person1 -> {

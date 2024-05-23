@@ -5,21 +5,21 @@ import bpos.server.service.IObserver;
 import bpos.server.service.Implementation.PersonActorService;
 import bpos.server.service.Interface.IPersonActorInterface;
 import bpos.server.service.ServicesExceptions;
-import bpos.server.service.WebSockets.JwtResponse;
-import bpos.server.service.WebSockets.JwtTokenUtil;
+//import bpos.server.service.WebSockets.JwtResponse;
+//import bpos.server.service.WebSockets.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Optional;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetailsService;
 
 @RequestMapping("/personActorService")
 @CrossOrigin
@@ -28,14 +28,14 @@ public class PersonActorController {
 
     private IPersonActorInterface service;
 
-    private UserDetailsService userDetailService;
-    private JwtTokenUtil jwtTokenUtil;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    public PersonActorController(IPersonActorInterface service, @Qualifier("jwtUserDetailsService")UserDetailsService userDetailService, JwtTokenUtil jwtTokenUtil) {
+//    private UserDetailsService userDetailService;
+//    private JwtTokenUtil jwtTokenUtil;
+//    @Autowired
+//    private AuthenticationManager authenticationManager;
+    public PersonActorController(IPersonActorInterface service /*, @Qualifier("jwtUserDetailsService")UserDetailsService userDetailService, JwtTokenUtil jwtTokenUtil*/) {
         this.service = service;
-        this.userDetailService = userDetailService;
-        this.jwtTokenUtil = jwtTokenUtil;
+//        this.userDetailService = userDetailService;
+//        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     @GetMapping("/persons")
@@ -205,42 +205,42 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
     }
 
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<JwtResponse> authenticate(@RequestBody LogInfo logInfo) {
-        try {
-            // Attempt login
-            Optional<JwtResponse> loggedInPerson = service.login(logInfo, null); // Assuming observer is not needed here
-            if (loggedInPerson.isPresent()) {
-                // Authenticate using Spring Security
-                authenticate(logInfo.getUsername(), logInfo.getPassword());
-
-                // Load user details
-                 UserDetails userDetails = userDetailService.loadUserByUsername(logInfo.getUsername());
-
-                // Generate JWT token
-                final String token = jwtTokenUtil.generateToken(userDetails);
-
-                // Create and return the response with JWT token
-                return new ResponseEntity<>(new JwtResponse(token), HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            }
-        } catch (ServicesExceptions e) {
-            // Handle login exception
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (Exception e) {
-            // Handle other exceptions
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    private void authenticate(String username, String password) throws Exception {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (Exception e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
-        }
-    }
+//    @PostMapping("/authenticate")
+//    public ResponseEntity<JwtResponse> authenticate(@RequestBody LogInfo logInfo) {
+//        try {
+//            // Attempt login
+//            Optional<JwtResponse> loggedInPerson = service.login(logInfo, null); // Assuming observer is not needed here
+//            if (loggedInPerson.isPresent()) {
+//                // Authenticate using Spring Security
+//                authenticate(logInfo.getUsername(), logInfo.getPassword());
+//
+//                // Load user details
+//                 UserDetails userDetails = userDetailService.loadUserByUsername(logInfo.getUsername());
+//
+//                // Generate JWT token
+//                final String token = jwtTokenUtil.generateToken(userDetails);
+//
+//                // Create and return the response with JWT token
+//                return new ResponseEntity<>(new JwtResponse(token), HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//            }
+//        } catch (ServicesExceptions e) {
+//            // Handle login exception
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        } catch (Exception e) {
+//            // Handle other exceptions
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+//
+//    private void authenticate(String username, String password) throws Exception {
+//        try {
+//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+//        } catch (Exception e) {
+//            throw new Exception("INVALID_CREDENTIALS", e);
+//        }
+//    }
 //
 //
 //
