@@ -10,6 +10,7 @@ import bpos.server.service.exceptions.UserAlreadyLoggedInException;
 import java.util.Optional;
 
 public interface IPersonActorInterface {
+    void logout(Person person) throws ServicesExceptions;
     Optional<PersonalData> findOnePersonalData(Integer integer) throws ServicesExceptions;
     Iterable<PersonalData> findAllPersonalDatas() throws ServicesExceptions;
     Optional<PersonalData> savePersonalData(PersonalData entity) throws ServicesExceptions;

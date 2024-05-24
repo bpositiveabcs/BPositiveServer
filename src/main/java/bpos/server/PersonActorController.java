@@ -7,6 +7,8 @@ import bpos.server.service.Interface.IPersonActorInterface;
 import bpos.server.service.ServicesExceptions;
 //import bpos.server.service.WebSockets.JwtResponse;
 //import bpos.server.service.WebSockets.JwtTokenUtil;
+import bpos.server.service.exceptions.InvalidCredentialsException;
+import bpos.server.service.exceptions.UserAlreadyLoggedInException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
@@ -203,6 +205,31 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
     public Student findByUsernameStudent(@RequestParam(value="username",required = true)String username) throws ServicesExceptions {
         return service.findByUsernameStudent(username);
     }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestParam String username,@RequestParam String password) {
+        try {
+            Optional<Person> loggedInPerson = service.login(username, password);
+            if (loggedInPerson.isPresent()) {
+                return new ResponseEntity<>(loggedInPerson.get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        } catch (ServicesExceptions e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (InvalidCredentialsException | UserAlreadyLoggedInException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestParam String username) {
+        try {
+            Person person=service.findByUsernamePerson(username);
+            service.logout(person);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ServicesExceptions e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 //    @PostMapping("/authenticate")
@@ -266,15 +293,7 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
 //        }
 
 
-//        public void logoutCenter(Center center, IObserver observer)  {
-//            IObserver localClient=loggedCenter.remove(center.getId());
-//            if (localClient==null)
-//                throw new ServicesExceptions("User "+center+" is not logged in.");
-//            notifyLogOutCenter(center);
-//        }
 
-//
-//
 //
 //
 //        public synchronized  void  logoutPerson(Person password, IObserver observer)  {
