@@ -8,13 +8,18 @@ import bpos.server.service.ServicesExceptions;
 //import bpos.server.service.WebSockets.JwtResponse;
 //import bpos.server.service.WebSockets.JwtTokenUtil;
 import bpos.server.service.WebSockets.WebSocketHandler;
+import bpos.server.service.exceptions.InvalidCredentialsException;
+import bpos.server.service.exceptions.UserAlreadyLoggedInException;
+import bpos.server.service.exceptions.UserNotLoggedInException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PersonActorService implements IPersonActorInterface {
     private final PersonalDataRepository dbPersonalData;
@@ -23,9 +28,11 @@ public class PersonActorService implements IPersonActorInterface {
     private final LogInfoRepository dbLogInfo;
     private final InstitutionRepository dbInstitution;
     private final WebSocketHandler webSocketHandler;
-    private final Map<Integer, Object> loggedEntities;
+
 //    private  UserDetailsService userDetailsService;
 //    private  JwtTokenUtil jwtTokenUtil;
+private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentHashMap<>();
+
 
     private ObjectMapper objectMapper;
 
@@ -41,7 +48,6 @@ public class PersonActorService implements IPersonActorInterface {
         this.objectMapper = objectMapper;
 //        this.userDetailsService = userDetailsService;
 //        this.jwtTokenUtil = jwtTokenUtil;
-        this.loggedEntities = new java.util.concurrent.ConcurrentHashMap<>();
     }
 
     @Override
@@ -194,6 +200,21 @@ public class PersonActorService implements IPersonActorInterface {
         return dbStudent.findByUsername(username);
     }
 
+    @Override
+    public Optional<Person> login(String username, String password) throws UserAlreadyLoggedInException, InvalidCredentialsException, ServicesExceptions {
+
+        LogInfo logInfo = new LogInfo(username, password,username,null);
+        if(dbLogInfo.findByUsername(logInfo.getUsername())==null)
+        {
+            throw new InvalidCredentialsException("Username does not exist");
+        }
+        Person person = dbPerson.findByUsername(logInfo.getUsername());
+        if (loggedInUsers.containsKey(person.getPersonLogInfo().getUsername()) && loggedInUsers.get(username)) {
+            throw new UserAlreadyLoggedInException("User is already logged in");
+        }
+        return Optional.of(person);
+    }
+
 
 //    @Override
 //    public Optional<JwtResponse> login(LogInfo logInfo, IObserver observer) throws ServicesExceptions {
@@ -244,7 +265,7 @@ public class PersonActorService implements IPersonActorInterface {
 
     @Override
     public void logoutPerson(Person person, IObserver observer) throws ServicesExceptions {
-        loggedEntities.remove(person.getId());
+        loggedInUsers.remove(person.getPersonLogInfo().getUsername());
         String json = null;
         try {
             json = objectMapper.writeValueAsString(person);
@@ -302,5 +323,13 @@ public class PersonActorService implements IPersonActorInterface {
     public Iterable<Institution> findByEmailInstitution(String email) throws ServicesExceptions {
         return dbInstitution.findByEmail(email);
     }
-
+    private LogInfo authenticate(String username, String password) {
+        boolean found = false;
+        LogInfo logInfo = new LogInfo();
+        if (Objects.equals(username, "admin") && Objects.equals(password, "admin")) {
+            logInfo = new LogInfo("admin", "admin", "admin", "admin");
+            return logInfo;
+        }
+        return logInfo;
+    }
 }
