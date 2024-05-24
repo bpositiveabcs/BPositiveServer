@@ -1,27 +1,32 @@
 package bpos.server.service.WebSockets;
 
-import org.springframework.context.annotation.Bean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.*;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
+    private static final Logger logger = LoggerFactory.getLogger(WebSocketConfig.class);
+
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
+        logger.info("Configuring message broker...");
         config.enableSimpleBroker("/topic");
         config.setApplicationDestinationPrefixes("/app");
     }
+
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        String endpoint = "/client-websocket";
-        registry.addEndpoint(endpoint).addInterceptors(new CustomHandshakeInterceptor()).setAllowedOriginPatterns("*").withSockJS();
-        endpoint = "/center-websocket";
-        registry.addEndpoint(endpoint).setAllowedOriginPatterns("*").withSockJS();
-        endpoint = "/admin-websocket";
-        registry.addEndpoint(endpoint).setAllowedOriginPatterns("*").withSockJS();
+        logger.info("Registering STOMP endpoints...");
+        registry.addEndpoint("/client-websocket").setAllowedOriginPatterns("*").withSockJS();
+        registry.addEndpoint("/center-websocket").setAllowedOriginPatterns("*").withSockJS();
+        registry.addEndpoint("/admin-websocket").setAllowedOriginPatterns("*").withSockJS();
+        logger.info("STOMP endpoints registered.");
     }
-
-
 }

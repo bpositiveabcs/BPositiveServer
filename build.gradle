@@ -49,6 +49,16 @@ dependencies {
 
     // Database runtime driver
     runtimeOnly 'org.xerial:sqlite-jdbc:3.41.2.2'
+
+
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    //implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation   'com.fasterxml.jackson.core:jackson-databind:2.13.4.1'
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    implementation 'javax.xml.bind:jaxb-api:2.3.0'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
 }
 
 // Customizes the jar task provided by the Java plugin to package our application

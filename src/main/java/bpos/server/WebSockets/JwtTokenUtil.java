@@ -1,4 +1,4 @@
-package bpos.server.service.WebSockets;//package bpos.server.service.WebSockets;
+package bpos.server.WebSockets;//package bpos.server.service.WebSockets;
 //
 //import io.jsonwebtoken.Claims;
 //import io.jsonwebtoken.Jwts;
