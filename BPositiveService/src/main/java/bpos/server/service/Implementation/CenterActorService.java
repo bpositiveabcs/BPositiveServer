@@ -7,24 +7,26 @@ import bpos.server.repository.Interfaces.LogInfoRepository;
 import bpos.server.service.IObserver;
 import bpos.server.service.Interface.ICenterActor;
 import bpos.server.service.ServicesExceptions;
+import bpos.server.service.exceptions.UserNotLoggedInException;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CenterActorService implements ICenterActor {
     private CenterRepository centerRepository;
     private LogInfoRepository dbLogInfo;
-    private Map<Integer,IObserver> loggedCenter;
+    private final ConcurrentHashMap<String, Boolean> loggedCenter = new ConcurrentHashMap<>();
 
     public CenterActorService(CenterRepository centerRepository, LogInfoRepository dbLogInfo) {
         this.centerRepository = centerRepository;
         this.dbLogInfo = dbLogInfo;
-        this.loggedCenter = loggedCenter;
+
     }
 
 
     @Override
-    public synchronized Optional<Center> loginCenter(LogInfo logInfo , IObserver observer) throws ServicesExceptions {
+    public synchronized Optional<Center> loginCenter(LogInfo logInfo ) throws ServicesExceptions {
         if(dbLogInfo.findByUsername(logInfo.getUsername())==null)
         {
             throw new ServicesExceptions("Username does not exist");
@@ -32,52 +34,30 @@ public class CenterActorService implements ICenterActor {
         Center center = centerRepository.findByUsername(logInfo.getUsername());
         Center center1=centerRepository.findByEmail(logInfo.getEmail());
         if(center!=null && center.equals(center1)) {
-            if (loggedCenter.get(center.getId()) != null) {
+            if (loggedCenter.get(center.getLogInfo().getUsername()) != null) {
                 throw new ServicesExceptions("User already logged in.");
             }
         }else{
             throw new ServicesExceptions("Authentication failed.");
         }
 
-        loggedCenter.put(center.getId(),observer);
-        notifyLogInCenter(center);
+        loggedCenter.put(center.getLogInfo().getUsername(),true);
         return Optional.of(center);
     }
-    private void notifyLogInCenter(Center center) {
-        Iterable<Center> centerIterable=centerRepository.findAll();
-        centerIterable.forEach(center1 -> {
-            IObserver client=loggedCenter.get(center1.getId());
-            if(client!=null){
-                try {
-                    client.loginCenterEvent(center);
-                } catch (ServicesExceptions e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-    }
+
+
+
 
     @Override
-    public void logoutCenter(Center center, IObserver observer) throws ServicesExceptions {
-        IObserver localClient=loggedCenter.remove(center.getId());
-        if (localClient==null)
-            throw new ServicesExceptions("User "+center+" is not logged in.");
-        notifyLogOutCenter(center);
+    public void logoutCenter(Center center) throws ServicesExceptions ,UserNotLoggedInException{
+        String username = center.getLogInfo().getUsername();
+        // Check if the user is not logged in
+        if (!loggedCenter.containsKey(username) || !loggedCenter.get(username)) {
+            throw new UserNotLoggedInException("User is not logged in");
+        }
+        // Log out the user
+        loggedCenter.put(username, false);
     }
-    private void notifyLogOutCenter(Center center) {
-        Iterable<Center> centerIterable=centerRepository.findAll();
-        centerIterable.forEach(center1 -> {
-            IObserver client=loggedCenter.get(center1.getId());
-            if(client!=null){
-                try {
-                    client.logoutCenterEvent(center);
-                } catch (ServicesExceptions e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-    }
-
 
     @Override
     public Center findByUsernameCenter(String username) throws ServicesExceptions {

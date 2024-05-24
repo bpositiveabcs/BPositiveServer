@@ -3,6 +3,7 @@ package bpos.server;
 import bpos.common.model.Center;
 import bpos.server.service.Implementation.CenterActorService;
 import bpos.server.service.ServicesExceptions;
+import bpos.server.service.exceptions.UserNotLoggedInException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -104,6 +105,32 @@ public class CenterController {
                 return ResponseEntity.status(HttpStatus.CREATED).body(savedCenter.get());
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Center could not be saved");
+            }
+        } catch (ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
+        }
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<?> logoutCenter(@RequestParam String username) {
+        try {
+            Center center=service.findByUsernameCenter(username);
+            service.logoutCenter(center);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ServicesExceptions e) {
+            return new ResponseEntity<>("Eroare la procesarea cererii: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (UserNotLoggedInException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> loginCenter(@RequestParam String username, @RequestParam String password) {
+        try {
+            Center center=service.findByUsernameCenter(username);
+            Optional<Center> loggedCenter = service.loginCenter(center.getLogInfo());
+            if (loggedCenter.isPresent()) {
+                return ResponseEntity.ok(loggedCenter.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
             }
         } catch (ServicesExceptions e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");

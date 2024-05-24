@@ -4,13 +4,14 @@ import bpos.common.model.Center;
 import bpos.common.model.LogInfo;
 import bpos.server.service.IObserver;
 import bpos.server.service.ServicesExceptions;
+import bpos.server.service.exceptions.UserNotLoggedInException;
 
 import java.util.Optional;
 
 public interface ICenterActor {
-    Optional<Center> loginCenter(LogInfo logInfo, IObserver observer) throws ServicesExceptions;
+    Optional<Center> loginCenter(LogInfo logInfo) throws ServicesExceptions;
 
-    void  logoutCenter(Center center,IObserver observer) throws ServicesExceptions;
+    void  logoutCenter(Center center) throws ServicesExceptions, UserNotLoggedInException;
 
     Center findByUsernameCenter(String username) throws ServicesExceptions;
     Center findByEmailCenter(String email) throws ServicesExceptions;
