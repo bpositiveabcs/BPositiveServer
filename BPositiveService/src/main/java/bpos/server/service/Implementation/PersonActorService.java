@@ -52,6 +52,26 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
     }
 
     @Override
+    public void logout(Person person) throws ServicesExceptions {
+        loggedInUsers.remove(person.getPersonLogInfo().getUsername());
+        String json = null;
+        try {
+            json = objectMapper.writeValueAsString(person);
+        } catch (JsonProcessingException e) {
+            throw new ServicesExceptions("Error sending message to all clients");
+        }
+
+        // Trimiteți obiectul serializat prin WebSocket
+        if (json != null) {
+            try {
+                webSocketHandler.sendMessageToAll(json);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Override
     public Optional<PersonalData> findOnePersonalData(Integer integer) throws ServicesExceptions {
          return dbPersonalData.findOne(integer);
     }
@@ -264,25 +284,25 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
 //        });
 //    }
 
-    @Override
-    public void logoutPerson(Person person, IObserver observer) throws ServicesExceptions {
-        loggedInUsers.remove(person.getPersonLogInfo().getUsername());
-        String json = null;
-        try {
-            json = objectMapper.writeValueAsString(person);
-        } catch (JsonProcessingException e) {
-            throw new ServicesExceptions("Error sending message to all clients");
-        }
-
-        // Trimiteți obiectul serializat prin WebSocket
-        if (json != null) {
-            try {
-                webSocketHandler.sendMessageToAll(json);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
+//    @Override
+//    public void logoutPerson(Person person, IObserver observer) throws ServicesExceptions {
+//        loggedInUsers.remove(person.getPersonLogInfo().getUsername());
+//        String json = null;
+//        try {
+//            json = objectMapper.writeValueAsString(person);
+//        } catch (JsonProcessingException e) {
+//            throw new ServicesExceptions("Error sending message to all clients");
+//        }
+//
+//        // Trimiteți obiectul serializat prin WebSocket
+//        if (json != null) {
+//            try {
+//                webSocketHandler.sendMessageToAll(json);
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
 
 
     @Override
