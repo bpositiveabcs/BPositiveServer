@@ -208,7 +208,7 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
         return service.findByUsernameStudent(username);
     }
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String username,@RequestParam String password) {
+    public ResponseEntity<?> login(@RequestParam (value="username")String username,@RequestParam(value ="password") String password) {
         try {
             Optional<Person> loggedInPerson = service.login(username, password);
             if (loggedInPerson.isPresent()) {
