@@ -41,6 +41,8 @@ public interface IPersonActorInterface {
     Student findByEmailStudent(String email) throws ServicesExceptions;
     Iterable<Student> findByPhoneNumberStudent(String phoneNumber) throws ServicesExceptions;
     Student findByUsernameStudent(String username) throws ServicesExceptions;
+
+
     Optional<Person> login(String username, String password) throws UserAlreadyLoggedInException, InvalidCredentialsException, ServicesExceptions;
 
     void  logoutPerson(Person center,IObserver observer) throws ServicesExceptions;

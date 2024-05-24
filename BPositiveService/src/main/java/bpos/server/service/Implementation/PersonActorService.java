@@ -32,6 +32,7 @@ public class PersonActorService implements IPersonActorInterface {
 //    private  UserDetailsService userDetailsService;
 //    private  JwtTokenUtil jwtTokenUtil;
 private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentHashMap<>();
+    private final Map<Integer, IObserver> loggedCenter = new ConcurrentHashMap<>();
 
 
     private ObjectMapper objectMapper;
@@ -332,4 +333,9 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
         }
         return logInfo;
     }
+
+
+
+
+
 }
