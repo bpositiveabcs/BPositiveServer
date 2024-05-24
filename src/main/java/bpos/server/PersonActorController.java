@@ -264,15 +264,15 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
 //            notifyLogInCenter(center);
 //            return Optional.of(center);
 //        }
-//
-//
+
+
 //        public void logoutCenter(Center center, IObserver observer)  {
 //            IObserver localClient=loggedCenter.remove(center.getId());
 //            if (localClient==null)
 //                throw new ServicesExceptions("User "+center+" is not logged in.");
 //            notifyLogOutCenter(center);
 //        }
-//
+
 //
 //
 //
