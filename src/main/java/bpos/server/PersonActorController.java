@@ -19,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
@@ -210,7 +212,9 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
         try {
             Optional<Person> loggedInPerson = service.login(username, password);
             if (loggedInPerson.isPresent()) {
-                return new ResponseEntity<>(loggedInPerson.get(), HttpStatus.OK);
+                Map<String, Object> response = new HashMap<>();
+                response.put("person", loggedInPerson.get());
+                return new ResponseEntity<>(response, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
