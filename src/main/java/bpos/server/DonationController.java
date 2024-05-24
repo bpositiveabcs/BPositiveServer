@@ -18,7 +18,7 @@ public class DonationController {
     public DonationController(IDonationService service) {
         this.service = service;
     }
-    @PostMapping("donație")
+    @PostMapping("/donație")
     public ResponseEntity<?> donationRegister(@RequestBody Donation donation, @RequestBody Person person, @RequestBody Event event) {
         try {
             service.donationRegister(donation, person, event);
