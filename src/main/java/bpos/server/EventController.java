@@ -2,9 +2,13 @@ package bpos.server;
 
 import bpos.common.model.Coupon;
 import bpos.common.model.Event;
+import bpos.common.model.Person;
 import bpos.common.model.RetrievedCoupons;
+import bpos.other.NotificationRest;
 import bpos.server.service.Interface.IEventService;
+import bpos.server.service.Interface.IPersonActorInterface;
 import bpos.server.service.ServicesExceptions;
+import bpos.server.service.WebSockets.NotificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +18,27 @@ import java.util.Optional;
 @RestController
 
 public class EventController {
-    public EventController(IEventService service) {
+    private NotificationService notifyService;
+
+    public EventController(IEventService service, IPersonActorInterface servicePerson, NotificationService notifyService) {
         this.service = service;
+        this.servicePerson= servicePerson;
+        this.notifyService=notifyService;
+    }
+    @PostMapping("/events/join-event")
+    public ResponseEntity<Person> joinEvent(@RequestParam(value="username")String username , @RequestBody Event event) {
+        try {
+            Person findPerson = servicePerson.findByUsernamePerson(username);
+            Optional<Person>updatePerson = Optional.empty();
+            if(findPerson!=null) {
+                findPerson.getEvents().add(event);
+                updatePerson = servicePerson.updatePerson(findPerson);
+                notifyService.notifyClient(NotificationRest.NEW_EVENT+":"+"You have joined the event "+event.getEventName());
+            }
+            return new ResponseEntity<>(updatePerson.get(), HttpStatus.CREATED);
+        } catch (ServicesExceptions e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @PutMapping("/retrieved-coupons")
     public ResponseEntity<?> updateRetrieved(@RequestBody RetrievedCoupons entity) {
@@ -56,7 +79,7 @@ public class EventController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    private IPersonActorInterface servicePerson;
     private IEventService service;
     //nush cum sa dau URI inca
     @GetMapping("/coupons/code-coupon")

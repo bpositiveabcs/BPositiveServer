@@ -3,6 +3,7 @@ package bpos.server;
 import bpos.common.model.*;
 import bpos.server.service.IObserver;
 import bpos.server.service.Implementation.PersonActorService;
+import bpos.server.service.Interface.ILogInfoService;
 import bpos.server.service.Interface.IPersonActorInterface;
 import bpos.server.service.ServicesExceptions;
 //import bpos.server.service.WebSockets.JwtResponse;
@@ -31,15 +32,39 @@ import java.util.Optional;
 public class PersonActorController {
 
     private IPersonActorInterface service;
+    private ILogInfoService logInfoService;
 
 //    private UserDetailsService userDetailService;
 //    private JwtTokenUtil jwtTokenUtil;
 //    @Autowired
 //    private AuthenticationManager authenticationManager;
-    public PersonActorController(IPersonActorInterface service /*, @Qualifier("jwtUserDetailsService")UserDetailsService userDetailService, JwtTokenUtil jwtTokenUtil*/) {
+    public PersonActorController(IPersonActorInterface service /*, @Qualifier("jwtUserDetailsService")UserDetailsService userDetailService, JwtTokenUtil jwtTokenUtil*/,ILogInfoService logInfo) {
         this.service = service;
+        this.logInfoService=logInfo;
 //        this.userDetailService = userDetailService;
 //        this.jwtTokenUtil = jwtTokenUtil;
+    }
+    @PostMapping("/personRequest")
+    public Person personRequest(@RequestParam (value="firstName") String firstName,@RequestParam(value="lastName") String lastName,@RequestParam(value="cnp") String cnp,@RequestParam (value="birthday") LocalDate birthday,@RequestParam(value="sex") String sex,@RequestParam(value="country") String country ,@RequestParam(value ="city") String city,@RequestParam(value="street") String street, @RequestParam(value="number") String number,@RequestParam(value="bloc") String bloc,@RequestParam(value="apartament") String apartment,@RequestParam(value="floor") String floor,@RequestParam(value="telephone") String telephone ,@RequestParam(value="email") String email,@RequestParam(value="username") String username,@RequestParam(value="password") String password,@RequestParam(value="confirm-password") String confirmPassword) {
+        Person person = new Person();
+        PersonalData personalData = new PersonalData();
+        LogInfo logInfo = new LogInfo();
+        Address address = new Address();
+        logInfo.setUsername(username);
+        logInfo.setPassword(password);
+        logInfo.setEmail(email);
+        try {
+            Optional<LogInfo> newLogInfo=logInfoService.saveLogInfo(logInfo);
+            if(newLogInfo.isPresent()) {
+                person.set(newLogInfo.get());
+            }
+
+        } catch (ServicesExceptions e) {
+            throw new RuntimeException(e);
+        }
+
+        person.setFirstName(firstName);
+
     }
 
     @GetMapping("/persons")

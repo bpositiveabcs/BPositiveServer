@@ -30,7 +30,7 @@ dependencies {
     implementation project(':BPositiveService')
     implementation project(':BPositiveController')
     implementation project(path: ':BPositiveCommon:BPositiveModel')
-    implementation project(path: ':BPositiveCommon:BPositiveModel')
+    implementation project(path: ':BPositiveCommon:BPositiveOther')
 
     // Spring Boot starter for testing, includes JUnit, Mockito, Hamcrest, and more
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

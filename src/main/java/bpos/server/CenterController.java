@@ -124,7 +124,7 @@ public class CenterController {
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<?> loginCenter(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<?> loginCenter(@RequestParam(value="username") String username, @RequestParam (value="password")String password) {
         try {
             Center center=service.findByUsernameCenter(username);
             Optional<Center> loggedCenter = service.loginCenter(center.getLogInfo());
