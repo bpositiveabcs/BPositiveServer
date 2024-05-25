@@ -3,6 +3,8 @@ package bpos.server;
 import bpos.common.model.*;
 import bpos.server.service.IObserver;
 import bpos.server.service.Implementation.PersonActorService;
+import bpos.server.service.Interface.IAddressService;
+import bpos.server.service.Interface.IEventService;
 import bpos.server.service.Interface.ILogInfoService;
 import bpos.server.service.Interface.IPersonActorInterface;
 import bpos.server.service.ServicesExceptions;
@@ -20,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -33,19 +36,22 @@ public class PersonActorController {
 
     private IPersonActorInterface service;
     private ILogInfoService logInfoService;
-
+    private IEventService eventService;
+    private IAddressService addressService;
 //    private UserDetailsService userDetailService;
 //    private JwtTokenUtil jwtTokenUtil;
 //    @Autowired
 //    private AuthenticationManager authenticationManager;
-    public PersonActorController(IPersonActorInterface service /*, @Qualifier("jwtUserDetailsService")UserDetailsService userDetailService, JwtTokenUtil jwtTokenUtil*/,ILogInfoService logInfo) {
+    public PersonActorController(IPersonActorInterface service /*, @Qualifier("jwtUserDetailsService")UserDetailsService userDetailService, JwtTokenUtil jwtTokenUtil*/,ILogInfoService logInfo,IAddressService addressService,IEventService eventService) {
         this.service = service;
         this.logInfoService=logInfo;
+        this.addressService=addressService;
+        this.eventService=eventService;
 //        this.userDetailService = userDetailService;
 //        this.jwtTokenUtil = jwtTokenUtil;
     }
     @PostMapping("/personRequest")
-    public Person personRequest(@RequestParam (value="firstName") String firstName,@RequestParam(value="lastName") String lastName,@RequestParam(value="cnp") String cnp,@RequestParam (value="birthday") LocalDate birthday,@RequestParam(value="sex") String sex,@RequestParam(value="country") String country ,@RequestParam(value ="city") String city,@RequestParam(value="street") String street, @RequestParam(value="number") String number,@RequestParam(value="bloc") String bloc,@RequestParam(value="apartament") String apartment,@RequestParam(value="floor") String floor,@RequestParam(value="telephone") String telephone ,@RequestParam(value="email") String email,@RequestParam(value="username") String username,@RequestParam(value="password") String password,@RequestParam(value="confirm-password") String confirmPassword) {
+    public Person personRequest(@RequestParam (value="firstName") String firstName,@RequestParam(value="lastName") String lastName,@RequestParam(value="cnp") String cnp,@RequestParam (value="birthday") LocalDate birthday,@RequestParam(value="sex") String sex,@RequestParam(value="country") String country ,@RequestParam(value ="city") String city,@RequestParam(value="county") String county,@RequestParam(value="street") String street, @RequestParam(value="number") String number,@RequestParam(value="bloc") String bloc,@RequestParam(value="apartament") String apartment,@RequestParam(value="floor") Integer floor,@RequestParam(value="telephone") String telephone ,@RequestParam(value="email") String email,@RequestParam(value="username") String username,@RequestParam(value="password") String password,@RequestParam(value="confirm-password") String confirmPassword) {
         Person person = new Person();
         PersonalData personalData = new PersonalData();
         LogInfo logInfo = new LogInfo();
@@ -55,15 +61,36 @@ public class PersonActorController {
         logInfo.setEmail(email);
         try {
             Optional<LogInfo> newLogInfo=logInfoService.saveLogInfo(logInfo);
-            if(newLogInfo.isPresent()) {
-                person.set(newLogInfo.get());
-            }
+            person.setPersonLogInfo(newLogInfo.get());
+            personalData.setFirstName(firstName);
+            personalData.setLastName(lastName);
+            personalData.setCnp(cnp);
+            personalData.setBirthDate(birthday);
+            personalData.setPhoneNumber(telephone);
+            personalData.setSex(sex);
+            address.setApartment(apartment);
+            address.setBlock(bloc);
+            address.setCity(city);
+            address.setCountry(country);
+            address.setFloor(floor);
+            address.setCounty(city);
+            address.setNumberStreet(number);
+            address.setStreet(street);
+            Optional<Address> newAddress=addressService.saveAddress(address);
+            personalData.setAddress(newAddress.get());
+            Optional<PersonalData> newPersonalData=service.savePersonalData(personalData);
+            person.setPersonalDate(newPersonalData.get());
+            person.setEvents(new ArrayList<>());
+            person.setDonations(new ArrayList<>());
+            person.setPoints(0);
+            person.setMedicalInfo(new MedicalInfo());
+            Optional<Person> newPerson=service.savePerson(person);
 
+            return  person;
         } catch (ServicesExceptions e) {
             throw new RuntimeException(e);
         }
 
-        person.setFirstName(firstName);
 
     }
 

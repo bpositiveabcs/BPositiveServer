@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 @RestController
 
@@ -31,7 +32,9 @@ public class EventController {
             Person findPerson = servicePerson.findByUsernamePerson(username);
             Optional<Person>updatePerson = Optional.empty();
             if(findPerson!=null) {
-                findPerson.getEvents().add(event);
+                List<Event>eventList=findPerson.getEvents();
+                eventList.add(event);
+                findPerson.setEvents(eventList);
                 updatePerson = servicePerson.updatePerson(findPerson);
                 notifyService.notifyClient(NotificationRest.NEW_EVENT+":"+"You have joined the event "+event.getEventName());
             }
