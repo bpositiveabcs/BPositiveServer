@@ -1,12 +1,14 @@
 package bpos.server.service.Implementation;
 
 import bpos.common.model.*;
+import bpos.other.NotificationRest;
 import bpos.server.repository.Interfaces.*;
 import bpos.server.service.IObserver;
 import bpos.server.service.Interface.IPersonActorInterface;
 import bpos.server.service.ServicesExceptions;
 //import bpos.server.service.WebSockets.JwtResponse;
 //import bpos.server.service.WebSockets.JwtTokenUtil;
+import bpos.server.service.WebSockets.NotificationService;
 import bpos.server.service.WebSockets.WebSocketHandler;
 import bpos.server.service.exceptions.InvalidCredentialsException;
 import bpos.server.service.exceptions.UserAlreadyLoggedInException;
@@ -33,7 +35,7 @@ public class PersonActorService implements IPersonActorInterface {
 //    private  JwtTokenUtil jwtTokenUtil;
 private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentHashMap<>();
     private final Map<Integer, IObserver> loggedCenter = new ConcurrentHashMap<>();
-
+    private NotificationService notificationService;
 
     private ObjectMapper objectMapper;
 
@@ -233,6 +235,7 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
         if (loggedInUsers.containsKey(person.getPersonLogInfo().getUsername()) && loggedInUsers.get(username)) {
             throw new UserAlreadyLoggedInException("User is already logged in");
         }
+        notificationService.notifyAdmins(String.valueOf(NotificationRest.LOGIN));
         return Optional.of(person);
     }
 
