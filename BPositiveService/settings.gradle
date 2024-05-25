@@ -1,6 +1,10 @@
 rootProject.name = 'BPositiveService'
 include ':BPositiveCommon:BPositiveModel'
 project(':BPositiveCommon:BPositiveModel').projectDir = new File('../BPositiveCommon/BPositiveModel')
+
+include ':BPositiveCommon:BPositiveOther'
+project(':BPositiveCommon:BPositiveOther').projectDir = new File('../BPositiveCommon/BPositiveOther')
+
 include ':BPositiveCommon'
 project(':BPositiveCommon').projectDir = new File('../BPositiveCommon')
 include ':BPositiveRepository'

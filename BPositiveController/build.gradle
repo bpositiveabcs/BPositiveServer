@@ -26,9 +26,10 @@ repositories {
 dependencies {
     implementation project(':BPositiveCommon')
     implementation project(':BPositiveService')
+    implementation project(':BPositiveCommon:BPositiveOther')
+
     implementation project(':BPositiveCommon:BPositiveModel')
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation project(path: ':BPositiveRepository')
     implementation project(path: ':BPositiveRepository')

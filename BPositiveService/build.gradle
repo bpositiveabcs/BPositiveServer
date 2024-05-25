@@ -27,6 +27,8 @@ dependencies {
 
     implementation project(':BPositiveCommon')
     implementation project(':BPositiveCommon:BPositiveModel')
+    implementation project(':BPositiveCommon:BPositiveOther')
+
     implementation project(':BPositiveRepository')
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

@@ -6,4 +6,6 @@ include 'BPositiveController'
 include 'BPositiveConfig'
 include 'BPositiveService'
 project(':BPositiveCommon:BPositiveModel').projectDir = new File('./BPositiveCommon/BPositiveModel')
+include 'BPositiveCommon:BPositiveOther'
+project(':BPositiveCommon:BPositiveOther').projectDir = new File('./BPositiveCommon/BPositiveOther')
 
