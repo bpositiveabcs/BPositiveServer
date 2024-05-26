@@ -120,6 +120,7 @@ public class PersonActorController {
         }
     }
 
+
     @GetMapping("/persons")
     public Iterable<Person> findAllPersons() throws ServicesExceptions {
         System.out.println("getAllPersons");
