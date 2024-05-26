@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 @RestController
@@ -43,6 +45,7 @@ public class EventController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @PutMapping("/retrieved-coupons")
     public ResponseEntity<?> updateRetrieved(@RequestBody RetrievedCoupons entity) {
         try {
@@ -67,6 +70,37 @@ public class EventController {
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
+        } catch (ServicesExceptions e) {
+            // Handle exception
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("/retrieved-coupons/list-coupons")
+    public ResponseEntity<?> listCouponsSelected(@RequestBody PersonCouponRequest personCouponRequest){
+        try {
+            ArrayList<Coupon> coupons=new ArrayList<>();
+            Person personOptional=servicePerson.findByUsernamePerson(personCouponRequest.getUsername());
+            for(Coupon coupon:personCouponRequest.getCouponList()){
+                Optional<Coupon>couponFind=service.findOneCoupon(coupon.getId());
+                if(couponFind.isPresent()){
+                    coupon=couponFind.get();
+                }
+
+                if(personOptional!=null){
+                    RetrievedCoupons retrievedCoupons=new RetrievedCoupons();
+                    retrievedCoupons.setId_persoana(personOptional.getId());
+                    retrievedCoupons.setCoupon(coupon);
+                    retrievedCoupons.setSeries(coupon.getSeries());
+                    retrievedCoupons.setExpirationDate(coupon.getUnavailableToClaimFrom());
+                    retrievedCoupons.setReceivedDate(LocalDateTime.now());
+                    Optional<RetrievedCoupons> savedEntity = service.saveRetrieved(retrievedCoupons);
+                    coupons.add(coupon);
+                }
+            }
+            assert personOptional != null;
+            PersonCouponResponse personCouponResponse=new PersonCouponResponse(coupons,personOptional.getPersonLogInfo().getEmail());
+
+            return new ResponseEntity<>(personCouponResponse, HttpStatus.CREATED);
         } catch (ServicesExceptions e) {
             // Handle exception
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
