@@ -50,6 +50,7 @@ public class PersonActorController {
 //        this.userDetailService = userDetailService;
 //        this.jwtTokenUtil = jwtTokenUtil;
     }
+
     @PostMapping("/personRequest")
     public Person personRequest(@RequestParam (value="firstName") String firstName,@RequestParam(value="lastName") String lastName,@RequestParam(value="cnp") String cnp,@RequestParam (value="birthday") LocalDate birthday,@RequestParam(value="sex") String sex,@RequestParam(value="country") String country ,@RequestParam(value ="city") String city,@RequestParam(value="county") String county,@RequestParam(value="street") String street, @RequestParam(value="number") String number,@RequestParam(value="bloc") String bloc,@RequestParam(value="apartament") String apartment,@RequestParam(value="floor") Integer floor,@RequestParam(value="telephone") String telephone ,@RequestParam(value="email") String email,@RequestParam(value="username") String username,@RequestParam(value="password") String password,@RequestParam(value="confirm-password") String confirmPassword) {
         Person person = new Person();
@@ -92,6 +93,31 @@ public class PersonActorController {
         }
 
 
+    }
+    @PutMapping("/students/student-for-request")
+    public Student studentRequest(@RequestParam(value="username") String username,@RequestParam(value="departamanet") String departament,@RequestParam(value="grupa") String grupa , @RequestParam(value="faculty") String faculty ,@RequestParam(value="name-university") String name,@RequestParam(value="year") Integer year,@RequestParam(value="email-university") String emailUniversity,@RequestParam(value = "address-university") String addressUniversity){
+        try {
+            Person person=service.findByUsernamePerson(username);
+            Institution institution=new Institution();
+            institution.setName(name);
+            institution.setEmail(emailUniversity);
+            institution.setAddress(addressUniversity);
+            Student student=new Student();
+            student.setFaculty(faculty);
+            student.setDepartment(departament);
+            student.setGroup(grupa);
+            student.setUniversity(institution);
+            student.setYear(year);
+            student.setPersonLogInfo(person.getPersonLogInfo());
+            student.setPoints(person.getPoints());
+            student.setPersonalDate(person.getPersonalDate());
+            student.setMedicalInfo(person.getMedicalInfo());
+            student.setInstitution(person.getInstitution());
+            Optional<Student> newStudent=service.saveStudent(student);
+            return newStudent.get();
+        } catch (ServicesExceptions e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @GetMapping("/persons")
