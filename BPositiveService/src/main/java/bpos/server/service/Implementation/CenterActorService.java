@@ -4,21 +4,23 @@ import bpos.common.model.Center;
 import bpos.common.model.LogInfo;
 import bpos.server.repository.Interfaces.CenterRepository;
 import bpos.server.repository.Interfaces.LogInfoRepository;
-import bpos.server.service.IObserver;
 import bpos.server.service.Interface.ICenterActor;
 import bpos.server.service.ServicesExceptions;
+import bpos.server.service.WebSockets.NotificationService;
 import bpos.server.service.exceptions.UserNotLoggedInException;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CenterActorService implements ICenterActor {
+    private final NotificationService notificationService;
+
     private CenterRepository centerRepository;
     private LogInfoRepository dbLogInfo;
     private final ConcurrentHashMap<String, Boolean> loggedCenter = new ConcurrentHashMap<>();
 
-    public CenterActorService(CenterRepository centerRepository, LogInfoRepository dbLogInfo) {
+    public CenterActorService(NotificationService notificationService, CenterRepository centerRepository, LogInfoRepository dbLogInfo) {
+        this.notificationService = notificationService;
         this.centerRepository = centerRepository;
         this.dbLogInfo = dbLogInfo;
 

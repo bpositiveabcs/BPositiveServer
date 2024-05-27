@@ -8,16 +8,20 @@ import bpos.server.repository.Interfaces.EventRepository;
 import bpos.server.repository.Interfaces.RetrievedCouponsRepository;
 import bpos.server.service.Interface.IEventService;
 import bpos.server.service.ServicesExceptions;
+import bpos.server.service.WebSockets.NotificationService;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 public class EventService implements IEventService {
+    private final NotificationService notificationService;
+
     private EventRepository eventRepository;
     private CouponRepository couponRepository;
     private RetrievedCouponsRepository retrievedCouponsRepository;
 
-    public EventService(EventRepository eventRepository, CouponRepository couponRepository, RetrievedCouponsRepository retrievedCouponsRepository) {
+    public EventService(NotificationService notificationService, EventRepository eventRepository, CouponRepository couponRepository, RetrievedCouponsRepository retrievedCouponsRepository) {
+        this.notificationService = notificationService;
         this.eventRepository = eventRepository;
         this.couponRepository = couponRepository;
         this.retrievedCouponsRepository = retrievedCouponsRepository;

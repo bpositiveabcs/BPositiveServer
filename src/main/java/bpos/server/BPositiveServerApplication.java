@@ -16,7 +16,6 @@ import org.springframework.context.annotation.ImportResource;
         "bpos.server",
         "bpos.server.service",
         "bpos.server.controller",
-        "bpos.server.service.WebSockets"
 })
 public class BPositiveServerApplication {
 

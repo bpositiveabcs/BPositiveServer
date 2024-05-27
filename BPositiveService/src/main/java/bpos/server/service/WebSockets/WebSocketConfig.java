@@ -2,7 +2,11 @@ package bpos.server.service.WebSockets;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -28,5 +32,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/center-websocket").setAllowedOriginPatterns("*").withSockJS();
         registry.addEndpoint("/admin-websocket").setAllowedOriginPatterns("*").withSockJS();
         logger.info("STOMP endpoints registered.");
+    }
+
+    @Bean
+    public SimpMessagingTemplate messagingTemplate(@Qualifier("brokerChannel") MessageChannel messageChannel) {
+        return new SimpMessagingTemplate(messageChannel);
     }
 }

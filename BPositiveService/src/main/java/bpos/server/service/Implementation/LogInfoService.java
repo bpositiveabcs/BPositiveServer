@@ -4,14 +4,18 @@ import bpos.common.model.LogInfo;
 import bpos.server.repository.Interfaces.LogInfoRepository;
 import bpos.server.service.Interface.ILogInfoService;
 import bpos.server.service.ServicesExceptions;
+import bpos.server.service.WebSockets.NotificationService;
 
 import java.util.Optional;
 
 public class LogInfoService implements ILogInfoService {
     private LogInfoRepository logInfoRepository;
+    private final NotificationService notificationService;
 
-    public LogInfoService(LogInfoRepository logInfoRepository) {
+
+    public LogInfoService(LogInfoRepository logInfoRepository, NotificationService notificationService) {
         this.logInfoRepository = logInfoRepository;
+        this.notificationService = notificationService;
     }
 
     @Override

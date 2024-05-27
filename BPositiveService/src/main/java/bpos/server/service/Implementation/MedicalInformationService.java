@@ -6,14 +6,18 @@ import bpos.server.repository.Interfaces.BloodTestRepository;
 import bpos.server.repository.Interfaces.MedicalInfoRepository;
 import bpos.server.service.Interface.IMedicalInformationService;
 import bpos.server.service.ServicesExceptions;
+import bpos.server.service.WebSockets.NotificationService;
 
 import java.util.Optional;
 
 public class MedicalInformationService implements IMedicalInformationService {
+    private final NotificationService notificationService;
+
     private BloodTestRepository bloodTestRepository;
     private MedicalInfoRepository medicalInfoRepository;
 
-    public MedicalInformationService(BloodTestRepository bloodTestRepository, MedicalInfoRepository medicalInfoRepository) {
+    public MedicalInformationService(NotificationService notificationService, BloodTestRepository bloodTestRepository, MedicalInfoRepository medicalInfoRepository) {
+        this.notificationService = notificationService;
         this.bloodTestRepository = bloodTestRepository;
         this.medicalInfoRepository = medicalInfoRepository;
     }

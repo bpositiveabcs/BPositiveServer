@@ -11,19 +11,23 @@ import bpos.server.repository.Interfaces.PersonRepository;
 import bpos.server.service.IObserver;
 import bpos.server.service.Interface.IDonationService;
 import bpos.server.service.ServicesExceptions;
+import bpos.server.service.WebSockets.NotificationService;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 public class DonationService implements IDonationService {
+    private final NotificationService notificationService;
+
     private DonationRepository donationRepository;
     private DonationTypeRepository donationTypeRepository;
     private PersonRepository  dbPerson;
     private EventRepository dbEvent;
     private Map<Integer,IObserver> loggedClients;
 
-    public DonationService(DonationRepository donationRepository, DonationTypeRepository donationTypeRepository, PersonRepository dbPerson, EventRepository dbEvent) {
+    public DonationService(NotificationService notificationService, DonationRepository donationRepository, DonationTypeRepository donationTypeRepository, PersonRepository dbPerson, EventRepository dbEvent) {
+        this.notificationService = notificationService;
         this.donationRepository = donationRepository;
         this.donationTypeRepository = donationTypeRepository;
         this.dbPerson = dbPerson;

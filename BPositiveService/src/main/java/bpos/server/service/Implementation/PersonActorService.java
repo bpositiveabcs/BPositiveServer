@@ -12,7 +12,6 @@ import bpos.server.service.WebSockets.NotificationService;
 import bpos.server.service.WebSockets.WebSocketHandler;
 import bpos.server.service.exceptions.InvalidCredentialsException;
 import bpos.server.service.exceptions.UserAlreadyLoggedInException;
-import bpos.server.service.exceptions.UserNotLoggedInException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.springframework.security.core.userdetails.UserDetails;
@@ -35,12 +34,13 @@ public class PersonActorService implements IPersonActorInterface {
 //    private  JwtTokenUtil jwtTokenUtil;
 private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentHashMap<>();
     private final Map<Integer, IObserver> loggedCenter = new ConcurrentHashMap<>();
+
     private NotificationService notificationService;
 
     private ObjectMapper objectMapper;
 
 
-    public PersonActorService(PersonalDataRepository personalDataRepository, PersonRepository personRepository, StudentRepository studentRepository, LogInfoRepository logInfoRepository, InstitutionRepository institutionRepository, WebSocketHandler webSocketHandler /*ObjectMapper objectMapper, UserDetailsService userDetailsService*//*, JwtTokenUtil jwtTokenUtil*/) {
+    public PersonActorService(PersonalDataRepository personalDataRepository, PersonRepository personRepository, StudentRepository studentRepository, LogInfoRepository logInfoRepository, InstitutionRepository institutionRepository, WebSocketHandler webSocketHandler, /*ObjectMapper objectMapper, UserDetailsService userDetailsService*//*, JwtTokenUtil jwtTokenUtil*/NotificationService notificationService) {
         this.dbPersonalData = personalDataRepository;
         this.dbPerson=personRepository;
         this.dbStudent=studentRepository;
@@ -48,6 +48,7 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
         this.dbInstitution=institutionRepository;
         //vad daca trebuie sa initilaizesz si pt observer
         this.webSocketHandler = webSocketHandler;
+        this.notificationService = notificationService;
         this.objectMapper = objectMapper;
 //        this.userDetailsService = userDetailsService;
 //        this.jwtTokenUtil = jwtTokenUtil;
