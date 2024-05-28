@@ -192,7 +192,12 @@ public class DBPersonRepository implements PersonRepository {
             {
                 preparedStatement.setInt(1,entity.getId());
                 preparedStatement.setInt(2,entity.getPoints());
-                preparedStatement.setInt(3,entity.getInstitution().getId());
+                if(entity.getInstitution()==null)
+                    if (entity.getInstitution() != null) {
+                        preparedStatement.setInt(3, entity.getInstitution().getId());
+                    } else {
+                        preparedStatement.setNull(3, java.sql.Types.INTEGER);
+                    }
                 preparedStatement.executeUpdate();
                 return Optional.of(entity);
             }
@@ -250,7 +255,12 @@ public class DBPersonRepository implements PersonRepository {
         try(java.sql.PreparedStatement preparedStatement=connection.prepareStatement(sql))
         {
             preparedStatement.setInt(1,entity.getPoints());
-            preparedStatement.setInt(2,entity.getInstitution().getId());
+            if(entity.getInstitution()==null)
+                if (entity.getInstitution() != null) {
+                    preparedStatement.setInt(3, entity.getInstitution().getId());
+                } else {
+                    preparedStatement.setNull(3, java.sql.Types.INTEGER);
+                }
             preparedStatement.setInt(3,entity.getId());
             preparedStatement.executeUpdate();
             entity=seeIfAnythingNeedsInserted(entity,found);
