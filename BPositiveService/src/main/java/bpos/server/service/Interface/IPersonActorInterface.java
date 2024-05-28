@@ -1,6 +1,7 @@
 package bpos.server.service.Interface;
 
 import bpos.common.model.*;
+import bpos.other.PersonRequest;
 import bpos.server.service.IObserver;
 import bpos.server.service.ServicesExceptions;
 import bpos.server.service.exceptions.InvalidCredentialsException;
@@ -56,4 +57,7 @@ public interface IPersonActorInterface {
     Iterable<Institution> findByAddressInstitution(String address) throws ServicesExceptions;
     Iterable<Institution> findByEmailInstitution(String email) throws ServicesExceptions;
 
+    void signUp(PersonRequest personRequest);
+
+    void profileChange(PersonRequest personRequest);
 }

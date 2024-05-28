@@ -2,6 +2,7 @@ package bpos.server.service.Implementation;
 
 import bpos.common.model.*;
 import bpos.other.NotificationRest;
+import bpos.other.PersonRequest;
 import bpos.server.repository.Interfaces.*;
 import bpos.server.service.IObserver;
 import bpos.server.service.Interface.IPersonActorInterface;
@@ -17,6 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,6 +30,7 @@ public class PersonActorService implements IPersonActorInterface {
     private final PersonRepository dbPerson;
     private final StudentRepository dbStudent;
     private final LogInfoRepository dbLogInfo;
+    private final AddressRepository dbAdress;
     private final InstitutionRepository dbInstitution;
     private final WebSocketHandler webSocketHandler;
 
@@ -40,11 +44,14 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
     private ObjectMapper objectMapper;
 
 
-    public PersonActorService(PersonalDataRepository personalDataRepository, PersonRepository personRepository, StudentRepository studentRepository, LogInfoRepository logInfoRepository, InstitutionRepository institutionRepository, WebSocketHandler webSocketHandler, /*ObjectMapper objectMapper, UserDetailsService userDetailsService*//*, JwtTokenUtil jwtTokenUtil*/NotificationService notificationService) {
+    public PersonActorService(PersonalDataRepository personalDataRepository, PersonRepository personRepository, StudentRepository studentRepository, LogInfoRepository logInfoRepository, AddressRepository dbAdress,
+                              InstitutionRepository institutionRepository, WebSocketHandler webSocketHandler,
+            /*ObjectMapper objectMapper, UserDetailsService userDetailsService*//*, JwtTokenUtil jwtTokenUtil*/NotificationService notificationService) {
         this.dbPersonalData = personalDataRepository;
         this.dbPerson=personRepository;
         this.dbStudent=studentRepository;
         this.dbLogInfo=logInfoRepository;
+        this.dbAdress = dbAdress;
         this.dbInstitution=institutionRepository;
         //vad daca trebuie sa initilaizesz si pt observer
         this.webSocketHandler = webSocketHandler;
@@ -348,6 +355,158 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
     public Iterable<Institution> findByEmailInstitution(String email) throws ServicesExceptions {
         return dbInstitution.findByEmail(email);
     }
+
+    @Override
+    public void signUp(PersonRequest personRequest) {
+        Person person = new Person();
+        PersonalData personalData = new PersonalData();
+        LogInfo logInfo = new LogInfo();
+        Address address = new Address();
+        logInfo.setUsername(personRequest.getUsername());
+        logInfo.setPassword(personRequest.getPassword());
+        logInfo.setEmail(personRequest.getEmail());
+        logInfo.setSeed(personRequest.getUsername());
+        try {
+            Optional<LogInfo> newLogInfo=dbLogInfo.save(logInfo);
+            person.setPersonLogInfo(newLogInfo.get());
+            personalData.setFirstName(personRequest.getFirstName());
+            personalData.setLastName(personRequest.getLastName());
+            personalData.setCnp(personRequest.getCnp());
+            personalData.setBirthDate(LocalDate.parse(personRequest.getBirthday()));
+            personalData.setPhoneNumber(personRequest.getTelephone());
+            personalData.setSex(personRequest.getSex());
+            address.setApartment(personRequest.getApartment());
+            address.setBlock(personRequest.getBlock());
+            address.setCity(personRequest.getCity());
+            address.setCountry(personRequest.getCountry());
+            address.setFloor(Integer.valueOf(personRequest.getFloor()));
+            address.setCounty(personRequest.getCounty());
+            address.setNumberStreet(personRequest.getNumber());
+            address.setStreet(personRequest.getStreet());
+            Optional<Address> newAddress=dbAdress.save(address);
+            personalData.setAddress(newAddress.get());
+            personalData.setId(logInfo.getId());
+            Optional<PersonalData> newPersonalData=savePersonalData(personalData);
+            person.setPersonalDate(newPersonalData.get());
+            person.setEvents(new ArrayList<>());
+            person.setDonations(new ArrayList<>());
+            person.setPoints(0);
+            person.setMedicalInfo(new MedicalInfo());
+            person.setInstitution(null);
+            person.setId(logInfo.getId());
+            Optional<Person> newPerson=savePerson(person);
+        } catch (ServicesExceptions e) {
+            throw new RuntimeException(e);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        notificationService.notifyAdmins(String.valueOf(NotificationRest.REGISTER));
+
+    }
+    @Override
+    public void profileChange(PersonRequest personRequest) {
+        Person person= dbPerson.findByUsername(personRequest.getUsername());
+        PersonalData personalData = new PersonalData();
+        LogInfo logInfo = new LogInfo();
+        Address address = new Address();
+        logInfo.setUsername(personRequest.getUsername());
+        logInfo.setPassword(personRequest.getPassword());
+        logInfo.setEmail(personRequest.getEmail());
+        try {
+            if(person.getPersonLogInfo()!=logInfo)
+            {
+                Optional<LogInfo> newLogInfo=dbLogInfo.update(logInfo);
+                person.setPersonLogInfo(newLogInfo.get());
+            }
+            int change=0;
+            if(person.getPersonalDate().getFirstName()!=personRequest.getFirstName())
+            {
+                personalData.setFirstName(personRequest.getFirstName());
+                change=1;
+            }
+            if(person.getPersonalDate().getLastName()!=personRequest.getLastName())
+            {
+                personalData.setLastName(personRequest.getLastName());
+                change=1;
+            }
+            if(person.getPersonalDate().getCnp()!=personRequest.getCnp())
+            {
+                personalData.setCnp(personRequest.getCnp());
+                change=1;
+            }
+            if(person.getPersonalDate().getBirthDate()!=LocalDate.parse(personRequest.getBirthday()))
+            {
+                personalData.setBirthDate(LocalDate.parse(personRequest.getBirthday()));
+                change=1;
+            }
+            if(person.getPersonalDate().getPhoneNumber()!=personRequest.getTelephone())
+            {
+                personalData.setPhoneNumber(personRequest.getTelephone());
+                change=1;
+            }
+            if(person.getPersonalDate().getSex()!=personRequest.getSex())
+            {
+                personalData.setSex(personRequest.getSex());
+                change=1;
+            }
+            if(person.getPersonalDate().getAddress().getApartment()!=personRequest.getApartment())
+            {
+                address.setApartment(personRequest.getApartment());
+                change=1;
+            }
+            if(person.getPersonalDate().getAddress().getBlock()!=personRequest.getBlock())
+            {
+                address.setBlock(personRequest.getBlock());
+                change=1;
+            }
+            if(person.getPersonalDate().getAddress().getCity()!=personRequest.getCity())
+            {
+                address.setCity(personRequest.getCity());
+                change=1;
+            }
+            if(person.getPersonalDate().getAddress().getCountry()!=personRequest.getCountry())
+            {
+                address.setCountry(personRequest.getCountry());
+                change=1;
+            }
+            if(person.getPersonalDate().getAddress().getFloor()!=Integer.parseInt(personRequest.getFloor()))
+            {
+                address.setFloor(Integer.valueOf(personRequest.getFloor()));
+                change=1;
+            }
+            if(person.getPersonalDate().getAddress().getCounty()!=personRequest.getCounty())
+            {
+                address.setCounty(personRequest.getCounty());
+                change=1;
+            }
+            if(person.getPersonalDate().getAddress().getNumberStreet()!=personRequest.getNumber())
+            {
+                address.setNumberStreet(personRequest.getNumber());
+                change=1;
+            }
+            if(person.getPersonalDate().getAddress().getStreet()!=personRequest.getStreet())
+            {
+                address.setStreet(personRequest.getStreet());
+                change=1;
+            }
+            if(change==1)
+            {
+                Optional<Address> newAddress=dbAdress.update(address);
+                personalData.setAddress(newAddress.get());
+                Optional<PersonalData> newPersonalData=updatePersonalData(personalData);
+                person.setPersonalDate(newPersonalData.get());
+            }
+
+        } catch (ServicesExceptions e) {
+            throw new RuntimeException(e);
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        notificationService.notifyAdmins(String.valueOf(NotificationRest.USER_UPDATE));
+    }
+
     private LogInfo authenticate(String username, String password) {
         boolean found = false;
         LogInfo logInfo = new LogInfo();

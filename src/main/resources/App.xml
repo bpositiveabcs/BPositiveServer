@@ -140,12 +140,16 @@
 
     <bean id="personActor" class="bpos.server.service.Implementation.PersonActorService">
         <constructor-arg ref="personalDataRepository"/>
+
         <constructor-arg ref="personRepository"/>
         <constructor-arg ref="studentRepository"/>
         <constructor-arg ref="logInfoRepository"/>
+        <constructor-arg ref="addressRepository"/>
+
         <constructor-arg ref="institutionRepository"/>
         <constructor-arg ref="webSocketHandler"/>
         <constructor-arg ref="notificationService"/>
+
     </bean>
 
 </beans>

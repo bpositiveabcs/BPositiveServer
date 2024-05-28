@@ -92,19 +92,33 @@ public class DBLogInfoRepository implements LogInfoRepository {
     if(logInfoValidator!=null)
             logInfoValidator.validate(entity);
             Connection con=dbUtils.getConnection();
-            try (java.sql.PreparedStatement preparedStatement=con.prepareStatement("INSERT INTO LogInInfo(username,password,email,seed) VALUES (?,?,?,?)"))
+            try (java.sql.PreparedStatement preparedStatement=con.prepareStatement("INSERT INTO LogInInfo(username,password,email,seed) VALUES (?,?,?,?)",java.sql.Statement.RETURN_GENERATED_KEYS))
             {
                 preparedStatement.setString(1,entity.getUsername());
                 preparedStatement.setString(2,entity.getPassword());
                 preparedStatement.setString(3,entity.getEmail());
                 preparedStatement.setString(4,entity.getSeed());
-                preparedStatement.executeUpdate();
+
+                int affected=preparedStatement.executeUpdate();
+                if(affected==1)
+                {
+                    try(java.sql.ResultSet generatedKeys=preparedStatement.getGeneratedKeys())
+                    {
+                        if(generatedKeys.next())
+                        {
+                            int id=generatedKeys.getInt(1);
+                            entity.setId(id);
+                            return Optional.of(entity);
+                        }
+                    }
+                }
             }
             catch (java.sql.SQLException e)
             {
                 logger.error(e);
                 System.out.println("Error saving entity DB"+ e);
             }
+
             return Optional.empty();
     }
 

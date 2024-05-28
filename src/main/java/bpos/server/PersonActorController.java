@@ -1,6 +1,7 @@
 package bpos.server;
 
 import bpos.common.model.*;
+import bpos.other.PersonRequest;
 import bpos.server.service.IObserver;
 import bpos.server.service.Implementation.PersonActorService;
 import bpos.server.service.Interface.IAddressService;
@@ -50,7 +51,14 @@ public class PersonActorController {
 //        this.userDetailService = userDetailService;
 //        this.jwtTokenUtil = jwtTokenUtil;
     }
-
+    @PostMapping("/sign-up")
+    public void signUp(@RequestBody PersonRequest personRequest) {
+        service.signUp(personRequest);
+    }
+    @PutMapping("/profile-change")
+    public void profileChange(@RequestBody PersonRequest personRequest) {
+        service.profileChange(personRequest);
+    }
     @PostMapping("/personRequest")
     public Person personRequest(@RequestParam (value="firstName") String firstName,@RequestParam(value="lastName") String lastName,@RequestParam(value="cnp") String cnp,@RequestParam (value="birthday") LocalDate birthday,@RequestParam(value="sex") String sex,@RequestParam(value="country") String country ,@RequestParam(value ="city") String city,@RequestParam(value="county") String county,@RequestParam(value="street") String street, @RequestParam(value="number") String number,@RequestParam(value="bloc") String bloc,@RequestParam(value="apartament") String apartment,@RequestParam(value="floor") Integer floor,@RequestParam(value="telephone") String telephone ,@RequestParam(value="email") String email,@RequestParam(value="username") String username,@RequestParam(value="password") String password,@RequestParam(value="confirm-password") String confirmPassword) {
         Person person = new Person();
