@@ -13,11 +13,28 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.*;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.awt.event.InputEvent;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
 @RestController
 
 public class EventController {
@@ -100,12 +117,99 @@ public class EventController {
             assert personOptional != null;
             PersonCouponResponse personCouponResponse=new PersonCouponResponse(coupons,personOptional.getPersonLogInfo().getEmail());
 
+            ///////////////////////////////////////
+            for (Coupon c: coupons) {
+                pregatireTrimitereCupoane(personCouponResponse.getEmail(), c.getName());
+            }
+            ////////////////////////////////////////
+
             return new ResponseEntity<>(personCouponResponse, HttpStatus.CREATED);
         } catch (ServicesExceptions e) {
             // Handle exception
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    //////////////////////////
+
+    public static void pregatireTrimitereCupoane(String email, String filepath_cupon)
+    {
+        String filePath = "C:\\Users\\hp\\Documents\\UiPath\\EmailCupoane\\data.xlsx"; // Calea catre workbook-ul existent
+
+        try (FileInputStream fileIn = new FileInputStream(filePath);
+             Workbook workbook = new XSSFWorkbook(fileIn)) {
+
+            Sheet sheet = workbook.getSheetAt(0); // Datele trebuie scrise in prima foaie
+
+            // Creeaza o linie pentru fiecare parametru si scrie parametrii in coloana a doua
+            String[] parametri = {email, filepath_cupon};
+            for (int i = 0; i < parametri.length; i++) {
+                Row row = sheet.getRow(i);
+                if (row != null) {
+                    Cell cell = row.getCell(1); // A doua coloana (index 1)
+                    if (cell == null) {
+                        cell = row.createCell(1);
+                    }
+                    cell.setCellValue(parametri[i]);
+                } else {
+                    System.out.println("Randul " + (i + 1) + " nu exista in foaie.");
+                }
+            }
+
+            // Scrie workbook-ul actualizat intr-un fisier
+            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+                workbook.write(fileOut);
+                apelTrimitereCupoane();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void apelTrimitereCupoane() {
+        String uipathProjectPath = "C:\\Users\\hp\\Documents\\UiPath\\EmailCupoane\\Main.xaml";
+
+        try {
+            // Step 1: Open UiPath Studio with the specified project
+            // Update the path to the UiPath Studio executable or shortcut
+            Runtime.getRuntime().exec(new String[]{"C:\\Users\\hp\\AppData\\Local\\Programs\\UiPath\\Studio\\UiPath.Studio.exe", uipathProjectPath});
+
+            // Allow some time for UiPath Studio to open and load the project
+            Thread.sleep(15000);
+
+            // Step 2: Create a Robot instance
+            Robot robot = new Robot();
+
+            // Step 3: Simulate pressing Ctrl+F6 to run the project
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_F6);
+            robot.keyRelease(KeyEvent.VK_F6);
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+
+            // Allow some time for the process to start
+            Thread.sleep(5000);
+
+            // Step 4: Wait for a certain time (adjust as needed)
+            Thread.sleep(20000); // Wait for 20 seconds
+
+            // Step 5: close the UiPath Studio window
+            int x = 1920; // Replace with the x-coordinate of the box
+            int y = 0; // Replace with the y-coordinate of the box
+            robot.mouseMove(x, y);
+
+            // Simulate a mouse click
+            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); // Left mouse button down
+            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK); // Left mouse button up
+
+        } catch (IOException | AWTException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    ////////////////////////////
+
     @PostMapping("/retrieved-coupons")
     public ResponseEntity<?> saveRetrieved(@RequestBody RetrievedCoupons entity) {
         try {
