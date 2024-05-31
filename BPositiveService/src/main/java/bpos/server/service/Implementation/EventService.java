@@ -3,15 +3,21 @@ package bpos.server.service.Implementation;
 import bpos.common.model.Coupon;
 import bpos.common.model.Event;
 import bpos.common.model.RetrievedCoupons;
+import bpos.other.NotificationRest;
 import bpos.server.repository.Interfaces.CouponRepository;
 import bpos.server.repository.Interfaces.EventRepository;
 import bpos.server.repository.Interfaces.RetrievedCouponsRepository;
+import bpos.server.service.IObserver;
 import bpos.server.service.Interface.IEventService;
 import bpos.server.service.ServicesExceptions;
 import bpos.server.service.WebSockets.NotificationService;
+import bpos.server.service.WebSockets.WebSocketHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class EventService implements IEventService {
     private final NotificationService notificationService;
@@ -19,12 +25,23 @@ public class EventService implements IEventService {
     private EventRepository eventRepository;
     private CouponRepository couponRepository;
     private RetrievedCouponsRepository retrievedCouponsRepository;
+    private  WebSocketHandler webSocketHandler;
 
-    public EventService(NotificationService notificationService, EventRepository eventRepository, CouponRepository couponRepository, RetrievedCouponsRepository retrievedCouponsRepository) {
-        this.notificationService = notificationService;
+    //    private  UserDetailsService userDetailsService;
+//    private  JwtTokenUtil jwtTokenUtil;
+    private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentHashMap<>();
+    private final Map<Integer, IObserver> loggedCenter = new ConcurrentHashMap<>();
+
+
+
+    private ObjectMapper objectMapper;
+
+    public EventService( EventRepository eventRepository, CouponRepository couponRepository, RetrievedCouponsRepository retrievedCouponsRepository, WebSocketHandler webSocketHandler, NotificationService notificationService, ObjectMapper objectMapper) {
         this.eventRepository = eventRepository;
         this.couponRepository = couponRepository;
         this.retrievedCouponsRepository = retrievedCouponsRepository;
+        this.webSocketHandler = webSocketHandler;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -64,7 +81,9 @@ public class EventService implements IEventService {
 
     @Override
     public Optional<Event> deleteEvent(Event entity) throws ServicesExceptions {
-        return eventRepository.delete(entity);
+        Optional<Event> event= eventRepository.delete(entity);
+        notificationService.notifyAdmins(String.valueOf(NotificationRest.DENY_EVENT));
+        return event;
     }
 
     @Override

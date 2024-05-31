@@ -2,6 +2,7 @@ package bpos.server.repository.Implementations;
 
 
 import bpos.common.model.Event;
+import bpos.common.model.Person;
 import bpos.common.model.Validators.Implementation.EventValidator;
 import bpos.server.repository.Interfaces.EventRepository;
 import bpos.server.repository.Utils.DBGetters;
@@ -104,6 +105,11 @@ public class DBEventRepository implements EventRepository {
         attributes.add("data_Incepere_Eveniment");
         values.add(data.toString());
         return findAllUtilitary(attributes,values);
+    }
+
+    @Override
+    public Iterable<Person> findParticipants(Integer eventId) {
+        return null;
     }
 
     @Override
