@@ -304,6 +304,8 @@ public class EventController {
     @PutMapping("/events")
     public ResponseEntity<Event> updateEvent(@RequestBody Event event) {
         try {
+            System.out.println(event.getEventDescription());
+            System.out.println(event.getEventRequirements());
             Optional<Event> updatedEvent = service.updateEvent(event);
             if(updatedEvent.isPresent()) {
                 return new ResponseEntity<>(updatedEvent.get(), HttpStatus.OK);
