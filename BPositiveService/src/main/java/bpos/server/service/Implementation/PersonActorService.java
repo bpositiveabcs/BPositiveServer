@@ -140,10 +140,9 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
     public Optional<Person> deletePerson(Person entity) throws ServicesExceptions {
         return dbPerson.delete(entity);
     }
-
     @Override
-    public Optional<Person> updatePerson(Person entity) throws ServicesExceptions {
-        return dbPerson.update(entity);
+    public Optional<Person> updatePerson(Person object) throws ServicesExceptions {
+        return dbPerson.update(object);
     }
 
     @Override
@@ -316,6 +315,102 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
 //    }
 
 
+
+
+    private Person handlePersonRequest(PersonRequest personRequest,String type) throws ServicesExceptions {
+        //daca e pentru register -> save , altfel ->update existing
+        Person person = new Person();
+        if(type.equals("UPDATE"))
+        {
+            person=dbPerson.findByUsername(personRequest.getUsername());
+            if (person == null) {
+                throw new ServicesExceptions("Person does not exist");
+            }
+        }
+        LogInfo logInfo = new LogInfo();
+        Address address = new Address();
+        PersonalData personalData = new PersonalData();
+        if(type.equals("UPDATE"))
+        {
+            personalData=person.getPersonalDate();
+            logInfo=person.getPersonLogInfo();
+            address=personalData.getAddress();
+        }
+        try
+        {
+            logInfo.setUsername(personRequest.getUsername());
+            logInfo.setPassword(personRequest.getPassword());
+            logInfo.setEmail(personRequest.getEmail());
+            logInfo.setSeed(personRequest.getUsername());
+            if(type.equals("SAVE"))
+            {
+                Optional<LogInfo> newLogInfo=dbLogInfo.save(logInfo);
+                person.setPersonLogInfo(newLogInfo.get());
+            }
+            else
+            {
+                Optional<LogInfo> newLogInfo=dbLogInfo.update(logInfo);
+                person.setPersonLogInfo(newLogInfo.get());
+            }
+            personalData.setFirstName(personRequest.getFirstName());
+            personalData.setLastName(personRequest.getLastName());
+            personalData.setCnp(personRequest.getCnp());
+            personalData.setBirthDate(LocalDate.parse(personRequest.getBirthday()));
+            personalData.setPhoneNumber(personRequest.getTelephone());
+            personalData.setSex(personRequest.getSex());
+            address.setApartment(personRequest.getApartment());
+            address.setBlock(personRequest.getBlock());
+            address.setCity(personRequest.getCity());
+            address.setCountry(personRequest.getCountry());
+            address.setFloor(Integer.valueOf(personRequest.getFloor()));
+            address.setCounty(personRequest.getCounty());
+            address.setNumberStreet(personRequest.getNumber());
+            address.setStreet(personRequest.getStreet());
+            if(type.equals("SAVE"))
+            {
+                Optional<Address> newAddress=dbAdress.save(address);
+                personalData.setAddress(newAddress.get());
+            }
+            else
+            {
+                Optional<Address> newAddress=dbAdress.update(address);
+                personalData.setAddress(newAddress.get());
+            }
+            personalData.setId(logInfo.getId());
+            if(type.equals("SAVE"))
+            {
+                Optional<PersonalData> newPersonalData=savePersonalData(personalData);
+                person.setPersonalDate(newPersonalData.get());
+            }
+            else
+            {
+                Optional<PersonalData> newPersonalData=updatePersonalData(personalData);
+                person.setPersonalDate(newPersonalData.get());
+            }
+
+
+            if(type.equals("SAVE"))
+            {
+                person.setEvents(new ArrayList<>());
+                person.setDonations(new ArrayList<>());
+                person.setPoints(0);
+                person.setMedicalInfo(new MedicalInfo());
+                person.setInstitution(null);
+                person.setId(logInfo.getId());
+                Optional<Person> newPerson=savePerson(person);
+            }
+            else
+            {
+                Optional<Person> newPerson=updatePerson(person);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+
+        }
+        return person;
+
+    }
+
     @Override
     public Optional<Institution> findOneInstitution(Integer integer) throws ServicesExceptions {
         return dbInstitution.findOne(integer);
@@ -358,153 +453,29 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
 
     @Override
     public void signUp(PersonRequest personRequest) {
-        Person person = new Person();
-        PersonalData personalData = new PersonalData();
-        LogInfo logInfo = new LogInfo();
-        Address address = new Address();
-        logInfo.setUsername(personRequest.getUsername());
-        logInfo.setPassword(personRequest.getPassword());
-        logInfo.setEmail(personRequest.getEmail());
-        logInfo.setSeed(personRequest.getUsername());
         try {
-            Optional<LogInfo> newLogInfo=dbLogInfo.save(logInfo);
-            person.setPersonLogInfo(newLogInfo.get());
-            personalData.setFirstName(personRequest.getFirstName());
-            personalData.setLastName(personRequest.getLastName());
-            personalData.setCnp(personRequest.getCnp());
-            personalData.setBirthDate(LocalDate.parse(personRequest.getBirthday()));
-            personalData.setPhoneNumber(personRequest.getTelephone());
-            personalData.setSex(personRequest.getSex());
-            address.setApartment(personRequest.getApartment());
-            address.setBlock(personRequest.getBlock());
-            address.setCity(personRequest.getCity());
-            address.setCountry(personRequest.getCountry());
-            address.setFloor(Integer.valueOf(personRequest.getFloor()));
-            address.setCounty(personRequest.getCounty());
-            address.setNumberStreet(personRequest.getNumber());
-            address.setStreet(personRequest.getStreet());
-            Optional<Address> newAddress=dbAdress.save(address);
-            personalData.setAddress(newAddress.get());
-            personalData.setId(logInfo.getId());
-            Optional<PersonalData> newPersonalData=savePersonalData(personalData);
-            person.setPersonalDate(newPersonalData.get());
-            person.setEvents(new ArrayList<>());
-            person.setDonations(new ArrayList<>());
-            person.setPoints(0);
-            person.setMedicalInfo(new MedicalInfo());
-            person.setInstitution(null);
-            person.setId(logInfo.getId());
-            Optional<Person> newPerson=savePerson(person);
-        } catch (ServicesExceptions e) {
-            throw new RuntimeException(e);
-        }
-        catch (Exception e) {
+            handlePersonRequest(personRequest,"SAVE");
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         notificationService.notifyAdmins(String.valueOf(NotificationRest.REGISTER));
 
     }
     @Override
-    public void profileChange(PersonRequest personRequest) {
+    public Person profileChange(PersonRequest personRequest) throws ServicesExceptions {
         Person person= dbPerson.findByUsername(personRequest.getUsername());
-        PersonalData personalData = new PersonalData();
-        LogInfo logInfo = new LogInfo();
-        Address address = new Address();
-        logInfo.setUsername(personRequest.getUsername());
-        logInfo.setPassword(personRequest.getPassword());
-        logInfo.setEmail(personRequest.getEmail());
+        if (person == null) {
+            throw new ServicesExceptions("Person does not exist");
+        }
         try {
-            if(person.getPersonLogInfo()!=logInfo)
-            {
-                Optional<LogInfo> newLogInfo=dbLogInfo.update(logInfo);
-                person.setPersonLogInfo(newLogInfo.get());
-            }
-            int change=0;
-            if(person.getPersonalDate().getFirstName()!=personRequest.getFirstName())
-            {
-                personalData.setFirstName(personRequest.getFirstName());
-                change=1;
-            }
-            if(person.getPersonalDate().getLastName()!=personRequest.getLastName())
-            {
-                personalData.setLastName(personRequest.getLastName());
-                change=1;
-            }
-            if(person.getPersonalDate().getCnp()!=personRequest.getCnp())
-            {
-                personalData.setCnp(personRequest.getCnp());
-                change=1;
-            }
-            if(person.getPersonalDate().getBirthDate()!=LocalDate.parse(personRequest.getBirthday()))
-            {
-                personalData.setBirthDate(LocalDate.parse(personRequest.getBirthday()));
-                change=1;
-            }
-            if(person.getPersonalDate().getPhoneNumber()!=personRequest.getTelephone())
-            {
-                personalData.setPhoneNumber(personRequest.getTelephone());
-                change=1;
-            }
-            if(person.getPersonalDate().getSex()!=personRequest.getSex())
-            {
-                personalData.setSex(personRequest.getSex());
-                change=1;
-            }
-            if(person.getPersonalDate().getAddress().getApartment()!=personRequest.getApartment())
-            {
-                address.setApartment(personRequest.getApartment());
-                change=1;
-            }
-            if(person.getPersonalDate().getAddress().getBlock()!=personRequest.getBlock())
-            {
-                address.setBlock(personRequest.getBlock());
-                change=1;
-            }
-            if(person.getPersonalDate().getAddress().getCity()!=personRequest.getCity())
-            {
-                address.setCity(personRequest.getCity());
-                change=1;
-            }
-            if(person.getPersonalDate().getAddress().getCountry()!=personRequest.getCountry())
-            {
-                address.setCountry(personRequest.getCountry());
-                change=1;
-            }
-            if(person.getPersonalDate().getAddress().getFloor()!=Integer.parseInt(personRequest.getFloor()))
-            {
-                address.setFloor(Integer.valueOf(personRequest.getFloor()));
-                change=1;
-            }
-            if(person.getPersonalDate().getAddress().getCounty()!=personRequest.getCounty())
-            {
-                address.setCounty(personRequest.getCounty());
-                change=1;
-            }
-            if(person.getPersonalDate().getAddress().getNumberStreet()!=personRequest.getNumber())
-            {
-                address.setNumberStreet(personRequest.getNumber());
-                change=1;
-            }
-            if(person.getPersonalDate().getAddress().getStreet()!=personRequest.getStreet())
-            {
-                address.setStreet(personRequest.getStreet());
-                change=1;
-            }
-            if(change==1)
-            {
-                Optional<Address> newAddress=dbAdress.update(address);
-                personalData.setAddress(newAddress.get());
-                Optional<PersonalData> newPersonalData=updatePersonalData(personalData);
-                person.setPersonalDate(newPersonalData.get());
-            }
+            person= Optional.of(handlePersonRequest(personRequest,"UPDATE")).get();
+            notificationService.notifyAdmins(String.valueOf(NotificationRest.USER_UPDATE));
 
-        } catch (ServicesExceptions e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        notificationService.notifyAdmins(String.valueOf(NotificationRest.USER_UPDATE));
+        return person;
+
     }
 
     private LogInfo authenticate(String username, String password) {

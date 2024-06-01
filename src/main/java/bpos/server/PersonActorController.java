@@ -57,7 +57,14 @@ public class PersonActorController {
     }
     @PutMapping("/profile-change")
     public void profileChange(@RequestBody PersonRequest personRequest) {
-        service.profileChange(personRequest);
+        try
+        {
+            service.profileChange(personRequest);
+
+        } catch (ServicesExceptions e) {
+            throw new RuntimeException(e);
+
+        }
     }
     @PostMapping("/personRequest")
     public Person personRequest(@RequestParam (value="firstName") String firstName,@RequestParam(value="lastName") String lastName,@RequestParam(value="cnp") String cnp,@RequestParam (value="birthday") LocalDate birthday,@RequestParam(value="sex") String sex,@RequestParam(value="country") String country ,@RequestParam(value ="city") String city,@RequestParam(value="county") String county,@RequestParam(value="street") String street, @RequestParam(value="number") String number,@RequestParam(value="bloc") String bloc,@RequestParam(value="apartament") String apartment,@RequestParam(value="floor") Integer floor,@RequestParam(value="telephone") String telephone ,@RequestParam(value="email") String email,@RequestParam(value="username") String username,@RequestParam(value="password") String password,@RequestParam(value="confirm-password") String confirmPassword) {
@@ -400,15 +407,18 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
 
 
     @PutMapping("/persons")
-    public ResponseEntity<?> updatePerson(@RequestBody Person entity) {
+    public ResponseEntity<?> updatePerson(@RequestBody PersonRequest entity) {
         try {
-            Optional<Person> updatedEntity = service.updatePerson(entity);
+            Optional<Person> updatedEntity = Optional.ofNullable(service.profileChange(entity));
             return new ResponseEntity<>(updatedEntity.orElse(null), HttpStatus.OK);
         } catch (ServicesExceptions e) {
-            // Handle exception
+
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
 
 
     @DeleteMapping("/persons")

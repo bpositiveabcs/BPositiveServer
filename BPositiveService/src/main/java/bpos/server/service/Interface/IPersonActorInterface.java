@@ -2,7 +2,6 @@ package bpos.server.service.Interface;
 
 import bpos.common.model.*;
 import bpos.other.PersonRequest;
-import bpos.server.service.IObserver;
 import bpos.server.service.ServicesExceptions;
 import bpos.server.service.exceptions.InvalidCredentialsException;
 import bpos.server.service.exceptions.UserAlreadyLoggedInException;
@@ -59,5 +58,5 @@ public interface IPersonActorInterface {
 
     void signUp(PersonRequest personRequest);
 
-    void profileChange(PersonRequest personRequest);
+    Person profileChange(PersonRequest personRequest) throws ServicesExceptions;
 }
