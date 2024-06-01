@@ -11,7 +11,6 @@ import bpos.server.service.IObserver;
 import bpos.server.service.Interface.IEventService;
 import bpos.server.service.ServicesExceptions;
 import bpos.server.service.WebSockets.NotificationService;
-import bpos.server.service.WebSockets.WebSocketHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDate;
@@ -25,7 +24,7 @@ public class EventService implements IEventService {
     private EventRepository eventRepository;
     private CouponRepository couponRepository;
     private RetrievedCouponsRepository retrievedCouponsRepository;
-    private  WebSocketHandler webSocketHandler;
+
 
     //    private  UserDetailsService userDetailsService;
 //    private  JwtTokenUtil jwtTokenUtil;
@@ -36,11 +35,10 @@ public class EventService implements IEventService {
 
     private ObjectMapper objectMapper;
 
-    public EventService( EventRepository eventRepository, CouponRepository couponRepository, RetrievedCouponsRepository retrievedCouponsRepository, WebSocketHandler webSocketHandler, NotificationService notificationService, ObjectMapper objectMapper) {
+    public EventService( EventRepository eventRepository, CouponRepository couponRepository, RetrievedCouponsRepository retrievedCouponsRepository, NotificationService notificationService, ObjectMapper objectMapper) {
         this.eventRepository = eventRepository;
         this.couponRepository = couponRepository;
         this.retrievedCouponsRepository = retrievedCouponsRepository;
-        this.webSocketHandler = webSocketHandler;
         this.notificationService = notificationService;
     }
 

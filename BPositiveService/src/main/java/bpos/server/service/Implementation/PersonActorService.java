@@ -10,7 +10,7 @@ import bpos.server.service.ServicesExceptions;
 //import bpos.server.service.WebSockets.JwtResponse;
 //import bpos.server.service.WebSockets.JwtTokenUtil;
 import bpos.server.service.WebSockets.NotificationService;
-import bpos.server.service.WebSockets.WebSocketHandler;
+//import bpos.server.service.WebSockets.WebSocketHandler;
 import bpos.server.service.exceptions.InvalidCredentialsException;
 import bpos.server.service.exceptions.UserAlreadyLoggedInException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,7 +32,6 @@ public class PersonActorService implements IPersonActorInterface {
     private final LogInfoRepository dbLogInfo;
     private final AddressRepository dbAdress;
     private final InstitutionRepository dbInstitution;
-    private final WebSocketHandler webSocketHandler;
 
 //    private  UserDetailsService userDetailsService;
 //    private  JwtTokenUtil jwtTokenUtil;
@@ -45,7 +44,7 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
 
 
     public PersonActorService(PersonalDataRepository personalDataRepository, PersonRepository personRepository, StudentRepository studentRepository, LogInfoRepository logInfoRepository, AddressRepository dbAdress,
-                              InstitutionRepository institutionRepository, WebSocketHandler webSocketHandler,
+                              InstitutionRepository institutionRepository,
             /*ObjectMapper objectMapper, UserDetailsService userDetailsService*//*, JwtTokenUtil jwtTokenUtil*/NotificationService notificationService) {
         this.dbPersonalData = personalDataRepository;
         this.dbPerson=personRepository;
@@ -54,10 +53,8 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
         this.dbAdress = dbAdress;
         this.dbInstitution=institutionRepository;
         //vad daca trebuie sa initilaizesz si pt observer
-        this.webSocketHandler = webSocketHandler;
         this.notificationService = notificationService;
-        this.objectMapper = objectMapper;
-//        this.userDetailsService = userDetailsService;
+        //        this.userDetailsService = userDetailsService;
 //        this.jwtTokenUtil = jwtTokenUtil;
     }
 
@@ -74,7 +71,8 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
         // Trimiteți obiectul serializat prin WebSocket
         if (json != null) {
             try {
-                webSocketHandler.sendMessageToAll(json);
+                notificationService.notifyAdmins(String.valueOf(NotificationRest.LOGOUT));
+
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

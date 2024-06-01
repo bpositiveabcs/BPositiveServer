@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
@@ -21,8 +23,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         logger.info("Configuring message broker...");
-        config.enableSimpleBroker("/topic");
+        config.enableSimpleBroker("/topic")
+                .setHeartbeatValue(new long[]{10000, 10000})
+                .setTaskScheduler(heartBeatScheduler());
         config.setApplicationDestinationPrefixes("/app");
+        logger.info("Message broker configured.");
     }
 
     @Override
@@ -37,5 +42,14 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Bean
     public SimpMessagingTemplate messagingTemplate(@Qualifier("brokerChannel") MessageChannel messageChannel) {
         return new SimpMessagingTemplate(messageChannel);
+    }
+
+    @Bean
+    public TaskScheduler heartBeatScheduler() {
+        ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
+        taskScheduler.setPoolSize(1);
+        taskScheduler.setThreadNamePrefix("wss-heartbeat-thread-");
+        taskScheduler.initialize();
+        return taskScheduler;
     }
 }

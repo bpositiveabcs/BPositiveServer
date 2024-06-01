@@ -23,7 +23,6 @@
     <util:properties id="jdbcProps" location="classpath:bd.config"/>
 
     <!-- Define the WebSocketHandler bean -->
-    <bean id="webSocketHandler" class="bpos.server.service.WebSockets.WebSocketHandler"/>
 
     <!-- Validators -->
     <bean id="addressValidator" class="bpos.common.model.Validators.Implementation.AddressValidator"/>
@@ -147,7 +146,6 @@
         <constructor-arg ref="addressRepository"/>
 
         <constructor-arg ref="institutionRepository"/>
-        <constructor-arg ref="webSocketHandler"/>
         <constructor-arg ref="notificationService"/>
 
     </bean>

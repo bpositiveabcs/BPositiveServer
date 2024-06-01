@@ -45,19 +45,20 @@ public class EventController {
         this.servicePerson= servicePerson;
         this.notifyService=notifyService;
     }
-    @PostMapping("/events/join-event")
-    public ResponseEntity<Person> joinEvent(@RequestParam(value="username")String username , @RequestBody Event event) {
+    @PostMapping("events/join-event")
+    public ResponseEntity<Person> joinEvent(@RequestParam(value="username") String username, @RequestBody Event event) {
         try {
             Person findPerson = servicePerson.findByUsernamePerson(username);
-            Optional<Person>updatePerson = Optional.empty();
-            if(findPerson!=null) {
-                List<Event>eventList=findPerson.getEvents();
+            if (findPerson != null) {
+                // Correctly get the event list and update it
+                List<Event> eventList = findPerson.getEvents();
                 eventList.add(event);
                 findPerson.setEvents(eventList);
-                updatePerson = servicePerson.updatePerson(findPerson);
-                notifyService.notifyClient(NotificationRest.NEW_EVENT+":"+"You have joined the event "+event.getEventName());
+                Optional<Person> updatePerson = servicePerson.updatePerson(findPerson);
+                notifyService.notifyClient(NotificationRest.NEW_EVENT + ": " + "You have joined the event " + event.getEventName());
+                return new ResponseEntity<>(updatePerson.get(), HttpStatus.CREATED);
             }
-            return new ResponseEntity<>(updatePerson.get(), HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (ServicesExceptions e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

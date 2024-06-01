@@ -1,4 +1,4 @@
-package bpos.server.service.WebSockets;//package bpos.server.service.WebSockets;
+package bpos.server.service.WebSockets.jwt;//package bpos.server.service.WebSockets;
 //
 //import bpos.common.model.Person;
 //import bpos.server.repository.Interfaces.PersonRepository;

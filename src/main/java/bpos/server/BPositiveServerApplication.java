@@ -14,8 +14,7 @@ import org.springframework.context.annotation.ImportResource;
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 @ComponentScan(basePackages = {
         "bpos.server",
-        "bpos.server.service",
-        "bpos.server.controller",
+        "bpos.server.service"
 })
 public class BPositiveServerApplication {
 

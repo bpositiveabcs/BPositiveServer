@@ -1,4 +1,4 @@
-package bpos.server.service.WebSockets;//package bpos.server.service.WebSockets;
+package bpos.server.service.WebSockets.jwt;//package bpos.server.service.WebSockets;
 //
 //import java.io.Serializable;
 //

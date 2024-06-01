@@ -24,11 +24,10 @@ dependencies {
 
     // Spring Boot starter for creating web applications
     implementation 'org.springframework.boot:spring-boot-starter-web'
-
+    implementation "org.springframework.boot:spring-boot-starter-security"
     implementation project(':BPositiveCommon')
     implementation project(':BPositiveRepository')
     implementation project(':BPositiveService')
-    implementation project(':BPositiveController')
     implementation project(path: ':BPositiveCommon:BPositiveModel')
     implementation project(path: ':BPositiveCommon:BPositiveOther')
 
