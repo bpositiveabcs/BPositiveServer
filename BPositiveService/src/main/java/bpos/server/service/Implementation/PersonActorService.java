@@ -294,25 +294,7 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
 //        });
 //    }
 
-//    @Override
-//    public void logoutPerson(Person person, IObserver observer) throws ServicesExceptions {
-//        loggedInUsers.remove(person.getPersonLogInfo().getUsername());
-//        String json = null;
-//        try {
-//            json = objectMapper.writeValueAsString(person);
-//        } catch (JsonProcessingException e) {
-//            throw new ServicesExceptions("Error sending message to all clients");
-//        }
-//
-//        // Trimiteți obiectul serializat prin WebSocket
-//        if (json != null) {
-//            try {
-//                webSocketHandler.sendMessageToAll(json);
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
+
 
 
 
