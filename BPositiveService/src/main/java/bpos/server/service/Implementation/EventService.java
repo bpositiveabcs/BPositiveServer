@@ -76,19 +76,23 @@ public class EventService implements IEventService {
 
     @Override
     public Optional<Event> saveEvent(Event entity) throws ServicesExceptions {
-        return eventRepository.save(entity);
+        Optional<Event> event= eventRepository.save(entity);
+        notificationService.notifyCenter(String.valueOf(NotificationRest.NEW_EVENT));
+        return event;
     }
 
     @Override
     public Optional<Event> deleteEvent(Event entity) throws ServicesExceptions {
         Optional<Event> event= eventRepository.delete(entity);
-        notificationService.notifyAdmins(String.valueOf(NotificationRest.DENY_EVENT));
+        notificationService.notifyCenter(String.valueOf(NotificationRest.DENY_EVENT));
         return event;
     }
 
     @Override
     public Optional<Event> updateEvent(Event entity) throws ServicesExceptions {
-        return eventRepository.update(entity);
+        Optional<Event> updateEvent= eventRepository.update(entity);
+//        notificationService.notifyCenter(String.valueOf(NotificationRest.NEW_EVENT));
+        return updateEvent;
     }
 
     @Override

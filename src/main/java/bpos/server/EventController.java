@@ -436,6 +436,7 @@ public class EventController {
         try {
             Optional<Event> savedEvent = service.saveEvent(entity);
             if(savedEvent.isPresent()) {
+                notifyService.notifyCenter(NotificationRest.NEW_EVENT+":"+entity.getEventName()+" a fost adaugat");
                 return new ResponseEntity<>(savedEvent.get(), HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -450,6 +451,7 @@ public class EventController {
         try {
             Optional<Coupon> updatedCoupon = service.updateCoupon(entity);
             if (updatedCoupon.isPresent()) {
+
                 return ResponseEntity.ok("Coupon updated successfully");
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update coupon");
