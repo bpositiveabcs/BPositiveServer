@@ -84,46 +84,135 @@ public class DBStudentRepository implements StudentRepository {
 
     @Override
     public Optional<Student> save(Student entity) {
+
+        logger.traceEntry("saving student {}",entity);
+        studentValidator.validate(entity);
+        Connection con=dbUtils.getConnection();
+        String sql="INSERT INTO Student (id,departament,facultate,grupa,an) VALUES (?,?,?,?,?)";
+        try(java.sql.PreparedStatement preparedStatement=con.prepareStatement(sql))
+        {
+            preparedStatement.setInt(1,entity.getId());
+            preparedStatement.setString(1,entity.getDepartment());
+            preparedStatement.setString(2,entity.getFaculty());
+            preparedStatement.setString(3,entity.getGroup());
+            preparedStatement.setInt(4,entity.getYear());
+
+            preparedStatement.executeUpdate();
+        }
+        catch (java.sql.SQLException e)
+        {
+            logger.error(e);
+        }
         return Optional.empty();
     }
 
     @Override
     public Optional<Student> delete(Student entity) {
+        logger.traceEntry("deleting student {}",entity);
+        Connection con=dbUtils.getConnection();
+        String sql="DELETE FROM Student WHERE id=?";
+        try(java.sql.PreparedStatement preparedStatement=con.prepareStatement(sql))
+        {
+            preparedStatement.setInt(1,entity.getId());
+            preparedStatement.executeUpdate();
+        }
+        catch (java.sql.SQLException e)
+        {
+            logger.error(e);
+        }
         return Optional.empty();
+
     }
 
     @Override
     public Optional<Student> update(Student entity) {
+
+logger.traceEntry("updating student {}",entity);
+        studentValidator.validate(entity);
+        Connection con=dbUtils.getConnection();
+        String sql="UPDATE Student SET departament=?,facultate=?,grupa=?,an=? WHERE id=?";
+        try(java.sql.PreparedStatement preparedStatement=con.prepareStatement(sql))
+        {
+            preparedStatement.setString(1,entity.getDepartment());
+            preparedStatement.setString(2,entity.getFaculty());
+            preparedStatement.setString(3,entity.getGroup());
+            preparedStatement.setInt(4,entity.getYear());
+            preparedStatement.setInt(5,entity.getId());
+            preparedStatement.executeUpdate();
+        }
+        catch (java.sql.SQLException e)
+        {
+            logger.error(e);
+        }
         return Optional.empty();
     }
 
     @Override
     public Iterable<Student> findByFirstName(String firstName) {
-        return null;
+
+        List<String> attributes=new java.util.ArrayList<>();
+        List<Object> values=new java.util.ArrayList<>();
+        attributes.add("prenume_DatePersonale");
+        values.add(firstName);
+        return findAllUtilitary(attributes,values);
     }
 
     @Override
     public Iterable<Student> findByLastName(String lastName) {
-        return null;
+
+        List<String> attributes=new java.util.ArrayList<>();
+        List<Object> values=new java.util.ArrayList<>();
+        attributes.add("nume_DatePersonale");
+        values.add(lastName);
+        return findAllUtilitary(attributes,values);
     }
 
     @Override
     public Iterable<Student> findByCnp(String cnp) {
-        return null;
+
+        List<String> attributes=new java.util.ArrayList<>();
+        List<Object> values=new java.util.ArrayList<>();
+        attributes.add("cnp_DatePersonale");
+        values.add(cnp);
+        return findAllUtilitary(attributes,values);
     }
 
     @Override
     public Student findByEmail(String email) {
-        return null;
+        List<String> attributes=new java.util.ArrayList<>();
+        List<Object> values=new java.util.ArrayList<>();
+        attributes.add("email_LogInInfo");
+        values.add(email);
+        Iterable<Student> students=findAllUtilitary(attributes,values);
+        if(students.iterator().hasNext())
+        {
+            return students.iterator().next();
+        }
+        throw new RuntimeException("Student not found");
+
     }
 
     @Override
     public Iterable<Student> findByPhoneNumber(String phoneNumber) {
-        return null;
+
+            List<String> attributes=new java.util.ArrayList<>();
+            List<Object> values=new java.util.ArrayList<>();
+            attributes.add("telefon_DatePersonale");
+            values.add(phoneNumber);
+            return findAllUtilitary(attributes,values);
     }
 
     @Override
     public Student findByUsername(String username) {
-        return null;
+        List<String> attributes=new java.util.ArrayList<>();
+        List<Object> values=new java.util.ArrayList<>();
+        attributes.add("username_LogInInfo");
+        values.add(username);
+        Iterable<Student> students=findAllUtilitary(attributes,values);
+        if(students.iterator().hasNext())
+        {
+            return students.iterator().next();
+        }
+        throw new RuntimeException("Student not found");
     }
 }
