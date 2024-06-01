@@ -109,7 +109,47 @@ public class DBEventRepository implements EventRepository {
 
     @Override
     public Iterable<Person> findParticipants(Integer eventId) {
-        return null;
+        logger.traceEntry("finding participants for event with id={}",eventId);
+        Connection con=dbUtils.getConnection();
+        List<Integer> participants=new java.util.ArrayList<>();
+        try(java.sql.PreparedStatement preparedStatement=con.prepareStatement("SELECT * FROM InscriereEveniment where id_eveniment=?"))
+        {
+            preparedStatement.setInt(1,eventId);
+            try(java.sql.ResultSet resultSet=preparedStatement.executeQuery())
+            {
+                while(resultSet.next())
+                {
+                    participants.add(resultSet.getInt("id_persoana"));
+
+                }
+            }
+        }
+        catch (java.sql.SQLException e)
+        {
+            logger.error(e);
+        }
+        //acum caut persoanele
+        List<Person> people=new java.util.ArrayList<>();
+        for(Integer id:participants)
+        {
+            try(java.sql.PreparedStatement preparedStatement=con.prepareStatement("SELECT * FROM View_Persoana where id_Persoana=?"))
+            {
+                preparedStatement.setInt(1,id);
+                try(java.sql.ResultSet resultSet=preparedStatement.executeQuery())
+                {
+                    if(resultSet.next())
+                    {
+                        Person person=DBGetters.getPerson(resultSet);
+                        people.add(person);
+                    }
+                }
+            }
+            catch (java.sql.SQLException e)
+            {
+                logger.error(e);
+            }
+        }
+        return people;
     }
 
     @Override
