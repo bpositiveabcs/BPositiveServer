@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 
+import java.io.IOException;
+
 @SpringBootApplication
 @ImportResource("classpath:App.xml")
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
@@ -21,6 +23,15 @@ public class BPositiveServerApplication {
     private static final Logger logger = LoggerFactory.getLogger(BPositiveServerApplication.class);
 
     public static void main(String[] args) {
+        try{
+        ProcessBuilder processBuilder = new ProcessBuilder("python", "python/chatbot.py");
+        processBuilder.directory(new java.io.File("C:\\Users\\bianc\\IdeaProjects\\Bpositive_nou\\BPositiveServer"));
+        processBuilder.start();
+        logger.info("Flask server started.");
+    } catch (IOException e) {
+        e.printStackTrace();
+        logger.error("Failed to start Flask server: " + e.getMessage());
+    }
         SpringApplication.run(BPositiveServerApplication.class, args);
         logger.info("BPositiveServerApplication started successfully.");
     }

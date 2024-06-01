@@ -62,6 +62,23 @@ dependencies {
     implementation 'org.apache.poi:poi:5.2.3'
     implementation 'org.apache.poi:poi-ooxml:5.2.3'
 }
+//task installPythonDependencies(type: Exec) {
+//    commandLine 'pip', 'install', 'flask'
+//}
+//
+//task runPythonScript(type: Exec, dependsOn: installPythonDependencies) {
+//    commandLine 'python', 'chatbot.py'
+//    workingDir = file("$projectDir/src/main/python")
+//}
+//
+//task runServer(dependsOn: ['build', 'runPythonScript']) {
+//    doLast {
+//        javaexec {
+//            main = 'bpos.server.BPositiveServerApplication' // înlocuiește cu clasa ta principală
+//            classpath = sourceSets.main.runtimeClasspath
+//        }
+//    }
+//}
 
 // Customizes the jar task provided by the Java plugin to package our application
 jar {
