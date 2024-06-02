@@ -43,6 +43,7 @@ public interface IPersonActorInterface {
     Iterable<Student> findByPhoneNumberStudent(String phoneNumber) throws ServicesExceptions;
     Student findByUsernameStudent(String username) throws ServicesExceptions;
 
+    Iterable<Person> findAllPersonsNonStudents() throws ServicesExceptions ;
 
     Optional<Person> login(String username, String password) throws UserAlreadyLoggedInException, InvalidCredentialsException, ServicesExceptions;
 

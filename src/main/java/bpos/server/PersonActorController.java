@@ -295,7 +295,10 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
     public Iterable<Student> findByCnpStudent(@RequestParam(value="cnp",required = true)String cnp) throws ServicesExceptions {
         return service.findByCnpStudent(cnp);
     }
-
+    @GetMapping("/only-persons")
+    public Iterable<Person> findAllPersonsNonStudents() throws ServicesExceptions {
+        return service.findAllPersonsNonStudents();
+    }
     @GetMapping("/students/email")
     public Student findByEmailStudent(@RequestParam(value="email",required = true)String email) throws ServicesExceptions {
         return service.findByEmailStudent(email);

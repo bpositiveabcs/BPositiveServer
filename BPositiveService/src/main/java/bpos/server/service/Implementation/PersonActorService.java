@@ -128,6 +128,29 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
     public Iterable<Person> findAllPersons() throws ServicesExceptions {
         return dbPerson.findAll();
     }
+    @Override
+    public Iterable<Person> findAllPersonsNonStudents() throws ServicesExceptions {
+        Iterable<Person> persons=dbPerson.findAll();
+        Iterable<Student> students=dbStudent.findAll();
+        ArrayList<Person> personsNonStudents=new ArrayList<>();
+        for(Person person:persons)
+        {
+            boolean isStudent=false;
+            for(Student student:students)
+            {
+                if(person.getId()==student.getId())
+                {
+                    isStudent=true;
+                    break;
+                }
+            }
+            if(!isStudent)
+            {
+                personsNonStudents.add(person);
+            }
+        }
+        return personsNonStudents;
+    }
 
     @Override
     public Optional<Person> savePerson(Person entity) throws ServicesExceptions {
