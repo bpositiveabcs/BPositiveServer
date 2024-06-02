@@ -1,6 +1,8 @@
 package bpos.server.service.Implementation;
 
 import bpos.common.model.*;
+import bpos.common.model.Enums.BloodType;
+import bpos.common.model.Enums.Rh;
 import bpos.other.NotificationRest;
 import bpos.other.PersonRequest;
 import bpos.server.repository.Interfaces.*;
@@ -31,6 +33,7 @@ public class PersonActorService implements IPersonActorInterface {
     private final StudentRepository dbStudent;
     private final LogInfoRepository dbLogInfo;
     private final AddressRepository dbAdress;
+    private final MedicalInfoRepository dbMedicalInfo;
     private final InstitutionRepository dbInstitution;
 
 //    private  UserDetailsService userDetailsService;
@@ -45,7 +48,7 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
 
     public PersonActorService(PersonalDataRepository personalDataRepository, PersonRepository personRepository, StudentRepository studentRepository, LogInfoRepository logInfoRepository, AddressRepository dbAdress,
                               InstitutionRepository institutionRepository,
-            /*ObjectMapper objectMapper, UserDetailsService userDetailsService*//*, JwtTokenUtil jwtTokenUtil*/NotificationService notificationService) {
+            /*ObjectMapper objectMapper, UserDetailsService userDetailsService*//*, JwtTokenUtil jwtTokenUtil*/NotificationService notificationService,MedicalInfoRepository medicalInfoRepository) {
         this.dbPersonalData = personalDataRepository;
         this.dbPerson=personRepository;
         this.dbStudent=studentRepository;
@@ -56,6 +59,7 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
         this.notificationService = notificationService;
         //        this.userDetailsService = userDetailsService;
 //        this.jwtTokenUtil = jwtTokenUtil;
+        this.dbMedicalInfo=medicalInfoRepository;
     }
 
     @Override
@@ -320,12 +324,10 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
 
 
 
-    private Person handlePersonRequest(PersonRequest personRequest,String type) throws ServicesExceptions {
-        //daca e pentru register -> save , altfel ->update existing
+    private Person handlePersonRequest(PersonRequest personRequest, String type) throws ServicesExceptions {
         Person person = new Person();
-        if(type.equals("UPDATE"))
-        {
-            person=dbPerson.findByUsername(personRequest.getUsername());
+        if (type.equals("UPDATE")) {
+            person = dbPerson.findByUsername(personRequest.getUsername());
             if (person == null) {
                 throw new ServicesExceptions("Person does not exist");
             }
@@ -333,26 +335,23 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
         LogInfo logInfo = new LogInfo();
         Address address = new Address();
         PersonalData personalData = new PersonalData();
-        if(type.equals("UPDATE"))
-        {
-            personalData=person.getPersonalDate();
-            logInfo=person.getPersonLogInfo();
-            address=personalData.getAddress();
+        MedicalInfo medicalInfo = new MedicalInfo();
+        if (type.equals("UPDATE")) {
+            personalData = person.getPersonalDate();
+            logInfo = person.getPersonLogInfo();
+            address = personalData.getAddress();
+            medicalInfo = person.getMedicalInfo();
         }
-        try
-        {
+        try {
             logInfo.setUsername(personRequest.getUsername());
             logInfo.setPassword(personRequest.getPassword());
             logInfo.setEmail(personRequest.getEmail());
             logInfo.setSeed(personRequest.getUsername());
-            if(type.equals("SAVE"))
-            {
-                Optional<LogInfo> newLogInfo=dbLogInfo.save(logInfo);
+            if (type.equals("SAVE")) {
+                Optional<LogInfo> newLogInfo = dbLogInfo.save(logInfo);
                 person.setPersonLogInfo(newLogInfo.get());
-            }
-            else
-            {
-                Optional<LogInfo> newLogInfo=dbLogInfo.update(logInfo);
+            } else {
+                Optional<LogInfo> newLogInfo = dbLogInfo.update(logInfo);
                 person.setPersonLogInfo(newLogInfo.get());
             }
             personalData.setFirstName(personRequest.getFirstName());
@@ -361,6 +360,7 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
             personalData.setBirthDate(LocalDate.parse(personRequest.getBirthday()));
             personalData.setPhoneNumber(personRequest.getTelephone());
             personalData.setSex(personRequest.getSex());
+
             address.setApartment(personRequest.getApartment());
             address.setBlock(personRequest.getBlock());
             address.setCity(personRequest.getCity());
@@ -369,50 +369,52 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
             address.setCounty(personRequest.getCounty());
             address.setNumberStreet(personRequest.getNumber());
             address.setStreet(personRequest.getStreet());
-            if(type.equals("SAVE"))
-            {
-                Optional<Address> newAddress=dbAdress.save(address);
+            if (type.equals("SAVE")) {
+                Optional<Address> newAddress = dbAdress.save(address);
                 personalData.setAddress(newAddress.get());
-            }
-            else
-            {
-                Optional<Address> newAddress=dbAdress.update(address);
+            } else {
+                Optional<Address> newAddress = dbAdress.update(address);
                 personalData.setAddress(newAddress.get());
             }
             personalData.setId(logInfo.getId());
-            if(type.equals("SAVE"))
-            {
-                Optional<PersonalData> newPersonalData=savePersonalData(personalData);
+            if (type.equals("SAVE")) {
+                Optional<PersonalData> newPersonalData = savePersonalData(personalData);
+                person.setPersonalDate(newPersonalData.get());
+            } else {
+                Optional<PersonalData> newPersonalData = updatePersonalData(personalData);
                 person.setPersonalDate(newPersonalData.get());
             }
-            else
+            if(!(personRequest.getBloodType()==null || personRequest.getBloodRh()==null))
             {
-                Optional<PersonalData> newPersonalData=updatePersonalData(personalData);
-                person.setPersonalDate(newPersonalData.get());
+                medicalInfo.setBloodType(BloodType.valueOf(personRequest.getBloodType().toUpperCase()));
+                medicalInfo.setRh(Rh.valueOf(personRequest.getBloodRh().toUpperCase()));
+                medicalInfo.setEligibility(personRequest.getEligibility()==1);
             }
 
 
-            if(type.equals("SAVE"))
-            {
+            if (type.equals("SAVE")) {
                 person.setEvents(new ArrayList<>());
                 person.setDonations(new ArrayList<>());
                 person.setPoints(0);
-                person.setMedicalInfo(new MedicalInfo());
+                person.setMedicalInfo(medicalInfo);
                 person.setInstitution(null);
                 person.setId(logInfo.getId());
-                Optional<Person> newPerson=savePerson(person);
-            }
-            else
-            {
-                Optional<Person> newPerson=updatePerson(person);
+                medicalInfo.setId(logInfo.getId());
+                Optional<MedicalInfo> newMedicalInfo = dbMedicalInfo.save(medicalInfo);
+                person.setMedicalInfo(newMedicalInfo.get());
+
+                Optional<Person> newPerson = savePerson(person);
+            } else {
+                person.setMedicalInfo(medicalInfo);
+                dbMedicalInfo.update(medicalInfo);
+                Optional<Person> newPerson = updatePerson(person);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-
         }
         return person;
-
     }
+
 
     @Override
     public Optional<Institution> findOneInstitution(Integer integer) throws ServicesExceptions {

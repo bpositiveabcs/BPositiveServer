@@ -99,6 +99,7 @@ public class EventController {
         try {
             ArrayList<Coupon> coupons=new ArrayList<>();
             Person personOptional=servicePerson.findByUsernamePerson(personCouponRequest.getUsername());
+            int points=0;
             for(Coupon coupon:personCouponRequest.getCouponList()){
                 Optional<Coupon>couponFind=service.findOneCoupon(coupon.getId());
                 if(couponFind.isPresent()){
@@ -112,10 +113,14 @@ public class EventController {
                     retrievedCoupons.setSeries(coupon.getSeries());
                     retrievedCoupons.setExpirationDate(coupon.getUnavailableToClaimFrom());
                     retrievedCoupons.setReceivedDate(LocalDateTime.now());
+                    points+=coupon.getNecessaryPoints();
                     Optional<RetrievedCoupons> savedEntity = service.saveRetrieved(retrievedCoupons);
                     coupons.add(coupon);
                 }
             }
+            //facem update la puncte la persoana
+            personOptional.setPoints(personOptional.getPoints()-points);
+            servicePerson.updatePerson(personOptional);
             assert personOptional != null;
             PersonCouponResponse personCouponResponse=new PersonCouponResponse(coupons,personOptional.getPersonLogInfo().getEmail());
 

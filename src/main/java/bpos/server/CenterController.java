@@ -7,7 +7,14 @@ import bpos.server.service.exceptions.UserNotLoggedInException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 @RestController
 @RequestMapping("/centers")
@@ -97,7 +104,30 @@ public class CenterController {
         }
     }
 
+    @PostMapping("/upload-medical-info/{username}")
+    public ResponseEntity<?> uploadMedicalInfo(@PathVariable String username, @RequestParam("file") MultipartFile file) {
+        try {
+            // Create the main directory if it doesn't exist
+            Path mainDir = Paths.get("user_medicalinfo");
+            if (!Files.exists(mainDir)) {
+                Files.createDirectory(mainDir);
+            }
 
+            // Create the user-specific directory if it doesn't exist
+            Path userDir = mainDir.resolve(username);
+            if (!Files.exists(userDir)) {
+                Files.createDirectory(userDir);
+            }
+
+            // Copy the file to the user-specific directory
+            Path targetLocation = userDir.resolve(file.getOriginalFilename());
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+            return ResponseEntity.ok().body("File uploaded successfully!");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file: " + e.getMessage());
+        }
+    }
     @PostMapping
     public ResponseEntity<?> saveCenter(@RequestBody Center entity) {
         try {

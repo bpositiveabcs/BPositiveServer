@@ -1,5 +1,6 @@
 package bpos.server;
-
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import bpos.common.model.*;
 import bpos.other.PersonRequest;
 import bpos.server.service.IObserver;
@@ -16,12 +17,16 @@ import bpos.server.service.exceptions.UserAlreadyLoggedInException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.authentication.AuthenticationManager;
 //import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -312,6 +317,23 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
     @GetMapping("/students/username")
     public Student findByUsernameStudent(@RequestParam(value="username",required = true)String username) throws ServicesExceptions {
         return service.findByUsernameStudent(username);
+    }
+    @GetMapping("/download/{username}/{filename}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String username, @PathVariable String filename) {
+        try {
+            Path filePath = Paths.get("/analize/" + username + "/").resolve(filename).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (resource.exists()) {
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                        .body(resource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam (value="username")String username,@RequestParam(value ="password") String password) {

@@ -143,6 +143,7 @@
         <constructor-arg ref="addressRepository"/>
         <constructor-arg ref="institutionRepository"/>
         <constructor-arg ref="notificationService"/>
+        <constructor-arg ref="medicalInfoRepository"/>
     </bean>
 
 </beans>
