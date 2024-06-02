@@ -80,6 +80,10 @@ dependencies {
 //    }
 //}
 
+application {
+    applicationDefaultJvmArgs = ["-Djava.awt.headless=false"]
+}
+
 // Customizes the jar task provided by the Java plugin to package our application
 jar {
     archivesBaseName = 'BPositiveServer'

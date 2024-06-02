@@ -25,16 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import java.awt.event.InputEvent;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 @RestController
 
 public class EventController {
@@ -125,9 +118,13 @@ public class EventController {
             PersonCouponResponse personCouponResponse=new PersonCouponResponse(coupons,personOptional.getPersonLogInfo().getEmail());
 
             ///////////////////////////////////////
-            for (Coupon c: coupons) {
-                pregatireTrimitereCupoane(personCouponResponse.getEmail(), c.getName());
-            }
+
+            ArrayList<String> nume_cupoane = new ArrayList<>();
+            for (Coupon c: coupons)
+                nume_cupoane.add(c.getName()+".png");
+
+            pregatireTrimitereCupoane(personCouponResponse.getEmail(), nume_cupoane);
+
             ////////////////////////////////////////
 
             return new ResponseEntity<>(personCouponResponse, HttpStatus.CREATED);
@@ -139,75 +136,56 @@ public class EventController {
 
     //////////////////////////
 
-    public static void pregatireTrimitereCupoane(String email, String filepath_cupon)
-    {
-        String filePath = "C:\\Users\\hp\\Documents\\UiPath\\EmailCupoane\\data.xlsx"; // Calea catre workbook-ul existent
+    public static void pregatireTrimitereCupoane(String email, ArrayList<String> lista_cupoane) {
+        String filePath = "C:\\Users\\hp\\Documents\\UiPath\\EmailCupoane\\data.xlsx";
 
-        try (FileInputStream fileIn = new FileInputStream(filePath);
-             Workbook workbook = new XSSFWorkbook(fileIn)) {
+        // Create a new workbook and sheet
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Sheet1");
 
-            Sheet sheet = workbook.getSheetAt(0); // Datele trebuie scrise in prima foaie
+        // Create the first row and set the email
+        Row firstRow = sheet.createRow(0);
+        Cell emailCell = firstRow.createCell(0);
+        emailCell.setCellValue(email);
 
-            // Creeaza o linie pentru fiecare parametru si scrie parametrii in coloana a doua
-            String[] parametri = {email, filepath_cupon};
-            for (int i = 0; i < parametri.length; i++) {
-                Row row = sheet.getRow(i);
-                if (row != null) {
-                    Cell cell = row.getCell(1); // A doua coloana (index 1)
-                    if (cell == null) {
-                        cell = row.createCell(1);
-                    }
-                    cell.setCellValue(parametri[i]);
-                } else {
-                    System.out.println("Randul " + (i + 1) + " nu exista in foaie.");
-                }
-            }
+        // Add coupon data to subsequent rows
+        for (int i = 0; i < lista_cupoane.size(); i++) {
+            Row row = sheet.createRow(i + 1);
+            Cell cell = row.createCell(0);
+            cell.setCellValue(lista_cupoane.get(i));
+        }
 
-            // Scrie workbook-ul actualizat intr-un fisier
-            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
-                workbook.write(fileOut);
-                apelTrimitereCupoane();
-            }
-
+        // Write the new workbook to the file
+        try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
+            workbook.write(fileOut);
+            apelTrimitereCupoane();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
     public static void apelTrimitereCupoane() {
+        System.setProperty("java.awt.headless", "false");
         String uipathProjectPath = "C:\\Users\\hp\\Documents\\UiPath\\EmailCupoane\\Main.xaml";
 
         try {
-            // Step 1: Open UiPath Studio with the specified project
-            // Update the path to the UiPath Studio executable or shortcut
             Runtime.getRuntime().exec(new String[]{"C:\\Users\\hp\\AppData\\Local\\Programs\\UiPath\\Studio\\UiPath.Studio.exe", uipathProjectPath});
-
-            // Allow some time for UiPath Studio to open and load the project
             Thread.sleep(15000);
 
-            // Step 2: Create a Robot instance
             Robot robot = new Robot();
 
-            // Step 3: Simulate pressing Ctrl+F6 to run the project
             robot.keyPress(KeyEvent.VK_CONTROL);
             robot.keyPress(KeyEvent.VK_F6);
             robot.keyRelease(KeyEvent.VK_F6);
             robot.keyRelease(KeyEvent.VK_CONTROL);
 
-            // Allow some time for the process to start
             Thread.sleep(5000);
+            Thread.sleep(20000);
 
-            // Step 4: Wait for a certain time (adjust as needed)
-            Thread.sleep(20000); // Wait for 20 seconds
-
-            // Step 5: close the UiPath Studio window
-            int x = 1920; // Replace with the x-coordinate of the box
-            int y = 0; // Replace with the y-coordinate of the box
+            int x = 1920;
+            int y = 0;
             robot.mouseMove(x, y);
-
-            // Simulate a mouse click
-            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK); // Left mouse button down
-            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK); // Left mouse button up
+            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 
         } catch (IOException | AWTException | InterruptedException e) {
             e.printStackTrace();
