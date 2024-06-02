@@ -23,25 +23,39 @@ repositories {
 
 dependencies {
 
+    // Project dependencies
     implementation project(':BPositiveCommon')
     implementation project(':BPositiveCommon:BPositiveModel')
     implementation project(':BPositiveCommon:BPositiveOther')
-
     implementation project(':BPositiveRepository')
+
+    // Spring Boot dependencies
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.security:spring-security-config'
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4.1'
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
-    implementation 'javax.xml.bind:jaxb-api:2.3.0'
-    implementation 'javax.servlet:javax.servlet-api:4.0.1'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    // Lombok for reducing boilerplate code
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 
+    // JSON handling
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.4.1'
+
+    // JWT for token-based authentication
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+
+    // JAXB API for Java XML binding
+    implementation 'javax.xml.bind:jaxb-api:2.3.0'
+
+    // Servlet API for handling web requests
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+
+    // Testing dependencies
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Apache POI for Excel file handling
+    implementation 'org.apache.poi:poi-ooxml:5.2.2'
 }
 
 tasks.named('test') {

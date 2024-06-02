@@ -95,6 +95,7 @@ public class EventController {
     }
     @PostMapping("/retrieved-coupons/list-coupons")
     public ResponseEntity<?> listCouponsSelected(@RequestBody PersonCouponRequest personCouponRequest){
+
         try {
             ArrayList<Coupon> coupons=new ArrayList<>();
             Person personOptional=servicePerson.findByUsernamePerson(personCouponRequest.getUsername());
