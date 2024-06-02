@@ -1,9 +1,8 @@
-package bpos.server;
+package bpos.server.service.WebSockets;
 
-import bpos.server.service.WebSockets.NotificationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -11,23 +10,28 @@ public class WebSocketController {
 
     private final NotificationService notificationService;
 
-    @Autowired
     public WebSocketController(NotificationService notificationService) {
         this.notificationService = notificationService;
     }
 
     @MessageMapping("/clients")
-    public void sendNotificationClients(@Payload String message) {
+    @SendTo("/topic/clients")
+    public void sendNotificationClients(String message) {
         notificationService.notifyClient(message);
     }
 
     @MessageMapping("/centers")
-    public void sendNotificationCenters(@Payload String message) {
+    @SendTo("/topic/centers")
+    public void sendNotificationCenters(String message) {
         notificationService.notifyCenter(message);
     }
 
     @MessageMapping("/admins")
-    public void sendNotificationAdmins(@Payload String message) {
+    @SendTo("/topic/admins")
+    public void sendNotificationAdmins(String message) {
         notificationService.notifyAdmins(message);
     }
+//    @Scheduled(fixedDelay = 1000)
+//    private void send() {
+//    notificationService.notifyClient("Hello");}
 }

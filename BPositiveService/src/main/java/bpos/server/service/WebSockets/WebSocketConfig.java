@@ -1,55 +1,55 @@
 package bpos.server.service.WebSockets;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.messaging.support.ExecutorSubscribableChannel;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebSocketConfig.class);
+    private final ClientWebSocketHandler clientWebSocketHandler;
+    private final CustomHandshakeInterceptor customHandshakeInterceptor;
+
+    @Autowired
+    public WebSocketConfig(ClientWebSocketHandler clientWebSocketHandler, CustomHandshakeInterceptor customHandshakeInterceptor) {
+        this.clientWebSocketHandler = clientWebSocketHandler;
+        this.customHandshakeInterceptor = customHandshakeInterceptor;
+    }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        logger.info("Configuring message broker...");
-        config.enableSimpleBroker("/topic")
-                .setHeartbeatValue(new long[]{10000, 10000})
-                .setTaskScheduler(heartBeatScheduler());
+        config.enableSimpleBroker("/topic");
         config.setApplicationDestinationPrefixes("/app");
-        logger.info("Message broker configured.");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        logger.info("Registering STOMP endpoints...");
-        registry.addEndpoint("/client-websocket").setAllowedOriginPatterns("*").withSockJS();
-        registry.addEndpoint("/center-websocket").setAllowedOriginPatterns("*").withSockJS();
-        registry.addEndpoint("/admin-websocket").setAllowedOriginPatterns("*").withSockJS();
-        logger.info("STOMP endpoints registered.");
+        registry.addEndpoint("/client-websocket")
+                .setAllowedOriginPatterns("*")
+                .withSockJS();
+    }
+
+    @Bean(name = "customSimpMessagingTemplate")
+    public SimpMessagingTemplate simpMessagingTemplate() {
+        return new SimpMessagingTemplate(clientOutboundChannel());
     }
 
     @Bean
-    public SimpMessagingTemplate messagingTemplate(@Qualifier("brokerChannel") MessageChannel messageChannel) {
-        return new SimpMessagingTemplate(messageChannel);
+    public ExecutorSubscribableChannel clientInboundChannel() {
+        return new ExecutorSubscribableChannel();
     }
 
     @Bean
-    public TaskScheduler heartBeatScheduler() {
-        ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
-        taskScheduler.setPoolSize(1);
-        taskScheduler.setThreadNamePrefix("wss-heartbeat-thread-");
-        taskScheduler.initialize();
-        return taskScheduler;
+    public ExecutorSubscribableChannel clientOutboundChannel() {
+        return new ExecutorSubscribableChannel();
     }
 }

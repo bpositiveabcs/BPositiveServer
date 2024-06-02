@@ -4,8 +4,7 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="
-        http://www.springframework.org/schema/beans
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd
@@ -14,15 +13,11 @@
 
     <context:annotation-config/>
     <context:component-scan base-package="bpos.server"/>
+    <context:component-scan base-package="bpos.server.service"/>
+    <context:component-scan base-package="bpos.server.service.WebSockets"/>
 
-    <!-- Define the SimpMessagingTemplate -->
-    <bean id="simpMessagingTemplate" class="org.springframework.messaging.simp.SimpMessagingTemplate">
-        <constructor-arg ref="clientOutboundChannel"/>
-    </bean>
-
+    <!-- Define the properties -->
     <util:properties id="jdbcProps" location="classpath:bd.config"/>
-
-    <!-- Define the WebSocketHandler bean -->
 
     <!-- Validators -->
     <bean id="addressValidator" class="bpos.common.model.Validators.Implementation.AddressValidator"/>
@@ -100,9 +95,12 @@
         <constructor-arg ref="cuponValidator"/>
     </bean>
 
+<!--    <bean id="simpMessagingTemplate" class="org.springframework.messaging.simp.SimpMessagingTemplate">-->
+<!--        <constructor-arg ref="clientOutboundChannel"/>-->
+<!--    </bean>-->
     <!-- Services -->
     <bean id="notificationService" class="bpos.server.service.WebSockets.NotificationService">
-        <constructor-arg ref="simpMessagingTemplate"/>
+        <constructor-arg ref="customSimpMessagingTemplate"/>
     </bean>
 
     <bean id="addressService" class="bpos.server.service.Implementation.AddressService">
@@ -139,15 +137,12 @@
 
     <bean id="personActor" class="bpos.server.service.Implementation.PersonActorService">
         <constructor-arg ref="personalDataRepository"/>
-
         <constructor-arg ref="personRepository"/>
         <constructor-arg ref="studentRepository"/>
         <constructor-arg ref="logInfoRepository"/>
         <constructor-arg ref="addressRepository"/>
-
         <constructor-arg ref="institutionRepository"/>
         <constructor-arg ref="notificationService"/>
-
     </bean>
 
 </beans>

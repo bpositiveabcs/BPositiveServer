@@ -272,6 +272,15 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
     }
 }
 
+//    @PostMapping("/studentPrivelage")
+//    public ResponseEntity<> studentPrivelage(@RequestBody StudentRequest studentRequest) {
+//        try {
+//            Optional<Student> student = service.studentPrivelage(studentRequest);
+//            return new ResponseEntity<>(student.orElse(null), HttpStatus.OK);
+//        } catch (ServicesExceptions e) {
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
     @GetMapping("/students/first-name")
     public Iterable<Student> findByFirstNameStudent(@RequestParam(value="firstName",required = true)String firstName) throws ServicesExceptions {
         return service.findByFirstNameStudent(firstName);

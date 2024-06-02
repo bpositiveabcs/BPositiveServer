@@ -38,7 +38,7 @@ public class PersonActorService implements IPersonActorInterface {
 private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentHashMap<>();
     private final Map<Integer, IObserver> loggedCenter = new ConcurrentHashMap<>();
 
-    private NotificationService notificationService;
+    private final NotificationService notificationService;
 
     private ObjectMapper objectMapper;
 
