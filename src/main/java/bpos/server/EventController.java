@@ -336,7 +336,7 @@ public class EventController {
             return new ResponseEntity<>("Eroare la procesarea cererii: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/events/dto")
+    @GetMapping("/events-dto")
     public ResponseEntity<?> findAllEventsDTO() {
         try {
             List<EventDTO> events = service.findAllEventsDTO();

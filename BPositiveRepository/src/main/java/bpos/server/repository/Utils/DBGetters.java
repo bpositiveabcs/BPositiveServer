@@ -98,7 +98,7 @@ public class DBGetters {
         Rh rh = Rh.valueOf(resultSet.getString("rh_MedicalInformation"));
         BloodTest bloodTest=getBloodTest(resultSet);
         List<BloodTest> bloodTests=new ArrayList<>();
-        bloodTests.add(bloodTest);
+//        bloodTests.add(bloodTest);
         MedicalInfo medicalInfo=new MedicalInfo(eligibil,grupaSanguina,rh,bloodTests);
         medicalInfo.setId(id);
         return medicalInfo;
@@ -148,10 +148,9 @@ public class DBGetters {
         Integer id_institutie=resultSet.getInt("id_Institutie");
         Institution institution=null;
 
-        if(resultSet.wasNull())
-        {
+
             institution=getInstitution(resultSet);
-        }
+
         Person person=new Person(logInfo,points,personalData,medicalInfo,institution);
         person.setId(id);
         return person;
@@ -164,7 +163,9 @@ public class DBGetters {
         int an=resultSet.getInt("an_Student");
         String grupa=resultSet.getString("grupa_Student");
         Person person=getPerson(resultSet);
+
         Student student=new Student(department,faculty,an,grupa,person);
+        student.setUniversity(person.getInstitution());
         student.setId(id);
         return student;
     }

@@ -29,11 +29,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/topic");
         config.setApplicationDestinationPrefixes("/app");
+
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/client-websocket")
+        registry.addEndpoint("/client-websocket").addInterceptors(customHandshakeInterceptor)
                 .setAllowedOriginPatterns("*")
                 .withSockJS();
     }

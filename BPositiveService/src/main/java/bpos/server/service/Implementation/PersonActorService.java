@@ -15,16 +15,14 @@ import bpos.server.service.WebSockets.NotificationService;
 //import bpos.server.service.WebSockets.WebSocketHandler;
 import bpos.server.service.exceptions.InvalidCredentialsException;
 import bpos.server.service.exceptions.UserAlreadyLoggedInException;
+import bpos.server.service.utils.PasswordEncryption;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class PersonActorService implements IPersonActorInterface {
@@ -364,9 +362,12 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
         }
         try {
             logInfo.setUsername(personRequest.getUsername());
-            logInfo.setPassword(personRequest.getPassword());
+            List<String> passwordList = List.of(PasswordEncryption.hashPassword(personRequest.getPassword()));
+            String password=passwordList.get(1);
+            String hash=passwordList.get(0);
+            logInfo.setPassword(password);
             logInfo.setEmail(personRequest.getEmail());
-            logInfo.setSeed(personRequest.getUsername());
+            logInfo.setSeed(hash);
             if (type.equals("SAVE")) {
                 Optional<LogInfo> newLogInfo = dbLogInfo.save(logInfo);
                 person.setPersonLogInfo(newLogInfo.get());
