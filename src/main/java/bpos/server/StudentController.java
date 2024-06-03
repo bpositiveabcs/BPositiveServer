@@ -53,7 +53,7 @@ public class StudentController {
             Files.copy(identityCard.getInputStream(), identityCardPath, StandardCopyOption.REPLACE_EXISTING);
 
             // Trigger UiPath to read the PDF and extract CNP
-            studentService.pregatireCitirePdf(identityCardPath.toString());
+         //   studentService.pregatireCitirePdf(identityCardPath.toString());
 
             // Fetch Person and LogInfo
             Person person;
@@ -74,7 +74,7 @@ public class StudentController {
             // Create and save student entity
             Student student = new Student(logInfo, person.getPoints(), person.getPersonalDate(), person.getMedicalInfo(),
                     person.getInstitution(), Integer.parseInt(year), group, faculty, specialization, institution);
-
+            student.setId(person.getId());
             studentService.saveStudent(student);
 
             return ResponseEntity.ok().build();
