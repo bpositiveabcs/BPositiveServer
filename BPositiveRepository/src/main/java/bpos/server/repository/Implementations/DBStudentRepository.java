@@ -92,10 +92,10 @@ public class DBStudentRepository implements StudentRepository {
         try(java.sql.PreparedStatement preparedStatement=con.prepareStatement(sql))
         {
             preparedStatement.setInt(1,entity.getId());
-            preparedStatement.setString(1,entity.getDepartment());
-            preparedStatement.setString(2,entity.getFaculty());
-            preparedStatement.setString(3,entity.getGroup());
-            preparedStatement.setInt(4,entity.getYear());
+            preparedStatement.setString(2,entity.getDepartment());
+            preparedStatement.setString(3,entity.getFaculty());
+            preparedStatement.setString(4,entity.getGroup());
+            preparedStatement.setInt(5,entity.getYear());
 
             preparedStatement.executeUpdate();
         }
