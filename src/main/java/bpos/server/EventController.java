@@ -37,7 +37,7 @@ public class EventController {
         this.servicePerson= servicePerson;
         this.notifyService=notifyService;
     }
-    @PostMapping("events/join-event")
+    @PostMapping("/events/join-event")
     public ResponseEntity<?> joinEvent(@RequestParam(value="username") String username, @RequestBody Event event) {
         try {
             Person findPerson = servicePerson.findByUsernamePerson(username);
