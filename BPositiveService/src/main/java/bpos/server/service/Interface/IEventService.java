@@ -2,6 +2,7 @@ package bpos.server.service.Interface;
 
 import bpos.common.model.Coupon;
 import bpos.common.model.Event;
+import bpos.common.model.Person;
 import bpos.common.model.RetrievedCoupons;
 import bpos.server.service.ServicesExceptions;
 
@@ -36,4 +37,6 @@ public interface IEventService {
     Iterable<RetrievedCoupons> findByCouponIdRetrieved(Integer couponId) throws ServicesExceptions;
     Iterable<RetrievedCoupons> findByPersonIdRetrieved(Integer personId) throws ServicesExceptions;
     Iterable<RetrievedCoupons> findByDateRetrieved(String date) throws ServicesExceptions;
+
+    Person joinEvent(Person findPerson, Event event);
 }

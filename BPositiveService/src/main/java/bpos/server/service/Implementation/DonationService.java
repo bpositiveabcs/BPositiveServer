@@ -95,23 +95,22 @@ public class DonationService implements IDonationService {
     }
 
     @Override
-    public void donationRegister(Donation donation, Person person, Event event) throws ServicesExceptions {
+    public void donationRegister(Donation donation, Person person) throws ServicesExceptions {
         Optional<Donation> donationOptional = donationRepository.save(donation);
         List<Donation> donationArrayList=person.getDonations();
         donationArrayList.add(donation);
         // List<Event> eventArrayList=person.get();
         person.setDonations(donationArrayList);
         Optional<Person> personOptional = dbPerson.update(person);
-        event.setMaxParticipants(event.getMaxParticipants()+1);
-        Optional<Event> eventOptional = dbEvent.update(event);
-        if(personOptional.isPresent() && eventOptional.isPresent()&& donationOptional.isPresent()){
-            notifyDonationRegistered(donationOptional);
 
+        if(personOptional.isPresent() && donationOptional.isPresent()){
+            notificationService.notifyClient(person.getId()+" "+donationOptional.get());
         }
         else{
             throw new ServicesExceptions("Donation could not be registered");
         }
     }
+
     private void notifyDonationRegistered(Optional<Donation> donationOptional) {
         Iterable<Person> personIterable=dbPerson.findAll();
         personIterable.forEach(person -> {

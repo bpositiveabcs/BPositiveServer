@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 @RestController
 public class DonationController {
@@ -19,12 +20,13 @@ public class DonationController {
         this.service = service;
     }
     @PostMapping("/donație")
-    public ResponseEntity<?> donationRegister(@RequestBody Donation donation, @RequestBody Person person, @RequestBody Event event) {
+    public ResponseEntity<?> donationRegister(@RequestBody Donation donation, @RequestBody Person person) {
         try {
-            service.donationRegister(donation, person, event);
-            return new ResponseEntity<>(HttpStatus.OK);
+            service.donationRegister(donation, person);
+            return ResponseEntity.ok(Map.of("message", "Donația a fost înregistrată cu succes!"));
         } catch (ServicesExceptions e) {
-            // Handle exception
+
+
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

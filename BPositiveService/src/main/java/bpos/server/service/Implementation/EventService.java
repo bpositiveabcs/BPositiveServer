@@ -2,10 +2,12 @@ package bpos.server.service.Implementation;
 
 import bpos.common.model.Coupon;
 import bpos.common.model.Event;
+import bpos.common.model.Person;
 import bpos.common.model.RetrievedCoupons;
 import bpos.other.NotificationRest;
 import bpos.server.repository.Interfaces.CouponRepository;
 import bpos.server.repository.Interfaces.EventRepository;
+import bpos.server.repository.Interfaces.PersonRepository;
 import bpos.server.repository.Interfaces.RetrievedCouponsRepository;
 import bpos.server.service.IObserver;
 import bpos.server.service.Interface.IEventService;
@@ -14,6 +16,7 @@ import bpos.server.service.WebSockets.NotificationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,6 +25,7 @@ public class EventService implements IEventService {
     private final NotificationService notificationService;
 
     private EventRepository eventRepository;
+    private PersonRepository personRepository;
     private CouponRepository couponRepository;
     private RetrievedCouponsRepository retrievedCouponsRepository;
 
@@ -35,8 +39,9 @@ public class EventService implements IEventService {
 
     private ObjectMapper objectMapper;
 
-    public EventService( EventRepository eventRepository, CouponRepository couponRepository, RetrievedCouponsRepository retrievedCouponsRepository, NotificationService notificationService, ObjectMapper objectMapper) {
+    public EventService( EventRepository eventRepository, CouponRepository couponRepository, RetrievedCouponsRepository retrievedCouponsRepository, NotificationService notificationService,PersonRepository personRepository, ObjectMapper objectMapper) {
         this.eventRepository = eventRepository;
+        this.personRepository = personRepository;
         this.couponRepository = couponRepository;
         this.retrievedCouponsRepository = retrievedCouponsRepository;
         this.notificationService = notificationService;
@@ -176,5 +181,22 @@ public class EventService implements IEventService {
     @Override
     public Iterable<RetrievedCoupons> findByDateRetrieved(String date) throws ServicesExceptions {
         return retrievedCouponsRepository.findByDate(date);
+    }
+
+    @Override
+    public Person joinEvent(Person findPerson, Event event) {
+        List<Person> personForEvent=(List<Person>)eventRepository.findParticipants(event.getId());
+        if(personForEvent.size()==event.getMaxParticipants()){
+            return null;
+        }
+        List<Event> eventList = findPerson.getEvents();
+        eventList.add(event);
+        findPerson.setEvents(eventList);
+        Optional<Person> updatePerson = personRepository.update(findPerson);
+        if(updatePerson.isPresent()){
+            notificationService.notifyClient(NotificationRest.NEW_EVENT + ": " + "You have joined the event " + event.getEventName());
+
+        }
+        return updatePerson.orElse(null);
     }
 }
