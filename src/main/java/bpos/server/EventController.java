@@ -414,10 +414,10 @@ public class EventController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
     @DeleteMapping("/events")
-    public ResponseEntity<Void> deleteEvent(@RequestBody Event event) {
+    public ResponseEntity<Event> deleteEvent(@RequestBody Event event) {
         try {
-            service.deleteEvent(event);
-            return new ResponseEntity<>(HttpStatus.OK);
+            Optional<Event> deletedEvent=service.deleteEvent(event);
+            return new ResponseEntity<>(deletedEvent.get(),HttpStatus.OK);
         } catch (ServicesExceptions e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
