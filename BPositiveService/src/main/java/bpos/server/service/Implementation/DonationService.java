@@ -111,6 +111,8 @@ public class DonationService implements IDonationService {
         person.setDonations(donationArrayList);
         Optional<Person> personOptional = dbPerson.update(person);
 
+
+
         /////////////
         // Check if the person is a Student object
         if (person instanceof Student) {
