@@ -42,4 +42,8 @@ public interface IEventService {
     Iterable<RetrievedCoupons> findByDateRetrieved(String date) throws ServicesExceptions;
 
     Person joinEvent(Person findPerson, Event event);
+
+    Optional<Event> acceptEvent(Event event);
+
+    Optional<Event> denyEvent(Event event, String reason);
 }

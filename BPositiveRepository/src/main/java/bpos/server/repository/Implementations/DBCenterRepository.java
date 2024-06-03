@@ -6,7 +6,8 @@ import bpos.server.repository.Interfaces.CenterRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ import java.util.Properties;
 
 public class DBCenterRepository implements CenterRepository {
     private DBUtils dbUtils;
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBCenterRepository.class);
     CenterValidator centerValidator;
     public DBCenterRepository(Properties properties, CenterValidator centerValidator){
         this.centerValidator=centerValidator;
@@ -63,7 +64,7 @@ public class DBCenterRepository implements CenterRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error finding all elements DB"+ e);
         }
         return centers;
@@ -106,7 +107,7 @@ public class DBCenterRepository implements CenterRepository {
         if(entity==null)
         {
             String m="Cannot save center if entity is null!\n";
-            logger.traceExit("Sent error from repo {}",m);
+            logger.trace("Sent error from repo {}",m);
             throw new IllegalArgumentException(m);
         }
         if(centerValidator!=null)
@@ -134,7 +135,7 @@ public class DBCenterRepository implements CenterRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error finding all elements DB"+ e);
         }
         return Optional.of(entity);
@@ -158,7 +159,7 @@ public class DBCenterRepository implements CenterRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error finding all elements DB"+ e);
         }
         return Optional.of(entity);
@@ -170,7 +171,7 @@ public class DBCenterRepository implements CenterRepository {
         if(entity==null)
         {
             String m="Cannot update center if entity is null!\n";
-            logger.traceExit("Sent error from repo {}",m);
+            logger.trace("Sent error from repo {}",m);
             throw new IllegalArgumentException(m);
         }
         if(centerValidator!=null)
@@ -189,7 +190,7 @@ public class DBCenterRepository implements CenterRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error finding all elements DB"+ e);
         }
         return Optional.of(entity);

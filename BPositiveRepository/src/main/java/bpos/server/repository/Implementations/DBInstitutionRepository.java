@@ -6,7 +6,8 @@ import bpos.server.repository.Interfaces.InstitutionRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -24,7 +25,7 @@ public class DBInstitutionRepository implements InstitutionRepository {
         this.institutionValidator = institutionValidator;
     }
 
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBInstitutionRepository.class);
     private InstitutionValidator institutionValidator;
     private Iterable<Institution> findAllUtilitary(List<String> attributes, List<Object> values)
     {
@@ -60,7 +61,7 @@ public class DBInstitutionRepository implements InstitutionRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return institutions;
     }
@@ -107,7 +108,7 @@ public class DBInstitutionRepository implements InstitutionRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             return Optional.of(entity);
         }
 
@@ -130,7 +131,7 @@ public class DBInstitutionRepository implements InstitutionRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             return Optional.of(entity);
         }
     }
@@ -159,7 +160,7 @@ public class DBInstitutionRepository implements InstitutionRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             return Optional.of(entity);
         }
     }

@@ -2,6 +2,7 @@ package bpos.server.service.Implementation;
 
 import bpos.common.model.BloodTest;
 import bpos.common.model.MedicalInfo;
+import bpos.other.NotificationRest;
 import bpos.server.repository.Interfaces.BloodTestRepository;
 import bpos.server.repository.Interfaces.MedicalInfoRepository;
 import bpos.server.service.Interface.IMedicalInformationService;
@@ -37,7 +38,10 @@ public class MedicalInformationService implements IMedicalInformationService {
 
     @Override
     public Optional<BloodTest> saveBloodTest(BloodTest entity) throws ServicesExceptions {
+        BloodTest bloodTest = bloodTestRepository.save(entity).get();
+        notificationService.notifyCenter(NotificationRest.USER_UPDATE+":"+bloodTest.getMedicalInfo().toString());
         return bloodTestRepository.save(entity);
+
     }
 
     @Override

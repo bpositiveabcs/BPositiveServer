@@ -6,8 +6,9 @@ import bpos.server.repository.Exceptions.RepositoryException;
 import bpos.server.repository.Interfaces.AddressRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.juli.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.Properties;
 
 public class DBAddressRepository implements AddressRepository {
     private DBUtils dbUtils;
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBAddressRepository.class);
     private AddressValidator addressValidator;
     public DBAddressRepository(){
 
@@ -68,10 +69,10 @@ public class DBAddressRepository implements AddressRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error finding all elements DB"+ e);
         }
-        logger.traceExit(addresses);
+        logger.info(addresses.toString());
         return addresses;
     }
     @Override
@@ -99,9 +100,9 @@ public class DBAddressRepository implements AddressRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error finding all elements DB"+ e);
-        }     logger.traceExit(address);
+        }     logger.trace(address.toString());
         return Optional.ofNullable(address);
 
     }
@@ -115,11 +116,11 @@ public class DBAddressRepository implements AddressRepository {
     @Override
     public Optional<Address> save(Address entity) {
 
-        logger.traceEntry("Saving task {} ",entity);
+        logger.trace("Saving task {} ",entity);
         if(entity==null)
         {
             String m="Cannot save spectacol if entity is null!\n";
-            logger.traceExit("Sent error from repo {}",m);
+            logger.trace("Sent error from repo {}",m);
             throw new RepositoryException(m);
 
         }
@@ -147,10 +148,10 @@ public class DBAddressRepository implements AddressRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error saving element in  DB"+ e);
         }
-        logger.traceExit();
+        logger.trace("Exit save task {} ",entity);
         if(result==0)
         {
             return null;
@@ -181,9 +182,9 @@ public class DBAddressRepository implements AddressRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error deleting element in  DB"+ e);
-        }   logger.traceExit(entity);
+        }   logger.trace(entity.toString());
         if(result==0)
         {
             return Optional.empty();
@@ -195,11 +196,11 @@ public class DBAddressRepository implements AddressRepository {
     @Override
     public Optional<Address> update(Address entity) {
 
-logger.traceEntry("Update task {} ",entity);
+logger.trace("Update task {} ",entity);
         if(entity==null || entity.getId()==null)
         {
             String m="Cannot update spectacol if entity is null!\n";
-            logger.traceExit("Sent error from repo {}",m);
+            logger.trace("Sent error from repo {}",m);
             throw new RepositoryException(m);
 
         }
@@ -222,10 +223,10 @@ logger.traceEntry("Update task {} ",entity);
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error updating element in  DB"+ e);
         }
-        logger.traceExit();
+        logger.trace("Exit update task {} ",entity);
         if(result==0)
         {
             return Optional.empty();

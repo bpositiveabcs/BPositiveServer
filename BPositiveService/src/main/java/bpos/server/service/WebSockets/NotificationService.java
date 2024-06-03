@@ -1,5 +1,6 @@
 package bpos.server.service.WebSockets;
 
+import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class NotificationService {
     private final SimpMessagingTemplate messagingTemplate;
 
     @Autowired
-    public NotificationService(@Qualifier("customSimpMessagingTemplate") SimpMessagingTemplate messagingTemplate) {
+    public NotificationService( SimpMessagingTemplate messagingTemplate) {
         this.messagingTemplate = messagingTemplate;
     }
 

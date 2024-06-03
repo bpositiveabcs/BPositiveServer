@@ -8,7 +8,8 @@ import bpos.server.repository.Interfaces.MedicalInfoRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.util.*;
@@ -22,7 +23,7 @@ public class DBMedicalInfoRepository implements
         this.medicalInfoValidator = medicalInfoValidator;
     }
     public DBMedicalInfoRepository(){}
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBMedicalInfoRepository.class);
     private MedicalInfoValidator medicalInfoValidator;
     private Iterable<MedicalInfo> findAllUtilitary(List<String> attributes, List<Object> values)
     {
@@ -71,7 +72,7 @@ public class DBMedicalInfoRepository implements
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         List<MedicalInfo> medicalInfos1=medicalInfos.values().stream().toList();
         return medicalInfos1;
@@ -139,7 +140,7 @@ public class DBMedicalInfoRepository implements
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             return Optional.of(entity);
         }
     }
@@ -159,7 +160,7 @@ public class DBMedicalInfoRepository implements
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             return Optional.of(entity);
         }
     }
@@ -186,7 +187,7 @@ public class DBMedicalInfoRepository implements
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             return Optional.of(entity);
         }
     }

@@ -7,7 +7,8 @@ import bpos.server.repository.Interfaces.StudentRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.Properties;
 
 public class DBStudentRepository implements StudentRepository {
     private DBUtils dbUtils;
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBStudentRepository.class);
     private  StudentValidator studentValidator;
 
     public DBStudentRepository(Properties properties, StudentValidator studentValidator) {
@@ -59,7 +60,7 @@ public class DBStudentRepository implements StudentRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return students;
     }
@@ -85,7 +86,7 @@ public class DBStudentRepository implements StudentRepository {
     @Override
     public Optional<Student> save(Student entity) {
 
-        logger.traceEntry("saving student {}",entity);
+        logger.trace("saving student {}",entity);
         studentValidator.validate(entity);
         Connection con=dbUtils.getConnection();
         String sql="INSERT INTO Student (id,departament,facultate,grupa,an) VALUES (?,?,?,?,?)";
@@ -102,14 +103,14 @@ public class DBStudentRepository implements StudentRepository {
 
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return Optional.empty();
     }
 
     @Override
     public Optional<Student> delete(Student entity) {
-        logger.traceEntry("deleting student {}",entity);
+        logger.trace("deleting student {}",entity);
         Connection con=dbUtils.getConnection();
         String sql="DELETE FROM Student WHERE id=?";
         try(java.sql.PreparedStatement preparedStatement=con.prepareStatement(sql))
@@ -119,7 +120,7 @@ public class DBStudentRepository implements StudentRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return Optional.empty();
 
@@ -128,7 +129,7 @@ public class DBStudentRepository implements StudentRepository {
     @Override
     public Optional<Student> update(Student entity) {
 
-logger.traceEntry("updating student {}",entity);
+logger.trace("updating student {}",entity);
         studentValidator.validate(entity);
         Connection con=dbUtils.getConnection();
         String sql="UPDATE Student SET departament=?,facultate=?,grupa=?,an=? WHERE id=?";
@@ -143,7 +144,7 @@ logger.traceEntry("updating student {}",entity);
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return Optional.empty();
     }

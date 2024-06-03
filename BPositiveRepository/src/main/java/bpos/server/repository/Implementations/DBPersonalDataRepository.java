@@ -7,7 +7,8 @@ import bpos.server.repository.Interfaces.PersonalDataRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +25,7 @@ public class DBPersonalDataRepository implements PersonalDataRepository {
         this.personalDataValidator = personalDataValidator;
     }
     public DBPersonalDataRepository(){}
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBPersonalDataRepository.class);
     private PersonalDataValidator personalDataValidator;
     private Iterable<PersonalData> findAllUtilitary(List<String> attributes, List<Object> values)
     {
@@ -60,7 +61,7 @@ public class DBPersonalDataRepository implements PersonalDataRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return personalData;
     }
@@ -104,7 +105,7 @@ public class DBPersonalDataRepository implements PersonalDataRepository {
                 }
                 catch (java.sql.SQLException e)
                 {
-                    logger.error(e);
+                    logger.error(e.getMessage());
                 }
                   return Optional.empty();}
 
@@ -127,7 +128,7 @@ public class DBPersonalDataRepository implements PersonalDataRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return Optional.empty();
     }

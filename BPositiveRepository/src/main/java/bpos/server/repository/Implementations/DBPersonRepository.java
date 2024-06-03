@@ -6,7 +6,8 @@ import bpos.server.repository.Interfaces.PersonRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.util.*;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class DBPersonRepository implements PersonRepository {
     private DBUtils dbUtils;
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBPersonRepository.class);
     private PersonValidator personValidator;
 
     public DBPersonRepository(Properties properties, PersonValidator personValidator) {
@@ -53,7 +54,7 @@ public class DBPersonRepository implements PersonRepository {
                 }
             }
         } catch (java.sql.SQLException e) {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         List<Person> personsList = new ArrayList<>(persons.values());
         System.out.println(personsList);
@@ -75,7 +76,7 @@ public class DBPersonRepository implements PersonRepository {
                 }
             }
         } catch (java.sql.SQLException e) {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return donations;
     }
@@ -93,7 +94,7 @@ public class DBPersonRepository implements PersonRepository {
                 }
             }
         } catch (java.sql.SQLException e) {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return events;
     }
@@ -172,7 +173,7 @@ public class DBPersonRepository implements PersonRepository {
             preparedStatement.executeUpdate();
             return Optional.of(entity);
         } catch (java.sql.SQLException e) {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return Optional.empty();
     }
@@ -191,7 +192,7 @@ public class DBPersonRepository implements PersonRepository {
             preparedStatement.executeUpdate();
             return Optional.of(entity);
         } catch (java.sql.SQLException e) {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return Optional.empty();
     }
@@ -225,7 +226,7 @@ public class DBPersonRepository implements PersonRepository {
             entity = seeIfAnythingNeedsInserted(entity, found);
             return Optional.of(entity);
         } catch (java.sql.SQLException e) {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return Optional.empty();
     }
@@ -256,7 +257,7 @@ public class DBPersonRepository implements PersonRepository {
             preparedStatement.setInt(2, id1);
             preparedStatement.executeUpdate();
         } catch (java.sql.SQLException e) {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
     }
 
@@ -268,7 +269,7 @@ public class DBPersonRepository implements PersonRepository {
             preparedStatement.setInt(2, id1);
             preparedStatement.executeUpdate();
         } catch (java.sql.SQLException e) {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
     }
 

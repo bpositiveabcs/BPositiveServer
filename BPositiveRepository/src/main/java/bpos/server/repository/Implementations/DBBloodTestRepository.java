@@ -7,7 +7,8 @@ import bpos.server.repository.Interfaces.BloodTestRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ import java.util.Properties;
 
 public class DBBloodTestRepository implements BloodTestRepository {
     private DBUtils dbUtils;
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBBloodTestRepository.class);
     BloodTestValidator bloodTestValidator;
     private Properties properties;
     public DBBloodTestRepository(Properties properties,BloodTestValidator bloodTestValidator){
@@ -67,7 +68,7 @@ public class DBBloodTestRepository implements BloodTestRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error finding all elements DB"+ e);
         }
         return Optional.empty();
@@ -111,7 +112,7 @@ public class DBBloodTestRepository implements BloodTestRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error finding all elements DB"+ e);
         }
         return null;
@@ -145,7 +146,7 @@ public class DBBloodTestRepository implements BloodTestRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             throw new IllegalArgumentException("Error finding all elements DB"+ e);
         }
         return Optional.of(entity);
@@ -168,7 +169,7 @@ public class DBBloodTestRepository implements BloodTestRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error finding all elements DB"+ e);
         }
         return Optional.of(entity);
@@ -198,7 +199,7 @@ public class DBBloodTestRepository implements BloodTestRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error finding all elements DB"+ e);
         }
         return Optional.of(entity);

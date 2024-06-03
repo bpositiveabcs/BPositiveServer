@@ -99,9 +99,7 @@
 <!--        <constructor-arg ref="clientOutboundChannel"/>-->
 <!--    </bean>-->
     <!-- Services -->
-    <bean id="notificationService" class="bpos.server.service.WebSockets.NotificationService">
-        <constructor-arg ref="customSimpMessagingTemplate"/>
-    </bean>
+
 
     <bean id="addressService" class="bpos.server.service.Implementation.AddressService">
         <constructor-arg ref="addressRepository"/>

@@ -18,6 +18,7 @@ import bpos.server.service.exceptions.UserAlreadyLoggedInException;
 import bpos.server.service.utils.PasswordEncryption;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -39,7 +40,6 @@ public class PersonActorService implements IPersonActorInterface {
 //    private  JwtTokenUtil jwtTokenUtil;
 private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentHashMap<>();
     private final Map<Integer, IObserver> loggedCenter = new ConcurrentHashMap<>();
-
     private final NotificationService notificationService;
 
     private ObjectMapper objectMapper;
@@ -177,11 +177,14 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
 
     @Override
     public Optional<Person> savePerson(Person entity) throws ServicesExceptions {
-        return dbPerson.save(entity);
+        Person person = dbPerson.save(entity).get();
+        notificationService.notifyAdmins(String.valueOf(NotificationRest.REGISTER));
+        return Optional.ofNullable(person);
     }
 
     @Override
     public Optional<Person> deletePerson(Person entity) throws ServicesExceptions {
+
         return dbPerson.delete(entity);
     }
     @Override

@@ -7,14 +7,15 @@ import bpos.server.repository.Interfaces.DonationTypeRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.util.*;
 
 public class DBDonationTypeRepository implements DonationTypeRepository {
     private DBUtils dbUtils;
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBDonationTypeRepository.class);
     private DonationTypeValidator donationTypeValidator;
     public DBDonationTypeRepository(Properties properties, DonationTypeValidator donationTypeValidator){
         this.donationTypeValidator=donationTypeValidator;
@@ -59,7 +60,7 @@ public class DBDonationTypeRepository implements DonationTypeRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return donationTypes;
     }
@@ -100,7 +101,7 @@ public class DBDonationTypeRepository implements DonationTypeRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error saving element DB"+ e);
         }
         return Optional.of(entity);

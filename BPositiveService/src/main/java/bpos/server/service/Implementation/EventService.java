@@ -91,7 +91,6 @@ public class EventService implements IEventService {
                 eventDTOS.add(eventDTO);
             }
         }
-//        notificationService.notifyClientWithSessionId(NotificationRest.NEW_EVENT + ": " + "You have joined the event " + eventDTOS.get(0).getEventName(), "1");
         return eventDTOS;
 
     }
@@ -99,7 +98,7 @@ public class EventService implements IEventService {
     @Override
     public Optional<Event> saveEvent(Event entity) throws ServicesExceptions {
         Optional<Event> event= eventRepository.save(entity);
-        notificationService.notifyCenter(String.valueOf(NotificationRest.NEW_EVENT));
+
         return event;
     }
 
@@ -107,13 +106,14 @@ public class EventService implements IEventService {
     public Optional<Event> deleteEvent(Event entity) throws ServicesExceptions {
         Optional<Event> event= eventRepository.delete(entity);
         notificationService.notifyCenter(String.valueOf(NotificationRest.DENY_EVENT));
+
         return event;
     }
 
     @Override
     public Optional<Event> updateEvent(Event entity) throws ServicesExceptions {
         Optional<Event> updateEvent= eventRepository.update(entity);
-//        notificationService.notifyCenter(String.valueOf(NotificationRest.NEW_EVENT));
+        notificationService.notifyCenter(String.valueOf(NotificationRest.NEW_EVENT));
         return updateEvent;
     }
 
@@ -213,9 +213,33 @@ public class EventService implements IEventService {
         findPerson.setEvents(eventList);
         Optional<Person> updatePerson = personRepository.update(findPerson);
         if(updatePerson.isPresent()){
-            notificationService.notifyClient(NotificationRest.NEW_EVENT + ": " + "You have joined the event " + event.getEventName());
+            notificationService.notifyClient(NotificationRest.NEW_EVENT + ": "+findPerson.getPersonLogInfo().getUsername() + " has joined the event " + event.getEventName());
 
         }
         return updatePerson.orElse(null);
     }
+
+    @Override
+    public Optional<Event> acceptEvent(Event event) {
+        try {
+            Event newEvent=updateEvent(event).orElse(null);
+        } catch (ServicesExceptions e) {
+            throw new RuntimeException(e);
+        }
+        notificationService.notifyClient(NotificationRest.NEW_EVENT.toString());
+        notificationService.notifyCenter(String.valueOf(NotificationRest.NEW_EVENT));
+        return Optional.of(event);
+    }
+
+    @Override
+    public Optional<Event> denyEvent(Event event, String reason) {
+        try {
+            Event newEvent=deleteEvent(event).orElse(null);
+        } catch (ServicesExceptions e) {
+            throw new RuntimeException(e);
+        }
+        notificationService.notifyCenter(String.valueOf(NotificationRest.DENY_EVENT)+ ": " + reason);
+        return Optional.of(event);
+    }
+
 }

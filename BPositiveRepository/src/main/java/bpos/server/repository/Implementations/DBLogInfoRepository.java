@@ -7,7 +7,8 @@ import bpos.server.repository.Interfaces.LogInfoRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.util.List;
@@ -23,7 +24,7 @@ public class DBLogInfoRepository implements LogInfoRepository {
     }
     public DBLogInfoRepository(){}
 
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBLogInfoRepository.class);
     private LogInfoValidator logInfoValidator;
     private Iterable<LogInfo> findAllUtilitary(List<String> attributes, List<Object> values)
     {
@@ -59,7 +60,7 @@ public class DBLogInfoRepository implements LogInfoRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return logInfos;
     }
@@ -115,7 +116,7 @@ public class DBLogInfoRepository implements LogInfoRepository {
             }
             catch (java.sql.SQLException e)
             {
-                logger.error(e);
+                logger.error(e.getMessage());
                 System.out.println("Error saving entity DB"+ e);
             }
 
@@ -138,7 +139,7 @@ public class DBLogInfoRepository implements LogInfoRepository {
             }
             catch (java.sql.SQLException e)
             {
-                logger.error(e);
+                logger.error(e.getMessage());
                 System.out.println("Error deleting entity DB"+ e);
             }
             return Optional.empty();
@@ -165,7 +166,7 @@ public class DBLogInfoRepository implements LogInfoRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
             System.out.println("Error updating entity DB"+ e);
         }
         return Optional.empty();

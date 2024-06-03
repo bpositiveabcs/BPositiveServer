@@ -8,7 +8,8 @@ import bpos.server.repository.Interfaces.EventRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ import java.util.Properties;
 
 public class DBEventRepository implements EventRepository {
     private DBUtils dbUtils;
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBEventRepository.class);
     private EventValidator eventValidator;
 
     public DBEventRepository(Properties properties, EventValidator eventValidator) {
@@ -65,7 +66,7 @@ public class DBEventRepository implements EventRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return events;
     }
@@ -109,7 +110,7 @@ public class DBEventRepository implements EventRepository {
 
     @Override
     public Iterable<Person> findParticipants(Integer eventId) {
-        logger.traceEntry("finding participants for event with id={}",eventId);
+        logger.trace("finding participants for event with id={}",eventId);
         Connection con=dbUtils.getConnection();
         List<Integer> participants=new java.util.ArrayList<>();
         try(java.sql.PreparedStatement preparedStatement=con.prepareStatement("SELECT * FROM InscriereEveniment where id_eveniment=?"))
@@ -126,7 +127,7 @@ public class DBEventRepository implements EventRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         //acum caut persoanele
         List<Person> people=new java.util.ArrayList<>();
@@ -146,7 +147,7 @@ public class DBEventRepository implements EventRepository {
             }
             catch (java.sql.SQLException e)
             {
-                logger.error(e);
+                logger.error(e.getMessage());
             }
         }
         return people;
@@ -174,7 +175,7 @@ public class DBEventRepository implements EventRepository {
         Connection con=dbUtils.getConnection();
         if(entity==null)
         {
-            logger.traceExit("Entity must not be null");
+            logger.trace("Entity must not be null");
             throw new IllegalArgumentException("Entity must not be null");
 
         }
@@ -205,7 +206,7 @@ public class DBEventRepository implements EventRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return Optional.empty();
     }
@@ -227,7 +228,7 @@ public class DBEventRepository implements EventRepository {
             preparedStatement.setInt(1, entity.getId());
             result = preparedStatement.executeUpdate();
         } catch (java.sql.SQLException e) {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         if (result == 0) {
             return Optional.empty();
@@ -243,7 +244,7 @@ public class DBEventRepository implements EventRepository {
         if(entity==null)
         {
             String m="Entity must not be null";
-            logger.traceExit(m);
+            logger.trace(m);
             throw new IllegalArgumentException(m);
         }
         if(eventValidator!=null)
@@ -266,7 +267,7 @@ public class DBEventRepository implements EventRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         if(result==0)
         {

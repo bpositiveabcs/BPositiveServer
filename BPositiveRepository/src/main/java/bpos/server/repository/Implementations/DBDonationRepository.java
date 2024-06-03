@@ -8,7 +8,8 @@ import bpos.server.repository.Interfaces.DonationRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.Properties;
 
 public class DBDonationRepository implements DonationRepository {
     private DBUtils dbUtils;
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBDonationRepository.class);
     private DonationValidator donationValidator;
 
     public DBDonationRepository(Properties properties, DonationValidator donationValidator) {
@@ -65,7 +66,7 @@ public class DBDonationRepository implements DonationRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return donations;
     }
@@ -112,11 +113,11 @@ public class DBDonationRepository implements DonationRepository {
 
     @Override
     public Optional<Donation> save(Donation entity) {
-        logger.traceEntry("saving donation {}",entity);
+        logger.trace("saving donation {}",entity);
         if(entity==null)
         {
             String m="Entity must not be null";
-            logger.traceExit(m);
+            logger.trace(m);
             throw new RepositoryException(m);
         }
         int result=0;
@@ -133,14 +134,14 @@ public class DBDonationRepository implements DonationRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         if(result==0)
         {
-            logger.traceExit("No donation saved");
+            logger.trace("No donation saved");
             return Optional.empty();
         }
-        logger.traceExit("Donation saved");
+        logger.trace("Donation saved");
         return Optional.of(entity);
     }
 
@@ -162,7 +163,7 @@ public class DBDonationRepository implements DonationRepository {
             preparedStatement.setInt(1, entity.getId());
             result = preparedStatement.executeUpdate();
         } catch (java.sql.SQLException e) {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         if (result == 0) {
             return Optional.empty();
@@ -173,11 +174,11 @@ public class DBDonationRepository implements DonationRepository {
     @Override
     public Optional<Donation> update(Donation entity) {
 
-        logger.traceEntry("Update task {} ",entity);
+        logger.trace("Update task {} ",entity);
         if(entity==null || entity.getId()==null)
         {
             String m="Cannot update spectacol if entity is null!\n";
-            logger.traceExit("Sent error from repo {}",m);
+            logger.trace("Sent error from repo {}",m);
             throw new RepositoryException(m);
 
         }
@@ -194,7 +195,7 @@ public class DBDonationRepository implements DonationRepository {
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         if(result==0)
         {

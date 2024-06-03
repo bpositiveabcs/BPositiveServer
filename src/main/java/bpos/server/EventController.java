@@ -386,6 +386,30 @@ public class EventController {
             return new ResponseEntity<>("Eroare la procesarea cererii: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PostMapping("/events/event-acceptance")
+    public ResponseEntity<?> acceptEvent(@RequestBody Event event)
+    {
+        //Optional<Event> updatedEvent = service.updateEvent(event);
+        //            if(updatedEvent.isPresent()) {
+        //                return new ResponseEntity<>(updatedEvent.get(), HttpStatus.OK);
+        //            }
+        Optional<Event> acceptedEvent = service.acceptEvent(event);
+        if(acceptedEvent.isPresent()) {
+            return new ResponseEntity<>(acceptedEvent.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+    @PostMapping("/events/event-denial")
+    public ResponseEntity<?> denyEvent(@RequestBody Event event,@RequestParam (value = "reason") String reason)
+    {
+        Optional<Event> deniedEvent = service.denyEvent(event,reason);
+        if(deniedEvent.isPresent()) {
+            return new ResponseEntity<>(deniedEvent.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
     @GetMapping("/retrieved-coupons/personId")
     public ResponseEntity<?> findByPersonIdRetrieved(@RequestParam(value="personId",required = true) Integer personId) {

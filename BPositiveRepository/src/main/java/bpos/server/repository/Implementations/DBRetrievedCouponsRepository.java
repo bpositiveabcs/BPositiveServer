@@ -7,7 +7,8 @@ import bpos.server.repository.Interfaces.RetrievedCouponsRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.Properties;
 
 public class DBRetrievedCouponsRepository implements RetrievedCouponsRepository {
     private DBUtils dbUtils;
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBRetrievedCouponsRepository.class);
     private RetrievedCouponsValidator retrievedCouponsValidator;
 
     public DBRetrievedCouponsRepository(Properties properties, RetrievedCouponsValidator retrievedCouponsValidator) {
@@ -59,7 +60,7 @@ public class DBRetrievedCouponsRepository implements RetrievedCouponsRepository 
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return retrievedCoupons;
     }
@@ -111,7 +112,7 @@ public class DBRetrievedCouponsRepository implements RetrievedCouponsRepository 
             }
             catch (java.sql.SQLException e)
             {
-                logger.error(e);
+                logger.error(e.getMessage());
             }
 
         return Optional.empty();
@@ -133,7 +134,7 @@ public class DBRetrievedCouponsRepository implements RetrievedCouponsRepository 
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return Optional.empty();
     }
@@ -162,7 +163,7 @@ public class DBRetrievedCouponsRepository implements RetrievedCouponsRepository 
         }
         catch (java.sql.SQLException e)
         {
-            logger.error(e);
+            logger.error(e.getMessage());
         }
         return Optional.empty();
     }

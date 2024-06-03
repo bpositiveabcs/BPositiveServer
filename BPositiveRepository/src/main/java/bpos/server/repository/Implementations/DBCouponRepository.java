@@ -7,7 +7,8 @@ import bpos.server.repository.Interfaces.CouponRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +20,7 @@ import java.util.Properties;
 
 public class DBCouponRepository implements CouponRepository {
     private DBUtils dbUtils;
-    private static final Logger logger= LogManager.getLogger();
+    private static final Logger logger = LoggerFactory.getLogger(DBCouponRepository.class);
     private CouponValidator couponValidator;
     public DBCouponRepository(Properties properties, CouponValidator couponValidator){
         this.couponValidator=couponValidator;
@@ -65,7 +66,7 @@ public class DBCouponRepository implements CouponRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.trace(e.getMessage());
             System.out.println("Error finding all elements DB"+ e);
         }
         return coupons;
@@ -127,7 +128,7 @@ public class DBCouponRepository implements CouponRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.trace(e.getMessage());
             System.out.println("Error saving element DB"+ e);
         }
         return Optional.empty();
@@ -158,7 +159,7 @@ public class DBCouponRepository implements CouponRepository {
         }
         catch (SQLException e)
         {
-            logger.error(e);
+            logger.trace(e.getMessage());
             System.out.println("Error deleting element in  DB"+ e);
         }
         if(result==0)
@@ -172,7 +173,7 @@ public class DBCouponRepository implements CouponRepository {
     public Optional<Coupon> update(Coupon entity) {
         if (entity == null || entity.getId() == null) {
             String m = "Cannot update spectacol if entity is null!\n";
-            logger.traceExit("Sent error from repo {}", m);
+            logger.trace("Sent error from repo {}", m);
             throw new IllegalArgumentException(m);
         }
         if (couponValidator != null) {
@@ -188,7 +189,7 @@ public class DBCouponRepository implements CouponRepository {
             preparedStatement.setInt(6, entity.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            logger.error(e);
+            logger.trace(e.getMessage());
             System.out.println("Error updating element in  DB" + e);
         }
         return Optional.empty() ;
