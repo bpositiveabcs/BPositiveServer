@@ -20,9 +20,9 @@ public class DonationController {
         this.service = service;
     }
     @PostMapping("/donație")
-    public ResponseEntity<?> donationRegister(@RequestBody Donation donation, @RequestBody Person person, @RequestBody Event event) {
+    public ResponseEntity<?> donationRegister(@RequestBody Donation donation, @RequestBody Person person) {
         try {
-            service.donationRegister(donation, person, event);
+            service.donationRegister(donation, person);
             return ResponseEntity.ok(Map.of("message", "Donația a fost înregistrată cu succes!"));
         } catch (ServicesExceptions e) {
 

@@ -95,7 +95,7 @@ public class DonationService implements IDonationService {
     }
 
     @Override
-    public void donationRegister(Donation donation, Person person, Event event) throws ServicesExceptions {
+    public void donationRegister(Donation donation, Person person) throws ServicesExceptions {
         Optional<Donation> donationOptional = donationRepository.save(donation);
         List<Donation> donationArrayList=person.getDonations();
         donationArrayList.add(donation);

@@ -21,9 +21,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -39,17 +38,26 @@ public class EventController {
         this.notifyService=notifyService;
     }
     @PostMapping("events/join-event")
-    public ResponseEntity<Person> joinEvent(@RequestParam(value="username") String username, @RequestBody Event event) {
+    public ResponseEntity<?> joinEvent(@RequestParam(value="username") String username, @RequestBody Event event) {
         try {
             Person findPerson = servicePerson.findByUsernamePerson(username);
             if (findPerson != null) {
+                Person person=service.joinEvent(findPerson, event);
+                if(person==null){
+                    Map<String, String> response = new HashMap<>();
+                    response.put("message", "evenimentul a fost inchis, prea multi participanti");
+
+                    return new ResponseEntity<>(response, HttpStatus.OK);
+                }
                 // Correctly get the event list and update it
-                List<Event> eventList = findPerson.getEvents();
-                eventList.add(event);
-                findPerson.setEvents(eventList);
-                Optional<Person> updatePerson = servicePerson.updatePerson(findPerson);
-                notifyService.notifyClient(NotificationRest.NEW_EVENT + ": " + "You have joined the event " + event.getEventName());
-                return new ResponseEntity<>(updatePerson.get(), HttpStatus.CREATED);
+//                List<Event> eventList = findPerson.getEvents();
+//                eventList.add(event);
+//
+//                findPerson.setEvents(eventList);
+//
+//                Optional<Person> updatePerson = servicePerson.updatePerson(findPerson);
+
+                return new ResponseEntity<>(person, HttpStatus.CREATED);
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (ServicesExceptions e) {

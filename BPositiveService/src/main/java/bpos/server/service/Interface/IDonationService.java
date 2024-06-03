@@ -22,7 +22,7 @@ public interface IDonationService {
     Optional<DonationType> saveDonationType(DonationType entity) throws ServicesExceptions;
     Optional<DonationType> deleteDonationType(DonationType entity) throws ServicesExceptions;
     Optional<DonationType> updateDonationType(DonationType entity) throws ServicesExceptions;
-    void donationRegister(Donation donation, Person person, Event event) throws ServicesExceptions;
+    void donationRegister(Donation donation, Person person) throws ServicesExceptions;
 
 
 }
