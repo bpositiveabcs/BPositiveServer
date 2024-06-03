@@ -135,7 +135,7 @@ public class DBMedicalInfoRepository implements
             preparedStatement.setString(3,entity.getBloodType().toString());
             preparedStatement.setString(4,entity.getRh().toString());
             preparedStatement.executeUpdate();
-            return Optional.empty();
+            return Optional.of(entity);
         }
         catch (java.sql.SQLException e)
         {

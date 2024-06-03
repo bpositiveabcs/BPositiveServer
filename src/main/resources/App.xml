@@ -144,6 +144,10 @@
         <constructor-arg ref="institutionRepository"/>
         <constructor-arg ref="notificationService"/>
         <constructor-arg ref="medicalInfoRepository"/>
+        <constructor-arg ref="bloodTestRepository"/>
+    </bean>
+    <bean id="studentService" class="bpos.server.service.Implementation.StudentService">
+        <constructor-arg ref="studentRepository"/>
     </bean>
 
 </beans>

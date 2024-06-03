@@ -1,7 +1,8 @@
-package bpos.server.service;
+package bpos.server.service.Implementation;
 
 import bpos.common.model.Student;
 import bpos.server.repository.Interfaces.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -14,12 +15,15 @@ import java.util.Map;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-@Service
 public class StudentService {
 
     private Map<String, String> pendingVerifications = new HashMap<>();
 
+
     private StudentRepository studentRepository;
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     public void pregatireCitirePdf(String filepath) {
         String filePath = "C:\\Users\\hp\\Documents\\UiPath\\ReadText\\nume_fisier.xlsx";
@@ -85,7 +89,6 @@ public class StudentService {
     }
 
     public void triggerUiPathSendEmail(String email, String code) {
-        // Implement UiPath process invocation to send email
         invokeUiPathProcess("C:\\Users\\hp\\Documents\\UiPath\\EmailCupoane\\Main.xaml");
     }
 
@@ -141,6 +144,5 @@ public class StudentService {
 
     public void saveStudent(Student student) {
         studentRepository.save(student);
-
     }
 }

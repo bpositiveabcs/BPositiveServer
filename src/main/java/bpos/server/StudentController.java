@@ -6,18 +6,22 @@ import bpos.common.model.Person;
 import bpos.common.model.Student;
 import bpos.server.service.Implementation.LogInfoService;
 import bpos.server.service.Implementation.PersonActorService;
+import bpos.server.service.Implementation.StudentService;
 import bpos.server.service.ServicesExceptions;
-import bpos.server.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class StudentController {
@@ -35,12 +39,18 @@ public class StudentController {
             @RequestParam("username") String username) {
 
         try {
+            // Ensure the identityCards directory exists
+            Path directoryPath = Paths.get("identityCards");
+            if (!Files.exists(directoryPath)) {
+                Files.createDirectories(directoryPath);
+            }
+
             // Save the identity card
-            File identityCardFile = new File("identityCards/" + username + ".pdf");
-            identityCard.transferTo(identityCardFile);
+            Path identityCardPath = directoryPath.resolve(username + ".pdf");
+            Files.copy(identityCard.getInputStream(), identityCardPath, StandardCopyOption.REPLACE_EXISTING);
 
             // Trigger UiPath to read the PDF and extract CNP
-            studentService.pregatireCitirePdf(identityCardFile.getAbsolutePath());
+            studentService.pregatireCitirePdf(identityCardPath.toString());
 
             // Wait for UiPath to process and generate the verification code
             String extractedCnp = studentService.readVerificationCodeFromFile();
@@ -85,24 +95,24 @@ public class StudentController {
             String semigroup = payload.get("semigroup");
 
             // Fetch Person and LogInfo
-            Person person = null;
+            Person person;
             try {
                 person = personActorService.findByUsernamePerson(username);
             } catch (ServicesExceptions e) {
                 throw new RuntimeException(e);
             }
             LogInfo logInfo = person.getPersonLogInfo();
-            Institution institution = null;
+            Institution institution;
             try {
                 Iterable<Institution> institutions = personActorService.findByNameInstitution(university);
                 institution = institutions.iterator().next();
-
             } catch (ServicesExceptions e) {
                 throw new RuntimeException(e);
             }
+
             // Create and save student entity
-            Student student = new Student(logInfo, person.getPoints(),person.getPersonalDate(),person.getMedicalInfo(),person.getInstitution(),Integer.parseInt(year),group,
-                    faculty,specialty,institution);
+            Student student = new Student(logInfo, person.getPoints(), person.getPersonalDate(), person.getMedicalInfo(),
+                    person.getInstitution(), Integer.parseInt(year), group, faculty, specialty, institution);
 
             studentService.saveStudent(student);
 
@@ -112,6 +122,31 @@ public class StudentController {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(400).body("Invalid code");
+        }
+    }
+
+    @PostMapping("/upload-medical-info/{username}")
+    public ResponseEntity<?> uploadMedicalInfo(@PathVariable String username, @RequestParam("file") MultipartFile file) {
+        try {
+            // Create the main directory if it doesn't exist
+            Path mainDir = Paths.get("user_medicalinfo");
+            if (!Files.exists(mainDir)) {
+                Files.createDirectory(mainDir);
+            }
+
+            // Create the user-specific directory if it doesn't exist
+            Path userDir = mainDir.resolve(username);
+            if (!Files.exists(userDir)) {
+                Files.createDirectory(userDir);
+            }
+
+            // Copy the file to the user-specific directory
+            Path targetLocation = userDir.resolve(file.getOriginalFilename());
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+            return ResponseEntity.ok().body("File uploaded successfully!");
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file: " + e.getMessage());
         }
     }
 }

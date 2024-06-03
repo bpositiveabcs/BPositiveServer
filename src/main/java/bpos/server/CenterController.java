@@ -2,6 +2,7 @@ package bpos.server;
 
 import bpos.common.model.Center;
 import bpos.server.service.Implementation.CenterActorService;
+import bpos.server.service.Implementation.PersonActorService;
 import bpos.server.service.ServicesExceptions;
 import bpos.server.service.exceptions.UserNotLoggedInException;
 import org.springframework.http.HttpStatus;
@@ -20,9 +21,12 @@ import java.util.Optional;
 @RequestMapping("/centers")
 public class CenterController {
     private CenterActorService service;
+    private PersonActorService personService;
 
-    public CenterController(CenterActorService service) {
+    public CenterController(CenterActorService service,PersonActorService personService) {
         this.service = service;
+        this.personService=personService;
+
     }
     @GetMapping("/username")
     public ResponseEntity<?> findByUsernameCenter(@RequestParam(value="username",required = true) String username) {
@@ -122,10 +126,16 @@ public class CenterController {
             // Copy the file to the user-specific directory
             Path targetLocation = userDir.resolve(file.getOriginalFilename());
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            //acum sa adaug in repo
+            personService.addBloodTestToMedicalInfo(username,targetLocation.toString(),file.getOriginalFilename());
+
+
 
             return ResponseEntity.ok().body("File uploaded successfully!");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file: " + e.getMessage());
+        } catch (ServicesExceptions e) {
+            throw new RuntimeException(e);
         }
     }
     @PostMapping

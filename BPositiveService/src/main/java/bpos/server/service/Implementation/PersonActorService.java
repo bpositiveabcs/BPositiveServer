@@ -44,11 +44,12 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
     private final NotificationService notificationService;
 
     private ObjectMapper objectMapper;
-
+    private final BloodTestRepository dbBloodTest;
 
     public PersonActorService(PersonalDataRepository personalDataRepository, PersonRepository personRepository, StudentRepository studentRepository, LogInfoRepository logInfoRepository, AddressRepository dbAdress,
                               InstitutionRepository institutionRepository,
-            /*ObjectMapper objectMapper, UserDetailsService userDetailsService*//*, JwtTokenUtil jwtTokenUtil*/NotificationService notificationService,MedicalInfoRepository medicalInfoRepository) {
+            /*ObjectMapper objectMapper, UserDetailsService userDetailsService*//*, JwtTokenUtil jwtTokenUtil*/NotificationService notificationService,MedicalInfoRepository medicalInfoRepository,
+                              BloodTestRepository bloodTestRepository) {
         this.dbPersonalData = personalDataRepository;
         this.dbPerson=personRepository;
         this.dbStudent=studentRepository;
@@ -60,8 +61,27 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
         //        this.userDetailsService = userDetailsService;
 //        this.jwtTokenUtil = jwtTokenUtil;
         this.dbMedicalInfo=medicalInfoRepository;
+        this.dbBloodTest=bloodTestRepository;
     }
+    public void addBloodTestToMedicalInfo(String username, String fileName, String filePath) throws ServicesExceptions {
+        // Find the person's medical info by username
+        Person person = dbPerson.findByUsername(username);
+        if (person == null) {
+            throw new ServicesExceptions("Person not found: " + username);
+        }
+        MedicalInfo medicalInfo = person.getMedicalInfo();
+        if (medicalInfo == null) {
+            throw new ServicesExceptions("Medical Info not found for user: " + username);
+        }
 
+        // Create a new BloodTest entity
+        BloodTest bloodTest = new BloodTest();
+        bloodTest.setName(fileName);
+        bloodTest.setPath(filePath);
+        bloodTest.setMedicalInfo(medicalInfo.getId());
+
+        dbBloodTest.save(bloodTest);
+    }
     @Override
     public void logout(Person person) throws ServicesExceptions {
         loggedInUsers.remove(person.getPersonLogInfo().getUsername());
