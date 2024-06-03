@@ -214,6 +214,6 @@ logger.traceEntry("updating student {}",entity);
         {
             return students.iterator().next();
         }
-        throw new RuntimeException("Student not found");
+       return null;
     }
 }

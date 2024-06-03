@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -276,18 +277,35 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
     @Override
     public Optional<Person> login(String username, String password) throws UserAlreadyLoggedInException, InvalidCredentialsException, ServicesExceptions {
 
-        LogInfo logInfo = new LogInfo(username, password,username,null);
-        if(dbLogInfo.findByUsername(logInfo.getUsername())==null)
-        {
+        LogInfo logInfo = new LogInfo(username, password, username, null);
+        Person person = dbPerson.findByUsername(logInfo.getUsername());
+
+        if (person == null) {
             throw new InvalidCredentialsException("Username does not exist");
         }
-        Person person = dbPerson.findByUsername(logInfo.getUsername());
+
+        // Get stored password hash and seed from the database
+        LogInfo storedLogInfo = dbLogInfo.findByUsername(logInfo.getUsername());
+        String storedHashedPassword = storedLogInfo.getPassword(); // assuming getPassword() returns the hashed password
+        String storedSeed = storedLogInfo.getSeed(); // assuming getSeed() returns the seed used for hashing
+
+        // Verify the password
+        try {
+            if (!PasswordEncryption.verifyPassword(password, storedHashedPassword, storedSeed)) {
+                throw new InvalidCredentialsException("Invalid password");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            throw new ServicesExceptions("Password verification failed", e);
+        }
+
         if (loggedInUsers.containsKey(person.getPersonLogInfo().getUsername()) && loggedInUsers.get(username)) {
             throw new UserAlreadyLoggedInException("User is already logged in");
         }
+
         notificationService.notifyAdmins(String.valueOf(NotificationRest.LOGIN));
         return Optional.of(person);
     }
+
 
 
 //    @Override

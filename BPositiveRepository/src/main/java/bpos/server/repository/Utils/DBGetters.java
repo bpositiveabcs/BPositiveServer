@@ -87,7 +87,7 @@ public class DBGetters {
         String nume=resultSet.getString("nume_Analiza");
         String calerator=resultSet.getString("cale_Analiza");
         int idMedicalInfo=resultSet.getInt("id_MedicalInformation");
-        BloodTest bloodTest=new BloodTest(nume,calerator, idMedicalInfo);
+        BloodTest bloodTest=new BloodTest(calerator,nume, idMedicalInfo);
         bloodTest.setId(id);
         return bloodTest;
     }
@@ -98,7 +98,7 @@ public class DBGetters {
         Rh rh = Rh.valueOf(resultSet.getString("rh_MedicalInformation"));
         BloodTest bloodTest=getBloodTest(resultSet);
         List<BloodTest> bloodTests=new ArrayList<>();
-//        bloodTests.add(bloodTest);
+        bloodTests.add(bloodTest);
         MedicalInfo medicalInfo=new MedicalInfo(eligibil,grupaSanguina,rh,bloodTests);
         medicalInfo.setId(id);
         return medicalInfo;
@@ -140,16 +140,14 @@ public class DBGetters {
         PersonalData personalData=getPersonalData(resultSet);
         Integer id_medicalInformation=resultSet.getInt("id_MedicalInformation");
         int medicalInfoId = resultSet.getInt("id_MedicalInformation");
-        MedicalInfo medicalInfo=null;
+        MedicalInfo medicalInfo=new MedicalInfo();
 
-        if (!resultSet.wasNull()) { // Check if the last column read had a value of SQL NULL.
-            medicalInfo = getMedicalInfo(resultSet);
-        }
+        medicalInfo = getMedicalInfo(resultSet);
+
         Integer id_institutie=resultSet.getInt("id_Institutie");
-        Institution institution=null;
+        Institution institution=new Institution();
 
-
-            institution=getInstitution(resultSet);
+        institution=getInstitution(resultSet);
 
         Person person=new Person(logInfo,points,personalData,medicalInfo,institution);
         person.setId(id);

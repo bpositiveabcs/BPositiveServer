@@ -1,4 +1,5 @@
 package bpos.server;
+import bpos.server.service.Implementation.StudentService;
 import bpos.server.service.Interface.*;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -331,8 +332,17 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
     }
 
     @GetMapping("/students/username")
-    public Student findByUsernameStudent(@RequestParam(value="username",required = true)String username) throws ServicesExceptions {
-        return service.findByUsernameStudent(username);
+    public ResponseEntity<?> findByUsernameStudent(@RequestParam(value="username",required = true)String username) throws ServicesExceptions {
+       try
+       {
+           Student student= service.findByUsernameStudent(username);
+              return new ResponseEntity<>(student,HttpStatus.OK);
+       }
+         catch (ServicesExceptions e)
+         {
+              return new ResponseEntity<>(null,HttpStatus.INTERNAL_SERVER_ERROR);
+         }
+
     }
 
     @PostMapping("/login")

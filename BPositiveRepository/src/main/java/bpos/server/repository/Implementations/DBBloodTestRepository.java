@@ -134,20 +134,19 @@ public class DBBloodTestRepository implements BloodTestRepository {
         {
             bloodTestValidator.validate(entity);
         }
-        String sql="INSERT INTO Analiza(id, nume, cale, id_informatiimedicale) VALUES(?,?,?,?)";
+        String sql="INSERT INTO Analiza( nume, cale, id_informatiimedicale) VALUES(?,?,?)";
         Connection con=dbUtils.getConnection();
         try (PreparedStatement preparedStatement=con.prepareStatement(sql))
         {
-            preparedStatement.setInt(1,entity.getId());
-            preparedStatement.setString(2,entity.getName());
-            preparedStatement.setString(3,entity.getPath());
-            preparedStatement.setInt(4,entity.getMedicalInfo() );
+            preparedStatement.setString(1,entity.getName());
+            preparedStatement.setString(2,entity.getPath());
+            preparedStatement.setInt(3,entity.getMedicalInfo() );
             preparedStatement.executeUpdate();
         }
         catch (SQLException e)
         {
             logger.error(e);
-            System.out.println("Error finding all elements DB"+ e);
+            throw new IllegalArgumentException("Error finding all elements DB"+ e);
         }
         return Optional.of(entity);
     }

@@ -2,7 +2,6 @@ package bpos.server.service.WebSockets;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -31,7 +30,4 @@ public class WebSocketController {
     public void sendNotificationAdmins(String message) {
         notificationService.notifyAdmins(message);
     }
-//    @Scheduled(fixedDelay = 1000)
-//    private void send() {
-//    notificationService.notifyClient("Hello");}
 }

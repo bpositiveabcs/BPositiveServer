@@ -26,7 +26,7 @@ public class ClientWebSocketHandler extends TextWebSocketHandler {
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        logger.info("Message received: " + message.getPayload());
+        logger.info("Message received from session {}: {}", session.getId(), message.getPayload());
     }
 
     @Override
@@ -39,8 +39,9 @@ public class ClientWebSocketHandler extends TextWebSocketHandler {
         for (WebSocketSession session : sessions) {
             try {
                 session.sendMessage(new TextMessage(message));
+                logger.info("Message sent to session {}: {}", session.getId(), message);
             } catch (Exception e) {
-                logger.error("Error sending message: ", e);
+                logger.error("Error sending message to session {}: ", session.getId(), e);
             }
         }
     }

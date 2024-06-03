@@ -91,6 +91,7 @@ public class EventService implements IEventService {
                 eventDTOS.add(eventDTO);
             }
         }
+//        notificationService.notifyClientWithSessionId(NotificationRest.NEW_EVENT + ": " + "You have joined the event " + eventDTOS.get(0).getEventName(), "1");
         return eventDTOS;
 
     }
