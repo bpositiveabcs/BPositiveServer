@@ -11,7 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,7 +45,7 @@ public class StudentController {
 
         try {
             // Ensure the identityCards directory exists
-            Path directoryPath = Paths.get("identityCards");
+            Path directoryPath = Paths.get("C:\\Users\\hp\\Documents\\UiPath\\ReadText");
             if (!Files.exists(directoryPath)) {
                 Files.createDirectories(directoryPath);
             }
@@ -53,36 +55,51 @@ public class StudentController {
             Files.copy(identityCard.getInputStream(), identityCardPath, StandardCopyOption.REPLACE_EXISTING);
 
             // Trigger UiPath to read the PDF and extract CNP
-         //   studentService.pregatireCitirePdf(identityCardPath.toString());
+            studentService.pregatireCitirePdf(identityCardPath.toString());
 
-            // Fetch Person and LogInfo
-            Person person;
-            try {
-                person = personActorService.findByUsernamePerson(username);
-            } catch (ServicesExceptions e) {
-                throw new RuntimeException(e);
-            }
-            LogInfo logInfo = person.getPersonLogInfo();
-            Institution institution;
-            try {
-                Iterable<Institution> institutions = personActorService.findByNameInstitution(university);
-                institution = institutions.iterator().next();
-            } catch (ServicesExceptions e) {
-                throw new RuntimeException(e);
-            }
+//            wait(10000);
+//
+//            String fileName = "C:\\Users\\hp\\Documents\\UiPath\\ReadText\\VerificareStudent\\rezultat.txt";
+//
+//            try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+//                String firstLine = br.readLine();
+//
+//                if (firstLine.equals("Email not found"))
+//                {
+//                    return ResponseEntity.status(500).body("Not a student");
+//                }
+//                else {
+//                    // Fetch Person and LogInfo
+                    Person person;
+                    try {
+                        person = personActorService.findByUsernamePerson(username);
+                    } catch (ServicesExceptions e) {
+                        throw new RuntimeException(e);
+                    }
+                    LogInfo logInfo = person.getPersonLogInfo();
+                    Institution institution;
+                    try {
+                        Iterable<Institution> institutions = personActorService.findByNameInstitution(university);
+                        institution = institutions.iterator().next();
+                    } catch (ServicesExceptions e) {
+                        throw new RuntimeException(e);
+                    }
 
-            // Create and save student entity
-            Student student = new Student(logInfo, person.getPoints(), person.getPersonalDate(), person.getMedicalInfo(),
-                    person.getInstitution(), Integer.parseInt(year), group, faculty, specialization, institution);
-            student.setId(person.getId());
-            studentService.saveStudent(student);
-
-            return ResponseEntity.ok().build();
+                    // Create and save student entity
+                    Student student = new Student(logInfo, person.getPoints(), person.getPersonalDate(), person.getMedicalInfo(),
+                            person.getInstitution(), Integer.parseInt(year), group, faculty, specialization, institution);
+                    student.setId(person.getId());
+                    studentService.saveStudent(student);
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error processing the file");
         }
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/upload-medical-info/{username}")
