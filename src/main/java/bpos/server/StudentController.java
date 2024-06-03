@@ -40,7 +40,7 @@ public class StudentController {
 
         try {
             // Ensure the identityCards directory exists
-            Path directoryPath = Paths.get("identityCards");
+            Path directoryPath = Paths.get("C:\\Users\\hp\\Documents\\UiPath\\ReadText");
             if (!Files.exists(directoryPath)) {
                 Files.createDirectories(directoryPath);
             }
@@ -50,29 +50,22 @@ public class StudentController {
             Files.copy(identityCard.getInputStream(), identityCardPath, StandardCopyOption.REPLACE_EXISTING);
 
             // Trigger UiPath to read the PDF and extract CNP
+            System.out.println("am ajuns la etapa de pregatire a pdf-ului");
             studentService.pregatireCitirePdf(identityCardPath.toString());
 
-            // Wait for UiPath to process and generate the verification code
-            String extractedCnp = studentService.readVerificationCodeFromFile();
-            if (extractedCnp == null) {
-                return ResponseEntity.status(500).body("Error extracting CNP");
-            }
+//            wait(120000);
+//
+//            // Wait for UiPath to process and generate the verification code
+//            String extractedCnp = studentService.readVerificationCodeFromFile();
+//            if (extractedCnp == null) {
+//                return ResponseEntity.status(500).body("Error extracting CNP");
+//            }
+//
+//            // Generate a unique code
+//            String code = studentService.generateUniqueCode(extractedCnp);
 
-            // Generate a unique code
-            String code = studentService.generateUniqueCode(extractedCnp);
+            return ResponseEntity.ok().build();
 
-            // Send verification email via UiPath
-            String email = studentService.getEmailByCnp(extractedCnp);
-            if (email != null) {
-                studentService.triggerUiPathSendEmail(email, code);
-
-                // Temporarily store the code and username
-                studentService.storePendingVerification(code, username);
-
-                return ResponseEntity.ok().build();
-            } else {
-                return ResponseEntity.status(404).body("Email not found");
-            }
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error processing the file");

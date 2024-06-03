@@ -49,6 +49,7 @@ public class StudentService {
     }
 
     public void apelCitirePdf() {
+        System.setProperty("java.awt.headless", "false");
         String uipathProjectPath = "C:\\Users\\hp\\Documents\\UiPath\\ReadText\\Main.xaml";
 
         try {
@@ -76,50 +77,50 @@ public class StudentService {
         }
     }
 
-    public String readVerificationCodeFromFile() {
-        File resultFile = new File("C:\\Users\\hp\\Documents\\UiPath\\ReadText\\VerificareStudent\\rezultat.txt");
-        if (resultFile.exists()) {
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(resultFile)))) {
-                return reader.readLine();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
+//    public String readVerificationCodeFromFile() {
+//        File resultFile = new File("C:\\Users\\hp\\Documents\\UiPath\\ReadText\\VerificareStudent\\rezultat.txt");
+//        if (resultFile.exists()) {
+//            try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(resultFile)))) {
+//                return reader.readLine();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return null;
+//    }
 
-    public void triggerUiPathSendEmail(String email, String code) {
-        invokeUiPathProcess("C:\\Users\\hp\\Documents\\UiPath\\EmailCupoane\\Main.xaml");
-    }
-
-    private void invokeUiPathProcess(String uipathProjectPath) {
-        try {
-            Runtime.getRuntime().exec(new String[]{"C:\\Users\\hp\\AppData\\Local\\Programs\\UiPath\\Studio\\UiPath.Studio.exe", uipathProjectPath});
-
-            Thread.sleep(15000);
-
-            Robot robot = new Robot();
-            robot.keyPress(KeyEvent.VK_CONTROL);
-            robot.keyPress(KeyEvent.VK_F6);
-            robot.keyRelease(KeyEvent.VK_F6);
-            robot.keyRelease(KeyEvent.VK_CONTROL);
-
-            Thread.sleep(5000);
-
-            int x = 1920;
-            int y = 0;
-            robot.mouseMove(x, y);
-            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-
-        } catch (IOException | AWTException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String generateUniqueCode(String cnp) {
-        return String.valueOf(cnp.hashCode()).substring(0, 4);  // Example unique code generation
-    }
+//    public void triggerUiPathSendEmail(String email, String code) {
+//        invokeUiPathProcess("C:\\Users\\hp\\Documents\\UiPath\\EmailCupoane\\Main.xaml");
+//    }
+//
+//    private void invokeUiPathProcess(String uipathProjectPath) {
+//        try {
+//            Runtime.getRuntime().exec(new String[]{"C:\\Users\\hp\\AppData\\Local\\Programs\\UiPath\\Studio\\UiPath.Studio.exe", uipathProjectPath});
+//
+//            Thread.sleep(15000);
+//
+//            Robot robot = new Robot();
+//            robot.keyPress(KeyEvent.VK_CONTROL);
+//            robot.keyPress(KeyEvent.VK_F6);
+//            robot.keyRelease(KeyEvent.VK_F6);
+//            robot.keyRelease(KeyEvent.VK_CONTROL);
+//
+//            Thread.sleep(5000);
+//
+//            int x = 1920;
+//            int y = 0;
+//            robot.mouseMove(x, y);
+//            robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+//            robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+//
+//        } catch (IOException | AWTException | InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public String generateUniqueCode(String cnp) {
+//        return String.valueOf(cnp.hashCode()).substring(0, 4);  // Example unique code generation
+//    }
 
     public String getEmailByCnp(String cnp) {
         // Lookup email by CNP (stubbed for example)
