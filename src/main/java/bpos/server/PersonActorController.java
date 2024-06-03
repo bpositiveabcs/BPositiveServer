@@ -355,8 +355,22 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestParam String username) {
         try {
+            System.out.println("Logout");
+            System.out.println(username);
             Person person=service.findByUsernamePerson(username);
             service.logout(person);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ServicesExceptions e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @PostMapping("/logoutAdmin")
+    public ResponseEntity<?> logoutAdmin(@RequestParam (value="username")String username) {
+        try {
+            System.out.println("Logout");
+            System.out.println(username);
+            Person person=service.findByUsernamePerson(username);
+            service.logoutAdmin(person);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (ServicesExceptions e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

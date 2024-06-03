@@ -118,6 +118,7 @@
         <constructor-arg ref="personRepository"/>
         <constructor-arg ref="eventRepository"/>
         <constructor-arg ref="notificationService"/>
+        <constructor-arg ref="eventRepository"/>
     </bean>
     <bean id="eventService" class="bpos.server.service.Implementation.EventService">
         <constructor-arg ref="eventRepository"/>

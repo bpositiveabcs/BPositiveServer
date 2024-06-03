@@ -60,4 +60,6 @@ public interface IPersonActorInterface {
     void signUp(PersonRequest personRequest);
 
     Person profileChange(PersonRequest personRequest) throws ServicesExceptions;
+
+    void logoutAdmin(Person person) throws ServicesExceptions;
 }

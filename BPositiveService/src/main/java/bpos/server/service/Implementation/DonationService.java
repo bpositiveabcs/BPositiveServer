@@ -1,10 +1,7 @@
 package bpos.server.service.Implementation;
 
 import bpos.common.model.*;
-import bpos.server.repository.Interfaces.DonationRepository;
-import bpos.server.repository.Interfaces.DonationTypeRepository;
-import bpos.server.repository.Interfaces.EventRepository;
-import bpos.server.repository.Interfaces.PersonRepository;
+import bpos.server.repository.Interfaces.*;
 import bpos.server.service.IObserver;
 import bpos.server.service.Interface.IDonationService;
 import bpos.server.service.ServicesExceptions;
@@ -32,14 +29,16 @@ public class DonationService implements IDonationService {
     private DonationTypeRepository donationTypeRepository;
     private PersonRepository  dbPerson;
     private EventRepository dbEvent;
+    private StudentRepository studentRepository;
     private Map<Integer,IObserver> loggedClients;
 
-    public DonationService(NotificationService notificationService, DonationRepository donationRepository, DonationTypeRepository donationTypeRepository, PersonRepository dbPerson, EventRepository dbEvent) {
+    public DonationService(NotificationService notificationService, DonationRepository donationRepository, DonationTypeRepository donationTypeRepository, PersonRepository dbPerson, EventRepository dbEvent,StudentRepository studentRepository) {
         this.notificationService = notificationService;
         this.donationRepository = donationRepository;
         this.donationTypeRepository = donationTypeRepository;
         this.dbPerson = dbPerson;
         this.dbEvent = dbEvent;
+        this.dbPerson=dbPerson;
     }
 
     @Override

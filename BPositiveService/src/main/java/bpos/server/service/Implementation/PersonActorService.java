@@ -503,6 +503,19 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
 
     }
 
+    @Override
+    public void logoutAdmin(Person person) throws ServicesExceptions {
+        System.out.println(person.getPersonLogInfo().getUsername());
+        loggedInUsers.remove(person.getPersonLogInfo().getUsername());
+        String json = null;
+        try {
+            json = objectMapper.writeValueAsString(person);
+        } catch (JsonProcessingException e) {
+            throw new ServicesExceptions("Error sending message to all clients");
+
+        }
+    }
+
     private LogInfo authenticate(String username, String password) {
         boolean found = false;
         LogInfo logInfo = new LogInfo();
