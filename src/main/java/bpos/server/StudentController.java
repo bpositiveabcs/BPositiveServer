@@ -85,9 +85,10 @@ public class StudentController {
                         throw new RuntimeException(e);
                     }
 
+                    String gr = group+"/"+semigroup;
                     // Create and save student entity
                     Student student = new Student(logInfo, person.getPoints(), person.getPersonalDate(), person.getMedicalInfo(),
-                            person.getInstitution(), Integer.parseInt(year), group, faculty, specialization, institution);
+                            person.getInstitution(), Integer.parseInt(year), gr, faculty, specialization, institution);
                     student.setId(person.getId());
                     studentService.saveStudent(student);
 //                }
