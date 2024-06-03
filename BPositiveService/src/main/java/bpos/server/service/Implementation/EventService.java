@@ -16,6 +16,7 @@ import bpos.server.service.WebSockets.NotificationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -83,10 +84,12 @@ public class EventService implements IEventService {
         Iterable<Event>allEvents= eventRepository.findAll();
         List<EventDTO> eventDTOS = new ArrayList<>();
         for(Event e: allEvents){
-            List<Person> allEventsParticipants = (List<Person>) eventRepository.findParticipants(e.getId());
-            EventDTO eventDTO = new EventDTO(e);
-            eventDTO.setCurrentNumberOfParticipants(allEventsParticipants.size());
-            eventDTOS.add(eventDTO);
+            if (e.getEventStartDate().isAfter(LocalDateTime.of(0, 1, 1, 0, 0))) {
+                List<Person> allEventsParticipants = (List<Person>) eventRepository.findParticipants(e.getId());
+                EventDTO eventDTO = new EventDTO(e);
+                eventDTO.setCurrentNumberOfParticipants(allEventsParticipants.size());
+                eventDTOS.add(eventDTO);
+            }
         }
         return eventDTOS;
 
