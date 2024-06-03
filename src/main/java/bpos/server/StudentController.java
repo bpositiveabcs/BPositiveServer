@@ -1,9 +1,6 @@
 package bpos.server;
 
-import bpos.common.model.Institution;
-import bpos.common.model.LogInfo;
-import bpos.common.model.Person;
-import bpos.common.model.Student;
+import bpos.common.model.*;
 import bpos.server.service.Implementation.LogInfoService;
 import bpos.server.service.Implementation.PersonActorService;
 import bpos.server.service.Implementation.StudentService;
@@ -20,7 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -36,11 +32,18 @@ public class StudentController {
     @PostMapping("/upload")
     public ResponseEntity<?> handleFileUpload(
             @RequestParam("identityCard") MultipartFile identityCard,
-            @RequestParam("username") String username) {
+            @RequestParam("username") String username,
+            @RequestParam("university") String university,
+            @RequestParam("faculty") String faculty,
+            @RequestParam("domain") String domain,
+            @RequestParam("specialization") String specialization,
+            @RequestParam("year") String year,
+            @RequestParam("group") String group,
+            @RequestParam("semigroup") String semigroup) {
 
         try {
             // Ensure the identityCards directory exists
-            Path directoryPath = Paths.get("C:\\Users\\hp\\Documents\\UiPath\\ReadText");
+            Path directoryPath = Paths.get("identityCards");
             if (!Files.exists(directoryPath)) {
                 Files.createDirectories(directoryPath);
             }
@@ -50,42 +53,7 @@ public class StudentController {
             Files.copy(identityCard.getInputStream(), identityCardPath, StandardCopyOption.REPLACE_EXISTING);
 
             // Trigger UiPath to read the PDF and extract CNP
-            System.out.println("am ajuns la etapa de pregatire a pdf-ului");
             studentService.pregatireCitirePdf(identityCardPath.toString());
-
-//            wait(120000);
-//
-//            // Wait for UiPath to process and generate the verification code
-//            String extractedCnp = studentService.readVerificationCodeFromFile();
-//            if (extractedCnp == null) {
-//                return ResponseEntity.status(500).body("Error extracting CNP");
-//            }
-//
-//            // Generate a unique code
-//            String code = studentService.generateUniqueCode(extractedCnp);
-
-            return ResponseEntity.ok().build();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Error processing the file");
-        }
-    }
-
-    @PostMapping("/verifyCode")
-    public ResponseEntity<?> verifyCode(@RequestBody Map<String, String> payload) {
-        String code = payload.get("code");
-        String username = studentService.getUsernameByCode(code);
-
-        if (username != null && studentService.checkCode(code)) {
-            // Get student details from payload
-            String university = payload.get("university");
-            String faculty = payload.get("faculty");
-            String domain = payload.get("domain");
-            String specialty = payload.get("specialty");
-            String year = payload.get("year");
-            String group = payload.get("group");
-            String semigroup = payload.get("semigroup");
 
             // Fetch Person and LogInfo
             Person person;
@@ -105,16 +73,15 @@ public class StudentController {
 
             // Create and save student entity
             Student student = new Student(logInfo, person.getPoints(), person.getPersonalDate(), person.getMedicalInfo(),
-                    person.getInstitution(), Integer.parseInt(year), group, faculty, specialty, institution);
+                    person.getInstitution(), Integer.parseInt(year), group, faculty, specialization, institution);
 
             studentService.saveStudent(student);
 
-            // Remove the code from pending verifications
-            studentService.removePendingVerification(code);
-
             return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.status(400).body("Invalid code");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error processing the file");
         }
     }
 
@@ -137,9 +104,19 @@ public class StudentController {
             Path targetLocation = userDir.resolve(file.getOriginalFilename());
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            return ResponseEntity.ok().body("File uploaded successfully!");
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file: " + e.getMessage());
+            // Save the medical info to the repository
+            // Assume that you have a method to get the person's medical info by username
+            Person person = personActorService.findByUsernamePerson(username);
+            BloodTest bloodTest = new BloodTest();
+            bloodTest.setName(file.getOriginalFilename());
+            bloodTest.setPath(targetLocation.toString());
+            bloodTest.setMedicalInfo(person.getMedicalInfo().getId());
+            person.getMedicalInfo().getMedicalHistory().add(bloodTest);
+            personActorService.savePerson(person);
+
+            return ResponseEntity.ok().body("File uploaded and saved successfully!");
+        } catch (IOException | ServicesExceptions e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload and save file: " + e.getMessage());
         }
     }
 }
