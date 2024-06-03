@@ -6,6 +6,10 @@ import bpos.common.model.Event;
 import bpos.common.model.Person;
 import bpos.server.service.Interface.IDonationService;
 import bpos.server.service.ServicesExceptions;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,17 +23,17 @@ public class DonationController {
     public DonationController(IDonationService service) {
         this.service = service;
     }
-    @PostMapping("/donație")
-    public ResponseEntity<?> donationRegister(@RequestBody Donation donation, @RequestBody Person person) {
+    @PostMapping("/donation")
+    public ResponseEntity<?> donationRegister(@RequestBody DonationRequest donationRequest) {
         try {
-            service.donationRegister(donation, person);
+            System.out.println("Donation request: " + donationRequest);
+            service.donationRegister(donationRequest.getDonation(), donationRequest.getPerson());
             return ResponseEntity.ok(Map.of("message", "Donația a fost înregistrată cu succes!"));
         } catch (ServicesExceptions e) {
-
-
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @GetMapping("/donations/tip-donatie")
     public ResponseEntity<?> findByTipDonation(@RequestParam(value = "tip_donatie",required = true) String tipDonatie) {
