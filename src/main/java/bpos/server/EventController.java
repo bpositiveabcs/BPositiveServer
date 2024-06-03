@@ -5,6 +5,7 @@ import bpos.common.model.Event;
 import bpos.common.model.Person;
 import bpos.common.model.RetrievedCoupons;
 import bpos.other.NotificationRest;
+import bpos.server.service.Implementation.EventDTO;
 import bpos.server.service.Interface.IEventService;
 import bpos.server.service.Interface.IPersonActorInterface;
 import bpos.server.service.ServicesExceptions;
@@ -331,6 +332,15 @@ public class EventController {
         try {
             Optional<Event> event = service.findOneEvent(id);
             return event.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        } catch (ServicesExceptions e) {
+            return new ResponseEntity<>("Eroare la procesarea cererii: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/events/dto")
+    public ResponseEntity<?> findAllEventsDTO() {
+        try {
+            List<EventDTO> events = service.findAllEventsDTO();
+            return new ResponseEntity<>(events, HttpStatus.OK);
         } catch (ServicesExceptions e) {
             return new ResponseEntity<>("Eroare la procesarea cererii: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

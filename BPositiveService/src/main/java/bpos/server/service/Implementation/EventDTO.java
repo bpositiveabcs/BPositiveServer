@@ -16,10 +16,17 @@ public class EventDTO extends Event {
     }
 
     private int currentNumberOfParticipants;
-    private EventDTO(Event event){
+    public EventDTO(Event event){
         super( event.getEventName(), event.getEventAnnouncementDate(), event.getEventStartDate(), event.getEventEndDate(), event.getMaxParticipants(), event.getEventDescription(),event.getEventRequirements(),event.getCenter());
         this.currentNumberOfParticipants = 0;
         this.id=event.getId();
     }
 
+    public int getCurrentNumberOfParticipants() {
+        return currentNumberOfParticipants;
+    }
+
+    public void setCurrentNumberOfParticipants(int currentNumberOfParticipants) {
+        this.currentNumberOfParticipants = currentNumberOfParticipants;
+    }
 }

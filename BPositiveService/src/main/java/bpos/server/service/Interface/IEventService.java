@@ -4,9 +4,11 @@ import bpos.common.model.Coupon;
 import bpos.common.model.Event;
 import bpos.common.model.Person;
 import bpos.common.model.RetrievedCoupons;
+import bpos.server.service.Implementation.EventDTO;
 import bpos.server.service.ServicesExceptions;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface IEventService {
@@ -29,6 +31,7 @@ public interface IEventService {
     Optional<Coupon> saveCoupon(Coupon entity) throws ServicesExceptions;
     Optional<Coupon> deleteCoupon(Coupon entity) throws ServicesExceptions;
     Optional<Coupon> updateCoupon(Coupon entity) throws ServicesExceptions;
+    List<EventDTO> findAllEventsDTO() throws ServicesExceptions;
     Optional<RetrievedCoupons> findOneRetrieved(Integer integer) throws ServicesExceptions;
     Iterable<RetrievedCoupons> findAllRetrieved() throws ServicesExceptions;
     Optional<RetrievedCoupons> saveRetrieved(RetrievedCoupons entity) throws ServicesExceptions;
