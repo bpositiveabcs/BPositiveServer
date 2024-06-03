@@ -7,12 +7,15 @@ import bpos.server.repository.Interfaces.MedicalInfoRepository;
 import bpos.server.service.Interface.IMedicalInformationService;
 import bpos.server.service.ServicesExceptions;
 import bpos.server.service.WebSockets.NotificationService;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
+import java.nio.file.Path;
 import java.util.Optional;
 
 public class MedicalInformationService implements IMedicalInformationService {
     private final NotificationService notificationService;
-
+    private final Path fileStorageLocation= Path.of("user_medicalInfo");
     private BloodTestRepository bloodTestRepository;
     private MedicalInfoRepository medicalInfoRepository;
 
@@ -85,5 +88,20 @@ public class MedicalInformationService implements IMedicalInformationService {
     @Override
     public Iterable<MedicalInfo> findByBloodTypeAndRhMedicalInfo(String bloodType, String rh) throws ServicesExceptions {
         return medicalInfoRepository.findByBloodTypeAndRh(bloodType, rh);
+    }
+
+    @Override
+    public Resource loadFileAsResource(String username, String filename) {
+        try {
+            Path filePath = this.fileStorageLocation.resolve(username).resolve(filename).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new RuntimeException("File not found " + filename);
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException("File not found " + filename, ex);
+        }
     }
 }

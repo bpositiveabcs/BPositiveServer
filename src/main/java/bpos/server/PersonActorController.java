@@ -1,14 +1,11 @@
 package bpos.server;
+import bpos.server.service.Interface.*;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import bpos.common.model.*;
 import bpos.other.PersonRequest;
 import bpos.server.service.IObserver;
 import bpos.server.service.Implementation.PersonActorService;
-import bpos.server.service.Interface.IAddressService;
-import bpos.server.service.Interface.IEventService;
-import bpos.server.service.Interface.ILogInfoService;
-import bpos.server.service.Interface.IPersonActorInterface;
 import bpos.server.service.ServicesExceptions;
 //import bpos.server.service.WebSockets.JwtResponse;
 //import bpos.server.service.WebSockets.JwtTokenUtil;
@@ -20,6 +17,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.authentication.AuthenticationManager;
 //import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,15 +42,19 @@ public class PersonActorController {
     private ILogInfoService logInfoService;
     private IEventService eventService;
     private IAddressService addressService;
+    private IMedicalInformationService medicalInfoService;
 //    private UserDetailsService userDetailService;
 //    private JwtTokenUtil jwtTokenUtil;
 //    @Autowired
 //    private AuthenticationManager authenticationManager;
-    public PersonActorController(IPersonActorInterface service /*, @Qualifier("jwtUserDetailsService")UserDetailsService userDetailService, JwtTokenUtil jwtTokenUtil*/,ILogInfoService logInfo,IAddressService addressService,IEventService eventService) {
+    public PersonActorController(IPersonActorInterface service /*, @Qualifier("jwtUserDetailsService")UserDetailsService userDetailService, JwtTokenUtil jwtTokenUtil*/,ILogInfoService logInfo,IAddressService addressService,IEventService eventService,
+                                 IMedicalInformationService medicalInfoService) {
         this.service = service;
         this.logInfoService=logInfo;
         this.addressService=addressService;
         this.eventService=eventService;
+        this.medicalInfoService=medicalInfoService;
+
 //        this.userDetailService = userDetailService;
 //        this.jwtTokenUtil = jwtTokenUtil;
     }
@@ -139,7 +141,21 @@ public class PersonActorController {
             throw new RuntimeException(e);
         }
     }
+    @GetMapping("/medicalInfo/{username}")
+    public ResponseEntity<MedicalInfo> getMedicalInfo(@PathVariable String username) throws ServicesExceptions {
+        Person person = service.findByUsernamePerson(username);
+        MedicalInfo medicalInfo = person.getMedicalInfo();
+        return ResponseEntity.ok(medicalInfo);
+    }
 
+    @GetMapping("/download/{username}/{filename}")
+    public ResponseEntity<?> downloadFile(@PathVariable String username, @PathVariable String filename) {
+        Resource file = medicalInfoService.loadFileAsResource(username, filename);
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
+    }
 
     @GetMapping("/persons")
     public Iterable<Person> findAllPersons() throws ServicesExceptions {
@@ -318,23 +334,7 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
     public Student findByUsernameStudent(@RequestParam(value="username",required = true)String username) throws ServicesExceptions {
         return service.findByUsernameStudent(username);
     }
-    @GetMapping("/download/{username}/{filename}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String username, @PathVariable String filename) {
-        try {
-            Path filePath = Paths.get("/analize/" + username + "/").resolve(filename).normalize();
-            Resource resource = new UrlResource(filePath.toUri());
 
-            if (resource.exists()) {
-                return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                        .body(resource);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam (value="username")String username,@RequestParam(value ="password") String password) {
         try {

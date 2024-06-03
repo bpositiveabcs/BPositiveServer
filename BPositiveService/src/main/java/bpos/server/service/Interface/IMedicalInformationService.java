@@ -3,6 +3,7 @@ package bpos.server.service.Interface;
 import bpos.common.model.BloodTest;
 import bpos.common.model.MedicalInfo;
 import bpos.server.service.ServicesExceptions;
+import org.springframework.core.io.Resource;
 
 import java.util.Optional;
 
@@ -21,4 +22,6 @@ public interface IMedicalInformationService {
     Iterable<MedicalInfo> findByBloodTypeMedicalInfo(String bloodType) throws ServicesExceptions;
     Iterable<MedicalInfo> findByRhMedicalInfo(String rh) throws ServicesExceptions;
     Iterable<MedicalInfo> findByBloodTypeAndRhMedicalInfo(String bloodType, String rh) throws ServicesExceptions;
+
+    Resource loadFileAsResource(String username, String filename);
 }
