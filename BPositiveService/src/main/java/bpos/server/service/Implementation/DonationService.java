@@ -36,7 +36,7 @@ public class DonationService implements IDonationService {
         this.notificationService = notificationService;
         this.donationRepository = donationRepository;
         this.donationTypeRepository = donationTypeRepository;
-        this.dbPerson = dbPerson;
+        this.studentRepository = studentRepository;
         this.dbEvent = dbEvent;
         this.dbPerson=dbPerson;
     }
@@ -110,12 +110,11 @@ public class DonationService implements IDonationService {
         person.setDonations(donationArrayList);
         Optional<Person> personOptional = dbPerson.update(person);
 
-
+        Student student = studentRepository.findByUsername(person.getPersonLogInfo().getUsername());
 
         /////////////
         // Check if the person is a Student object
-        if (person instanceof Student) {
-            Student student = (Student) person;
+        if (student != null) {
 
             String grupa="";
             String semigrupa = "";
