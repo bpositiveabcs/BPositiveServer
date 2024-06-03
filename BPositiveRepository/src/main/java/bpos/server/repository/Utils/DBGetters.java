@@ -141,14 +141,18 @@ public class DBGetters {
         Integer id_medicalInformation=resultSet.getInt("id_MedicalInformation");
         int medicalInfoId = resultSet.getInt("id_MedicalInformation");
         MedicalInfo medicalInfo=new MedicalInfo();
-
-        medicalInfo = getMedicalInfo(resultSet);
+        if(medicalInfoId != 0) medicalInfo = getMedicalInfo(resultSet);
 
         Integer id_institutie=resultSet.getInt("id_Institutie");
-        Institution institution=new Institution();
-
-        institution=getInstitution(resultSet);
-
+        if (id_institutie==0) id_institutie=null;
+        Institution institution=null;
+        if (id_institutie!=null) {
+            institution = new Institution();
+            institution = getInstitution(resultSet);
+        }
+       else {
+            institution=null;
+        }
         Person person=new Person(logInfo,points,personalData,medicalInfo,institution);
         person.setId(id);
         return person;

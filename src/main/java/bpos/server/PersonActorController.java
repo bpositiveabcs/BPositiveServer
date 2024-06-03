@@ -1,6 +1,7 @@
 package bpos.server;
 import bpos.server.service.Implementation.StudentService;
 import bpos.server.service.Interface.*;
+import bpos.server.service.utils.PasswordEncryption;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import bpos.common.model.*;
@@ -26,11 +27,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -348,6 +347,11 @@ public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam (value="username")String username,@RequestParam(value ="password") String password) {
         try {
+            try {
+                System.out.println(Arrays.toString(PasswordEncryption.hashPassword("admin")));
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
             Optional<Person> loggedInPerson = service.login(username, password);
             if (loggedInPerson.isPresent()) {
                 Map<String, Object> response = new HashMap<>();
