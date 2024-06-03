@@ -179,7 +179,7 @@ public class DBGetters {
         String cerinte=resultSet.getString("cerinte_Eveniment");
         String descriere=resultSet.getString("descriere_Eveniment");
         Center center=getCenter(resultSet);
-        Event event=new Event(nume,dataStart,dataEnd,dataAnunt,maxParticipanti,cerinte,descriere,center);
+        Event event=new Event(nume,dataAnunt,dataStart,dataEnd,maxParticipanti,cerinte,descriere,center);
         event.setId(id);
         return event;
     }
