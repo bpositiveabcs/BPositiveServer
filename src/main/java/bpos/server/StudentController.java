@@ -90,6 +90,8 @@ public class StudentController {
                     Student student = new Student(logInfo, person.getPoints(), person.getPersonalDate(), person.getMedicalInfo(),
                             person.getInstitution(), Integer.parseInt(year), gr, faculty, specialization, institution);
                     student.setId(person.getId());
+                    person.setInstitution(institution);
+                    personActorService.updatePerson(person);
                     studentService.saveStudent(student);
 //                }
 //            } catch (IOException e) {
@@ -99,6 +101,8 @@ public class StudentController {
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error processing the file");
+        } catch (ServicesExceptions e) {
+            throw new RuntimeException(e);
         }
         return ResponseEntity.ok().build();
     }

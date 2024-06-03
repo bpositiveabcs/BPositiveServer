@@ -99,6 +99,7 @@ public class DBStudentRepository implements StudentRepository {
 
             preparedStatement.executeUpdate();
         }
+
         catch (java.sql.SQLException e)
         {
             logger.error(e);
