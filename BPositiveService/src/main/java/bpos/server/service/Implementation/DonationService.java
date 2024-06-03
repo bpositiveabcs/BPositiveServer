@@ -108,6 +108,7 @@ public class DonationService implements IDonationService {
         donationArrayList.add(donation);
         // List<Event> eventArrayList=person.get();
         person.setDonations(donationArrayList);
+        person.setPoints(person.getPoints() + donation.getPoints());
         Optional<Person> personOptional = dbPerson.update(person);
 
         Student student = studentRepository.findByUsername(person.getPersonLogInfo().getUsername());
