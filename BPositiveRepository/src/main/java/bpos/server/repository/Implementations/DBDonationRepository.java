@@ -7,7 +7,6 @@ import bpos.server.repository.Exceptions.RepositoryException;
 import bpos.server.repository.Interfaces.DonationRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
-import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

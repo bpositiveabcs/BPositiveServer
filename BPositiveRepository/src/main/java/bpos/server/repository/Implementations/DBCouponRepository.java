@@ -6,7 +6,6 @@ import bpos.common.model.Validators.Implementation.CouponValidator;
 import bpos.server.repository.Interfaces.CouponRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
-import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

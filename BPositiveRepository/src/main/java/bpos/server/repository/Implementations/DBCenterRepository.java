@@ -5,7 +5,6 @@ import bpos.common.model.Validators.Implementation.CenterValidator;
 import bpos.server.repository.Interfaces.CenterRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
-import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

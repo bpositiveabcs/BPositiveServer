@@ -6,7 +6,7 @@ import bpos.server.repository.Exceptions.RepositoryException;
 import bpos.server.repository.Interfaces.AddressRepository;
 import bpos.server.repository.Utils.DBGetters;
 import bpos.server.repository.Utils.DBUtils;
-import org.apache.juli.logging.LogFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

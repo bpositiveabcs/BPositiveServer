@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from fuzzywuzzy import process
 
 app = Flask(__name__)
 
@@ -21,17 +22,22 @@ predefined_responses = {
     "What should I do after donating blood?": "After donating blood, it's essential to rest for a short time and drink plenty of fluids to help replenish your body's fluids. Avoid strenuous physical activity for the remainder of the day and follow any specific post-donation instructions provided by the blood donation center."
 }
 
+
+
 @app.route("/chatbot", methods=["POST"])
 def chatbot():
     data = request.json
     user_message = data["message"]
 
-    if user_message in predefined_responses:
-        response = predefined_responses[user_message]
+    closest_match = process.extractOne(user_message, predefined_responses.keys(), score_cutoff=70)
+
+    if closest_match:
+        response = predefined_responses[closest_match[0]]
     else:
         response = "Sorry, I don't understand that question."
 
     return jsonify({"response": response})
+
 
 if __name__ == "__main__":
     print("Starting chatbot server...")
