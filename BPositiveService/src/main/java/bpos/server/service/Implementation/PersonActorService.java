@@ -189,6 +189,9 @@ private final ConcurrentHashMap<String, Boolean> loggedInUsers = new ConcurrentH
     }
     @Override
     public Optional<Person> updatePerson(Person object) throws ServicesExceptions {
+        Person person= dbPerson.update(object).get();
+        notificationService.notifyAdmins(String.valueOf(NotificationRest.USER_UPDATE));
+        notificationService.notifyClient(String.valueOf(NotificationRest.USER_UPDATE));
         return dbPerson.update(object);
     }
 

@@ -380,3 +380,336 @@ This generated password is for development use only. Your security configuration
 2024-06-04 09:21:58 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
 2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
 2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2024-06-04 09:22:47 [main] INFO  b.server.BPositiveServerApplication - Flask server started.
+2024-06-04 09:22:48 [main] INFO  b.server.BPositiveServerApplication - Starting BPositiveServerApplication using Java 17.0.8 with PID 29780 (C:\Users\Deea\Desktop\BPositiveProjects\BPositiveServer\build\classes\java\main started by Deea in C:\Users\Deea\Desktop\BPositiveProjects\BPositiveServer)
+2024-06-04 09:22:48 [main] INFO  b.server.BPositiveServerApplication - No active profile set, falling back to 1 default profile: "default"
+2024-06-04 09:22:49 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 55555 (http)
+2024-06-04 09:22:49 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-0.0.0.0-55555"]
+2024-06-04 09:22:49 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-06-04 09:22:49 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2024-06-04 09:22:49 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-06-04 09:22:49 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1531 ms
+2024-06-04 09:22:50 [main] INFO  b.s.r.I.DBBloodTestRepository - DBBloodTestRepository bean initialized with properties: {bpositive.jdbc.url=jdbc:sqlite:bpositive.db, bpositive.jdbc.driver=org.sqlite.JDBC}
+2024-06-04 09:22:50 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 4c8fc69f-810a-447b-a4cb-fe63a007cb80
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-06-04 09:22:50 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@39f0c343, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@781654f8, org.springframework.security.web.context.SecurityContextHolderFilter@1b7554d4, org.springframework.security.web.header.HeaderWriterFilter@7a36c83a, org.springframework.security.web.authentication.logout.LogoutFilter@4f811029, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1ea930eb, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6e3dd5ce, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2abc55c4, org.springframework.security.web.access.ExceptionTranslationFilter@6321a5aa, org.springframework.security.web.access.intercept.AuthorizationFilter@149aa7b2]
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Patterns [/client-websocket/**, /center-websocket/**, /admin-websocket/**] in 'stompWebSocketHandlerMapping'
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.AddressController:
+	
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.CenterController:
+	
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.ChatbotController:
+	
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.DonationController:
+	
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.EventController:
+	
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.LogInfoController:
+	
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.MedicalInfoController:
+	
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.PersonActorController:
+	
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.StudentController:
+	
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.s.W.WebSocketController:
+	{[MESSAGE],[/admins]}: sendNotificationAdmins(String)
+	{[MESSAGE],[/clients]}: sendNotificationClients(String)
+	{[MESSAGE],[/centers]}: sendNotificationCenters(String)
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 133 mappings in 'requestMappingHandlerMapping'
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Detected 1 mappings in 'beanNameHandlerMapping'
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-04 09:22:50 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-04 09:22:50 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-0.0.0.0-55555"]
+2024-06-04 09:22:50 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 55555 (http) with context path ''
+2024-06-04 09:22:50 [main] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientOutboundChannel added SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2024-06-04 09:22:50 [main] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel added WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2024-06-04 09:22:50 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2024-06-04 09:22:50 [main] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@74eec640]
+2024-06-04 09:22:50 [main] DEBUG o.s.m.s.ExecutorSubscribableChannel - brokerChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@74eec640]
+2024-06-04 09:22:50 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@74eec640]]
+2024-06-04 09:22:50 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2024-06-04 09:22:50 [main] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2024-06-04 09:22:50 [main] DEBUG o.s.m.s.ExecutorSubscribableChannel - brokerChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2024-06-04 09:22:50 [main] INFO  b.server.BPositiveServerApplication - Started BPositiveServerApplication in 2.875 seconds (process running for 3.707)
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@46ea78f0
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@568f4faa
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/info?t=1717482170384", parameters={masked}
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@3db6dd52
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/info?t=1717482170384
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/978/2noagiba/websocket", parameters={}
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@3db6dd52
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/978/2noagiba/websocket
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-3] INFO  b.s.s.W.CustomHandshakeInterceptor - Session ID: 6E4901E3AD1B14E3F3E10B06D3685E3B
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-3] INFO  b.s.s.W.CustomHandshakeInterceptor - Custom handshake - Request URI: http://localhost:55555/client-websocket/978/2noagiba/websocket
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-3] INFO  b.s.s.W.CustomHandshakeInterceptor - WebSocket handshake completed with URI: http://localhost:55555/client-websocket/978/2noagiba/websocket
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2024-06-04 09:22:50 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New WebSocketServerSockJsSession[id=2noagiba]
+2024-06-04 09:22:50 [clientInboundChannel-2] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=2noagiba
+2024-06-04 09:22:51 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/info?t=1717482171376", parameters={masked}
+2024-06-04 09:22:51 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@3db6dd52
+2024-06-04 09:22:51 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/info?t=1717482171376
+2024-06-04 09:22:51 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:22:51 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/913/gselsolt/websocket", parameters={}
+2024-06-04 09:22:51 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@3db6dd52
+2024-06-04 09:22:51 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/913/gselsolt/websocket
+2024-06-04 09:22:51 [http-nio-0.0.0.0-55555-exec-4] INFO  b.s.s.W.CustomHandshakeInterceptor - Session ID: 6E4901E3AD1B14E3F3E10B06D3685E3B
+2024-06-04 09:22:51 [http-nio-0.0.0.0-55555-exec-4] INFO  b.s.s.W.CustomHandshakeInterceptor - Custom handshake - Request URI: http://localhost:55555/client-websocket/913/gselsolt/websocket
+2024-06-04 09:22:51 [http-nio-0.0.0.0-55555-exec-4] INFO  b.s.s.W.CustomHandshakeInterceptor - WebSocket handshake completed with URI: http://localhost:55555/client-websocket/913/gselsolt/websocket
+2024-06-04 09:22:51 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2024-06-04 09:22:51 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New WebSocketServerSockJsSession[id=gselsolt]
+2024-06-04 09:22:51 [clientInboundChannel-5] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=gselsolt
+2024-06-04 09:22:52 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - WebSocketServerSockJsSession[id=2noagiba] closed with CloseStatus[code=1000, reason=null]
+2024-06-04 09:22:52 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session 2noagiba
+2024-06-04 09:22:52 [clientInboundChannel-8] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=2noagiba
+2024-06-04 09:22:52 [clientOutboundChannel-3] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - No session for GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT_ACK, simpDisconnectMessage=GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT, stompCommand=DISCONNECT, simpSessionAttributes={org.springframework.messaging.simp.SimpAttributes.COMPLETED=true, sessionId=6E4901E3AD1B14E3F3E10B06D3685E3B}, simpSessionId=2noagiba}], simpSessionId=2noagiba}]
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/personActorService/students/username?username=kriss", parameters={masked}
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/events-dto", parameters={}
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/info?t=1717482173030", parameters={masked}
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllEventsDTO()
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.PersonActorController#findByUsernameStudent(String)
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@3db6dd52
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/info?t=1717482173030
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/634/0l2i2rv1/websocket", parameters={}
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@3db6dd52
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/634/0l2i2rv1/websocket
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-6] INFO  b.s.s.W.CustomHandshakeInterceptor - Session ID: 6E4901E3AD1B14E3F3E10B06D3685E3B
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-6] INFO  b.s.s.W.CustomHandshakeInterceptor - Custom handshake - Request URI: http://localhost:55555/client-websocket/634/0l2i2rv1/websocket
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-6] INFO  b.s.s.W.CustomHandshakeInterceptor - WebSocket handshake completed with URI: http://localhost:55555/client-websocket/634/0l2i2rv1/websocket
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New WebSocketServerSockJsSession[id=0l2i2rv1]
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-8] INFO  b.server.repository.Utils.DBUtils - trying to connect to the database jdbc:sqlite:bpositive.db
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-8] INFO  b.server.repository.Utils.DBUtils - user null
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-8] INFO  b.server.repository.Utils.DBUtils - password null
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-7] INFO  b.server.repository.Utils.DBUtils - trying to connect to the database jdbc:sqlite:bpositive.db
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-7] INFO  b.server.repository.Utils.DBUtils - user null
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-7] INFO  b.server.repository.Utils.DBUtils - password null
+2024-06-04 09:22:53 [clientInboundChannel-11] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=0l2i2rv1
+2024-06-04 09:22:53 [clientInboundChannel-14] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing SUBSCRIBE /topic/clients id=sub-0 session=0l2i2rv1
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/personActorService/students/username?username=kriss", parameters={masked}
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.PersonActorController#findByUsernameStudent(String)
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Event{eventName='Donare Plasma ', eventAnnouncementDate=2024-06-03T00:00, eventStartDate=2024-06-03 (truncated)...]
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/events-dto", parameters={}
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllEventsDTO()
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Event{eventName='Donare Plasma ', eventAnnouncementDate=2024-06-03T00:00, eventStartDate=2024-06-03 (truncated)...]
+2024-06-04 09:22:53 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:22:57 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/coupons", parameters={}
+2024-06-04 09:22:57 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllCoupons()
+2024-06-04 09:22:57 [http-nio-0.0.0.0-55555-exec-10] INFO  b.server.repository.Utils.DBUtils - trying to connect to the database jdbc:sqlite:bpositive.db
+2024-06-04 09:22:57 [http-nio-0.0.0.0-55555-exec-10] INFO  b.server.repository.Utils.DBUtils - user null
+2024-06-04 09:22:57 [http-nio-0.0.0.0-55555-exec-10] INFO  b.server.repository.Utils.DBUtils - password null
+2024-06-04 09:22:57 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2024-06-04 09:22:57 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Coupon{necessaryPoints=5, name='cupon_carturesti', provider='Carturesti', offer='25% reducere', una (truncated)...]
+2024-06-04 09:22:57 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:22:57 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/coupons", parameters={}
+2024-06-04 09:22:57 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllCoupons()
+2024-06-04 09:22:57 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2024-06-04 09:22:57 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Coupon{necessaryPoints=5, name='cupon_carturesti', provider='Carturesti', offer='25% reducere', una (truncated)...]
+2024-06-04 09:22:57 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:23:00 [MessageBroker-3] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Closed 1 sessions: [2noagiba]
+2024-06-04 09:23:50 [MessageBroker-8] INFO  o.s.w.s.c.WebSocketMessageBrokerStats - WebSocketSession[2 current WS(2)-HttpStream(0)-HttpPoll(0), 3 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(3)-CONNECTED(3)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 15, active threads = 0, queued tasks = 0, completed tasks = 15], outboundChannel[pool size = 4, active threads = 0, queued tasks = 0, completed tasks = 4], sockJsScheduler[pool size = 20, active threads = 1, queued tasks = 3, completed tasks = 16]
+2024-06-04 09:25:54 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/personActorService/medicalInfo/kriss", parameters={}
+2024-06-04 09:25:54 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.PersonActorController#getMedicalInfo(String)
+2024-06-04 09:25:54 [http-nio-0.0.0.0-55555-exec-5] INFO  b.server.repository.Utils.DBUtils - trying to connect to the database jdbc:sqlite:bpositive.db
+2024-06-04 09:25:54 [http-nio-0.0.0.0-55555-exec-5] INFO  b.server.repository.Utils.DBUtils - user null
+2024-06-04 09:25:54 [http-nio-0.0.0.0-55555-exec-5] INFO  b.server.repository.Utils.DBUtils - password null
+2024-06-04 09:25:54 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-04 09:25:54 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [MedicalInfo{eligibility=false, bloodType=A2, rh=POSITIVE, medicalHistory=[BloodTest{name='null', pat (truncated)...]
+2024-06-04 09:25:54 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:25:54 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/personActorService/medicalInfo/kriss", parameters={}
+2024-06-04 09:25:54 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.PersonActorController#getMedicalInfo(String)
+2024-06-04 09:25:54 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-04 09:25:54 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [MedicalInfo{eligibility=false, bloodType=A2, rh=POSITIVE, medicalHistory=[BloodTest{name='null', pat (truncated)...]
+2024-06-04 09:25:54 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:25:57 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/coupons", parameters={}
+2024-06-04 09:25:57 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllCoupons()
+2024-06-04 09:25:57 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2024-06-04 09:25:57 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Coupon{necessaryPoints=5, name='cupon_carturesti', provider='Carturesti', offer='25% reducere', una (truncated)...]
+2024-06-04 09:25:57 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:25:57 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/coupons", parameters={}
+2024-06-04 09:25:57 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllCoupons()
+2024-06-04 09:25:57 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2024-06-04 09:25:57 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Coupon{necessaryPoints=5, name='cupon_carturesti', provider='Carturesti', offer='25% reducere', una (truncated)...]
+2024-06-04 09:25:57 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:01 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - WebSocketServerSockJsSession[id=0l2i2rv1] closed with CloseStatus[code=1000, reason=null]
+2024-06-04 09:27:01 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session 0l2i2rv1
+2024-06-04 09:27:01 [clientInboundChannel-17] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=0l2i2rv1
+2024-06-04 09:27:01 [clientOutboundChannel-5] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - No session for GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT_ACK, simpDisconnectMessage=GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT, stompCommand=DISCONNECT, simpSessionAttributes={org.springframework.messaging.simp.SimpAttributes.COMPLETED=true, sessionId=6E4901E3AD1B14E3F3E10B06D3685E3B}, simpSessionId=0l2i2rv1}], simpSessionId=0l2i2rv1}]
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/personActorService/students/username?username=kriss", parameters={masked}
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.PersonActorController#findByUsernameStudent(String)
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/events-dto", parameters={}
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllEventsDTO()
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/personActorService/students/username?username=kriss", parameters={masked}
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.PersonActorController#findByUsernameStudent(String)
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Event{eventName='Donare Plasma ', eventAnnouncementDate=2024-06-03T00:00, eventStartDate=2024-06-03 (truncated)...]
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/events-dto", parameters={}
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllEventsDTO()
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Event{eventName='Donare Plasma ', eventAnnouncementDate=2024-06-03T00:00, eventStartDate=2024-06-03 (truncated)...]
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/info?t=1717482422308", parameters={masked}
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@3db6dd52
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/info?t=1717482422308
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/039/hnb1rqlo/websocket", parameters={}
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@3db6dd52
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/039/hnb1rqlo/websocket
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-4] INFO  b.s.s.W.CustomHandshakeInterceptor - Session ID: 6E4901E3AD1B14E3F3E10B06D3685E3B
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-4] INFO  b.s.s.W.CustomHandshakeInterceptor - Custom handshake - Request URI: http://localhost:55555/client-websocket/039/hnb1rqlo/websocket
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-4] INFO  b.s.s.W.CustomHandshakeInterceptor - WebSocket handshake completed with URI: http://localhost:55555/client-websocket/039/hnb1rqlo/websocket
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2024-06-04 09:27:02 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New WebSocketServerSockJsSession[id=hnb1rqlo]
+2024-06-04 09:27:02 [clientInboundChannel-20] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=hnb1rqlo
+2024-06-04 09:27:02 [clientInboundChannel-23] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing SUBSCRIBE /topic/clients id=sub-0 session=hnb1rqlo
+2024-06-04 09:27:04 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/coupons", parameters={}
+2024-06-04 09:27:04 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllCoupons()
+2024-06-04 09:27:04 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2024-06-04 09:27:04 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Coupon{necessaryPoints=5, name='cupon_carturesti', provider='Carturesti', offer='25% reducere', una (truncated)...]
+2024-06-04 09:27:04 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:04 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/coupons", parameters={}
+2024-06-04 09:27:04 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllCoupons()
+2024-06-04 09:27:04 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2024-06-04 09:27:04 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Coupon{necessaryPoints=5, name='cupon_carturesti', provider='Carturesti', offer='25% reducere', una (truncated)...]
+2024-06-04 09:27:04 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:06 [clientInboundChannel-26] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing UNSUBSCRIBE id=sub-0 session=hnb1rqlo
+2024-06-04 09:27:06 [clientInboundChannel-29] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT receipt=close-1 session=hnb1rqlo
+2024-06-04 09:27:06 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - WebSocketServerSockJsSession[id=hnb1rqlo] closed with CloseStatus[code=1000, reason=null]
+2024-06-04 09:27:06 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session hnb1rqlo
+2024-06-04 09:27:06 [clientInboundChannel-32] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=hnb1rqlo
+2024-06-04 09:27:06 [clientOutboundChannel-8] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - No session for GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT_ACK, simpDisconnectMessage=GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT, stompCommand=DISCONNECT, simpSessionAttributes={org.springframework.messaging.simp.SimpAttributes.COMPLETED=true, sessionId=6E4901E3AD1B14E3F3E10B06D3685E3B}, simpSessionId=hnb1rqlo}], simpSessionId=hnb1rqlo}]
+2024-06-04 09:27:10 [MessageBroker-7] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Closed 1 sessions: [0l2i2rv1]
+2024-06-04 09:27:15 [MessageBroker-7] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Closed 1 sessions: [hnb1rqlo]
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - POST "/personActorService/login?username=kriss&password=kriss", parameters={masked}
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.PersonActorController#login(String, String)
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-7] INFO  b.server.repository.Utils.DBUtils - trying to connect to the database jdbc:sqlite:bpositive.db
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-7] INFO  b.server.repository.Utils.DBUtils - user null
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-7] INFO  b.server.repository.Utils.DBUtils - password null
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing MESSAGE destination=/topic/admins session=null payload=LOGIN
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-7] INFO  b.s.s.WebSockets.NotificationService - Sent message to admins: LOGIN
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [{person=Person{personLogInfo=LogInfo{username='kriss', password='tnhPZFu6PhGMTHpCQ+2ZcZpPZywA6KMpKAU (truncated)...]
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/personActorService/students/username?username=kriss", parameters={masked}
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.PersonActorController#findByUsernameStudent(String)
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/events-dto", parameters={}
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllEventsDTO()
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/personActorService/students/username?username=kriss", parameters={masked}
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/info?t=1717482446329", parameters={masked}
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.PersonActorController#findByUsernameStudent(String)
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@3db6dd52
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/info?t=1717482446329
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Event{eventName='Donare Plasma ', eventAnnouncementDate=2024-06-03T00:00, eventStartDate=2024-06-03 (truncated)...]
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/events-dto", parameters={}
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllEventsDTO()
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Event{eventName='Donare Plasma ', eventAnnouncementDate=2024-06-03T00:00, eventStartDate=2024-06-03 (truncated)...]
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/881/4zafg4ae/websocket", parameters={}
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@3db6dd52
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/881/4zafg4ae/websocket
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-6] INFO  b.s.s.W.CustomHandshakeInterceptor - Session ID: 6E4901E3AD1B14E3F3E10B06D3685E3B
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-6] INFO  b.s.s.W.CustomHandshakeInterceptor - Custom handshake - Request URI: http://localhost:55555/client-websocket/881/4zafg4ae/websocket
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-6] INFO  b.s.s.W.CustomHandshakeInterceptor - WebSocket handshake completed with URI: http://localhost:55555/client-websocket/881/4zafg4ae/websocket
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2024-06-04 09:27:26 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New WebSocketServerSockJsSession[id=4zafg4ae]
+2024-06-04 09:27:26 [clientInboundChannel-35] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=4zafg4ae
+2024-06-04 09:27:26 [clientInboundChannel-38] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing SUBSCRIBE /topic/clients id=sub-0 session=4zafg4ae
+2024-06-04 09:27:34 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/coupons", parameters={}
+2024-06-04 09:27:34 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllCoupons()
+2024-06-04 09:27:34 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2024-06-04 09:27:34 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Coupon{necessaryPoints=5, name='cupon_carturesti', provider='Carturesti', offer='25% reducere', una (truncated)...]
+2024-06-04 09:27:34 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:34 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/coupons", parameters={}
+2024-06-04 09:27:34 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllCoupons()
+2024-06-04 09:27:34 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2024-06-04 09:27:34 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Coupon{necessaryPoints=5, name='cupon_carturesti', provider='Carturesti', offer='25% reducere', una (truncated)...]
+2024-06-04 09:27:34 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:38 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - OPTIONS "/retrieved-coupons/list-coupons", parameters={}
+2024-06-04 09:27:38 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#listCouponsSelected(PersonCouponRequest)
+2024-06-04 09:27:38 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:38 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - POST "/retrieved-coupons/list-coupons", parameters={}
+2024-06-04 09:27:38 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#listCouponsSelected(PersonCouponRequest)
+2024-06-04 09:27:38 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [bpos.server.PersonCouponRequest@17bb7139]
+2024-06-04 09:27:38 [http-nio-0.0.0.0-55555-exec-10] INFO  b.server.repository.Utils.DBUtils - trying to connect to the database jdbc:sqlite:bpositive.db
+2024-06-04 09:27:38 [http-nio-0.0.0.0-55555-exec-10] INFO  b.server.repository.Utils.DBUtils - user null
+2024-06-04 09:27:38 [http-nio-0.0.0.0-55555-exec-10] INFO  b.server.repository.Utils.DBUtils - password null
+2024-06-04 09:27:38 [http-nio-0.0.0.0-55555-exec-10] ERROR b.s.r.I.DBRetrievedCouponsRepository - [SQLITE_CONSTRAINT_UNIQUE] A UNIQUE constraint failed (UNIQUE constraint failed: CupoaneRetrieved.series_unique)
+2024-06-04 09:27:39 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2024-06-04 09:27:39 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [bpos.server.PersonCouponResponse@6e3e262f]
+2024-06-04 09:27:39 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 201 CREATED
+2024-06-04 09:27:41 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/coupons", parameters={}
+2024-06-04 09:27:41 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllCoupons()
+2024-06-04 09:27:41 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2024-06-04 09:27:41 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Coupon{necessaryPoints=5, name='cupon_carturesti', provider='Carturesti', offer='25% reducere', una (truncated)...]
+2024-06-04 09:27:41 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:27:41 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - GET "/coupons", parameters={}
+2024-06-04 09:27:41 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllCoupons()
+2024-06-04 09:27:41 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2024-06-04 09:27:41 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Coupon{necessaryPoints=5, name='cupon_carturesti', provider='Carturesti', offer='25% reducere', una (truncated)...]
+2024-06-04 09:27:41 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientOutboundChannel removed SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.w.s.s.t.s.WebSocketServerSockJsSession - Closing SockJS session gselsolt with CloseStatus[code=1001, reason=null]
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.w.s.a.NativeWebSocketSession - Closing StandardWebSocketSession[id=52a96a30-011a-e9d8-8391-39e0814e09c3, uri=ws://localhost:55555/client-websocket/913/gselsolt/websocket]
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - WebSocketServerSockJsSession[id=gselsolt] closed with CloseStatus[code=1001, reason=null]
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session gselsolt
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.w.s.s.t.s.WebSocketServerSockJsSession - Closing SockJS session 4zafg4ae with CloseStatus[code=1001, reason=null]
+2024-06-04 09:29:00 [clientInboundChannel-41] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=gselsolt
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.w.s.a.NativeWebSocketSession - Closing StandardWebSocketSession[id=2acdc29c-9b33-5cd9-dde8-2212ddda4599, uri=ws://localhost:55555/client-websocket/881/4zafg4ae/websocket]
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - WebSocketServerSockJsSession[id=4zafg4ae] closed with CloseStatus[code=1001, reason=null]
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session 4zafg4ae
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel removed WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@74eec640]]
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@74eec640]
+2024-06-04 09:29:00 [clientInboundChannel-44] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=4zafg4ae
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - brokerChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@74eec640]
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2024-06-04 09:29:00 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
