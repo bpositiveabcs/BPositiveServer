@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${logging.pattern.console:-%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_FILE:-./application.log}</file>
+        <append>true</append>
+        <encoder>
+            <pattern>${logging.pattern.file:-%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="console" />
+        <appender-ref ref="file" />
+    </root>
+</configuration>

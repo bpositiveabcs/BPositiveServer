@@ -28,16 +28,16 @@ import java.io.IOException;
 @EnableWebSocket
 public class BPositiveServerApplication {
 
-//    private static final Logger logger = LoggerFactory.getLogger(BPositiveServerApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(BPositiveServerApplication.class);
 
     public static void main(String[] args) {
         try{
         ProcessBuilder processBuilder = new ProcessBuilder("python", "python/chatbot.py");
         processBuilder.start();
-//        logger.info("Flask server started.");
+        logger.info("Flask server started.");
     } catch (IOException e) {
         e.printStackTrace();
-//        logger.error("Failed to start Flask server: " + e.getMessage());
+        logger.error("Failed to start Flask server: " + e.getMessage());
     }
 
         SpringApplication.run(BPositiveServerApplication.class, args);

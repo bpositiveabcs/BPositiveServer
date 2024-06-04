@@ -24,30 +24,28 @@ dependencies {
     implementation project(':BPositiveService')
     implementation project(path: ':BPositiveCommon:BPositiveModel')
     implementation project(path: ':BPositiveCommon:BPositiveOther')
+
     // Spring Boot dependencies
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
-    // Exclude log4j-to-slf4j to avoid conflicts with log4j-slf4j-impl
+    // Exclude Log4j2 and include Logback for logging
     implementation ('org.springframework.boot:spring-boot-starter') {
-        exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
-    implementation ('org.springframework.boot:spring-boot-starter-logging') {
+    implementation 'ch.qos.logback:logback-classic:1.4.11'
+
+    // Exclude other logging implementations
+    configurations.all {
         exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
-        exclude group: 'ch.qos.logback', module: 'logback-classic'
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
     }
 
-    // Logging with Log4j2
-    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-
-    // Apache POI dependencies with exclusion
-    implementation ('org.apache.poi:poi-ooxml:5.2.2') {
-        exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
-    }
-    implementation ('org.apache.poi:poi:5.2.2') {
-        exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
-    }
+    // Include SLF4J bindings for Logback
+    implementation 'org.slf4j:slf4j-api:2.0.9'
 
     // Lombok for reducing boilerplate code
     compileOnly 'org.projectlombok:lombok'
@@ -67,6 +65,9 @@ dependencies {
 
     // Testing dependencies
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Apache POI for Excel file handling
+    implementation 'org.apache.poi:poi-ooxml:5.2.2'
 }
 
 application {

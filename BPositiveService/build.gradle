@@ -28,16 +28,17 @@ dependencies {
     implementation project(':BPositiveCommon:BPositiveOther')
     implementation project(':BPositiveRepository')
 
-    // Spring Boot dependencies
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
-    // Exclude logback and include log4j2 for logging
+    // Exclude other loggers and include logback for logging
     implementation ('org.springframework.boot:spring-boot-starter') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
-    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
+    implementation 'ch.qos.logback:logback-classic:1.4.11'
+    implementation 'org.slf4j:slf4j-api:2.0.9'
 
     // Lombok for reducing boilerplate code
     compileOnly 'org.projectlombok:lombok'
