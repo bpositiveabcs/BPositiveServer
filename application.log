@@ -16,3 +16,367 @@
 2024-06-04 09:12:56 [http-nio-0.0.0.0-55555-exec-10] INFO  b.s.s.W.CustomHandshakeInterceptor - Session ID: 4812081087D482B9FFC180D273808375
 2024-06-04 09:12:56 [http-nio-0.0.0.0-55555-exec-10] INFO  b.s.s.W.CustomHandshakeInterceptor - Custom handshake - Request URI: http://localhost:55555/client-websocket/259/on0h0h0j/websocket
 2024-06-04 09:12:56 [http-nio-0.0.0.0-55555-exec-10] INFO  b.s.s.W.CustomHandshakeInterceptor - WebSocket handshake completed with URI: http://localhost:55555/client-websocket/259/on0h0h0j/websocket
+2024-06-04 09:14:35 [main] INFO  b.server.BPositiveServerApplication - Flask server started.
+2024-06-04 09:14:36 [main] INFO  b.server.BPositiveServerApplication - Starting BPositiveServerApplication using Java 17.0.8 with PID 23284 (C:\Users\Deea\Desktop\BPositiveProjects\BPositiveServer\build\classes\java\main started by Deea in C:\Users\Deea\Desktop\BPositiveProjects\BPositiveServer)
+2024-06-04 09:14:36 [main] INFO  b.server.BPositiveServerApplication - No active profile set, falling back to 1 default profile: "default"
+2024-06-04 09:14:37 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 55555 (http)
+2024-06-04 09:14:37 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-0.0.0.0-55555"]
+2024-06-04 09:14:37 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-06-04 09:14:37 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2024-06-04 09:14:37 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-06-04 09:14:37 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1400 ms
+2024-06-04 09:14:37 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'addressController' defined in file [C:\Users\Deea\Desktop\BPositiveProjects\BPositiveServer\build\classes\java\main\bpos\server\AddressController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'addressService' defined in class path resource [App.xml]: Cannot resolve reference to bean 'addressRepository' while setting constructor argument
+2024-06-04 09:14:37 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2024-06-04 09:14:37 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-06-04 09:14:37 [main] ERROR o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'addressController' defined in file [C:\Users\Deea\Desktop\BPositiveProjects\BPositiveServer\build\classes\java\main\bpos\server\AddressController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'addressService' defined in class path resource [App.xml]: Cannot resolve reference to bean 'addressRepository' while setting constructor argument
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:801)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:950)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1290)
+	at bpos.server.BPositiveServerApplication.main(BPositiveServerApplication.java:43)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'addressService' defined in class path resource [App.xml]: Cannot resolve reference to bean 'addressRepository' while setting constructor argument
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:702)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:206)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:910)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788)
+	... 19 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'addressRepository' defined in class path resource [App.xml]: Failed to instantiate [bpos.server.repository.Implementations.DBAddressRepository]: Constructor threw exception
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:321)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:309)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
+	... 35 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [bpos.server.repository.Implementations.DBAddressRepository]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:225)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:110)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:318)
+	... 45 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: org/apache/logging/log4j/LogManager
+	at bpos.server.repository.Utils.DBUtils.<clinit>(DBUtils.java:13)
+	at bpos.server.repository.Implementations.DBAddressRepository.<init>(DBAddressRepository.java:27)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:212)
+	... 47 common frames omitted
+Caused by: java.lang.ClassNotFoundException: org.apache.logging.log4j.LogManager
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525)
+	... 55 common frames omitted
+2024-06-04 09:14:44 [main] INFO  b.server.BPositiveServerApplication - Flask server started.
+2024-06-04 09:14:45 [main] INFO  b.server.BPositiveServerApplication - Starting BPositiveServerApplication using Java 17.0.8 with PID 20696 (C:\Users\Deea\Desktop\BPositiveProjects\BPositiveServer\build\classes\java\main started by Deea in C:\Users\Deea\Desktop\BPositiveProjects\BPositiveServer)
+2024-06-04 09:14:45 [main] INFO  b.server.BPositiveServerApplication - No active profile set, falling back to 1 default profile: "default"
+2024-06-04 09:14:46 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 55555 (http)
+2024-06-04 09:14:46 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-0.0.0.0-55555"]
+2024-06-04 09:14:46 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-06-04 09:14:46 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2024-06-04 09:14:46 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-06-04 09:14:46 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1512 ms
+2024-06-04 09:14:46 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'addressController' defined in file [C:\Users\Deea\Desktop\BPositiveProjects\BPositiveServer\build\classes\java\main\bpos\server\AddressController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'addressService' defined in class path resource [App.xml]: Cannot resolve reference to bean 'addressRepository' while setting constructor argument
+2024-06-04 09:14:46 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2024-06-04 09:14:46 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-06-04 09:14:46 [main] ERROR o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'addressController' defined in file [C:\Users\Deea\Desktop\BPositiveProjects\BPositiveServer\build\classes\java\main\bpos\server\AddressController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'addressService' defined in class path resource [App.xml]: Cannot resolve reference to bean 'addressRepository' while setting constructor argument
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:801)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:950)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:733)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:435)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:311)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1301)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1290)
+	at bpos.server.BPositiveServerApplication.main(BPositiveServerApplication.java:43)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'addressService' defined in class path resource [App.xml]: Cannot resolve reference to bean 'addressRepository' while setting constructor argument
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:702)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:206)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:910)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788)
+	... 19 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'addressRepository' defined in class path resource [App.xml]: Failed to instantiate [bpos.server.repository.Implementations.DBAddressRepository]: Constructor threw exception
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:321)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:309)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
+	... 35 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [bpos.server.repository.Implementations.DBAddressRepository]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:225)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:110)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:318)
+	... 45 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: org/apache/logging/log4j/LogManager
+	at bpos.server.repository.Utils.DBUtils.<clinit>(DBUtils.java:13)
+	at bpos.server.repository.Implementations.DBAddressRepository.<init>(DBAddressRepository.java:27)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:212)
+	... 47 common frames omitted
+Caused by: java.lang.ClassNotFoundException: org.apache.logging.log4j.LogManager
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:525)
+	... 55 common frames omitted
+2024-06-04 09:21:20 [main] INFO  b.server.BPositiveServerApplication - Flask server started.
+2024-06-04 09:21:21 [main] INFO  b.server.BPositiveServerApplication - Starting BPositiveServerApplication using Java 17.0.8 with PID 22752 (C:\Users\Deea\Desktop\BPositiveProjects\BPositiveServer\build\classes\java\main started by Deea in C:\Users\Deea\Desktop\BPositiveProjects\BPositiveServer)
+2024-06-04 09:21:21 [main] INFO  b.server.BPositiveServerApplication - No active profile set, falling back to 1 default profile: "default"
+2024-06-04 09:21:22 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 55555 (http)
+2024-06-04 09:21:22 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-0.0.0.0-55555"]
+2024-06-04 09:21:22 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-06-04 09:21:22 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2024-06-04 09:21:22 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-06-04 09:21:22 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1456 ms
+2024-06-04 09:21:23 [main] INFO  b.s.r.I.DBBloodTestRepository - DBBloodTestRepository bean initialized with properties: {bpositive.jdbc.url=jdbc:sqlite:bpositive.db, bpositive.jdbc.driver=org.sqlite.JDBC}
+2024-06-04 09:21:23 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: e0512cce-7735-4056-b3bc-ce34b34797d8
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-06-04 09:21:23 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2a99ca99, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@39f0c343, org.springframework.security.web.context.SecurityContextHolderFilter@7b297740, org.springframework.security.web.header.HeaderWriterFilter@1c7f9861, org.springframework.security.web.authentication.logout.LogoutFilter@4faf1f4, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@57ce2898, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@39449465, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@781654f8, org.springframework.security.web.access.ExceptionTranslationFilter@191ec193, org.springframework.security.web.access.intercept.AuthorizationFilter@7f0d8eff]
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Patterns [/client-websocket/**, /center-websocket/**, /admin-websocket/**] in 'stompWebSocketHandlerMapping'
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.AddressController:
+	
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.CenterController:
+	
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.ChatbotController:
+	
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.DonationController:
+	
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.EventController:
+	
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.LogInfoController:
+	
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.MedicalInfoController:
+	
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.PersonActorController:
+	
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.StudentController:
+	
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	b.s.s.W.WebSocketController:
+	{[MESSAGE],[/centers]}: sendNotificationCenters(String)
+	{[MESSAGE],[/clients]}: sendNotificationClients(String)
+	{[MESSAGE],[/admins]}: sendNotificationAdmins(String)
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.WebSocketAnnotationMethodMessageHandler - 
+	o.s.b.a.w.s.e.BasicErrorController:
+	
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - 133 mappings in 'requestMappingHandlerMapping'
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.h.BeanNameUrlHandlerMapping - Detected 1 mappings in 'beanNameHandlerMapping'
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.h.SimpleUrlHandlerMapping - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2024-06-04 09:21:23 [main] DEBUG o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2024-06-04 09:21:23 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-0.0.0.0-55555"]
+2024-06-04 09:21:23 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 55555 (http) with context path ''
+2024-06-04 09:21:23 [main] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientOutboundChannel added SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2024-06-04 09:21:23 [main] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel added WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2024-06-04 09:21:23 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Starting...
+2024-06-04 09:21:23 [main] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@5b4954b2]
+2024-06-04 09:21:23 [main] DEBUG o.s.m.s.ExecutorSubscribableChannel - brokerChannel added SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@5b4954b2]
+2024-06-04 09:21:23 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@5b4954b2]]
+2024-06-04 09:21:23 [main] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Started.
+2024-06-04 09:21:23 [main] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2024-06-04 09:21:23 [main] DEBUG o.s.m.s.ExecutorSubscribableChannel - brokerChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2024-06-04 09:21:23 [main] INFO  b.server.BPositiveServerApplication - Started BPositiveServerApplication in 2.901 seconds (process running for 4.329)
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected StandardServletMultipartResolver
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected AcceptHeaderLocaleResolver
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected FixedThemeResolver
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@184751f3
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Detected org.springframework.web.servlet.support.SessionFlashMapManager@23b71d24
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/info?t=1717482082377", parameters={masked}
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@66451058
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/info?t=1717482082377
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-2] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/358/bkemgc25/websocket", parameters={}
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@66451058
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/358/bkemgc25/websocket
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-8] INFO  b.s.s.W.CustomHandshakeInterceptor - Session ID: 66AC830227802AC24F3BDF4457A408A5
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-8] INFO  b.s.s.W.CustomHandshakeInterceptor - Custom handshake - Request URI: http://localhost:55555/client-websocket/358/bkemgc25/websocket
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-8] INFO  b.s.s.W.CustomHandshakeInterceptor - WebSocket handshake completed with URI: http://localhost:55555/client-websocket/358/bkemgc25/websocket
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2024-06-04 09:21:23 [http-nio-0.0.0.0-55555-exec-8] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New WebSocketServerSockJsSession[id=bkemgc25]
+2024-06-04 09:21:23 [clientInboundChannel-2] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=bkemgc25
+2024-06-04 09:21:26 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/info?t=1717482086368", parameters={masked}
+2024-06-04 09:21:26 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@66451058
+2024-06-04 09:21:26 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/info?t=1717482086368
+2024-06-04 09:21:26 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:21:26 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/133/vpiyskec/websocket", parameters={}
+2024-06-04 09:21:26 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@66451058
+2024-06-04 09:21:26 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/133/vpiyskec/websocket
+2024-06-04 09:21:26 [http-nio-0.0.0.0-55555-exec-4] INFO  b.s.s.W.CustomHandshakeInterceptor - Session ID: 66AC830227802AC24F3BDF4457A408A5
+2024-06-04 09:21:26 [http-nio-0.0.0.0-55555-exec-4] INFO  b.s.s.W.CustomHandshakeInterceptor - Custom handshake - Request URI: http://localhost:55555/client-websocket/133/vpiyskec/websocket
+2024-06-04 09:21:26 [http-nio-0.0.0.0-55555-exec-4] INFO  b.s.s.W.CustomHandshakeInterceptor - WebSocket handshake completed with URI: http://localhost:55555/client-websocket/133/vpiyskec/websocket
+2024-06-04 09:21:26 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2024-06-04 09:21:26 [http-nio-0.0.0.0-55555-exec-4] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New WebSocketServerSockJsSession[id=vpiyskec]
+2024-06-04 09:21:26 [clientInboundChannel-5] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=vpiyskec
+2024-06-04 09:21:40 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - WebSocketServerSockJsSession[id=bkemgc25] closed with CloseStatus[code=1000, reason=null]
+2024-06-04 09:21:40 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session bkemgc25
+2024-06-04 09:21:40 [clientInboundChannel-8] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=bkemgc25
+2024-06-04 09:21:40 [clientOutboundChannel-3] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - No session for GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT_ACK, simpDisconnectMessage=GenericMessage [payload=byte[0], headers={simpMessageType=DISCONNECT, stompCommand=DISCONNECT, simpSessionAttributes={org.springframework.messaging.simp.SimpAttributes.COMPLETED=true, sessionId=66AC830227802AC24F3BDF4457A408A5}, simpSessionId=bkemgc25}], simpSessionId=bkemgc25}]
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - GET "/personActorService/students/username?username=kriss", parameters={masked}
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/events-dto", parameters={}
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllEventsDTO()
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.PersonActorController#findByUsernameStudent(String)
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/info?t=1717482101168", parameters={masked}
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@66451058
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/info?t=1717482101168
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-9] INFO  b.server.repository.Utils.DBUtils - trying to connect to the database jdbc:sqlite:bpositive.db
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-9] INFO  b.server.repository.Utils.DBUtils - user null
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-9] INFO  b.server.repository.Utils.DBUtils - password null
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-7] INFO  b.server.repository.Utils.DBUtils - trying to connect to the database jdbc:sqlite:bpositive.db
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-7] INFO  b.server.repository.Utils.DBUtils - user null
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-7] INFO  b.server.repository.Utils.DBUtils - password null
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - GET "/client-websocket/450/aqj1d3ph/websocket", parameters={}
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.w.s.s.s.WebSocketHandlerMapping - Mapped to org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@66451058
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Processing transport request: GET http://localhost:55555/client-websocket/450/aqj1d3ph/websocket
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-1] INFO  b.s.s.W.CustomHandshakeInterceptor - Session ID: 66AC830227802AC24F3BDF4457A408A5
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-1] INFO  b.s.s.W.CustomHandshakeInterceptor - Custom handshake - Request URI: http://localhost:55555/client-websocket/450/aqj1d3ph/websocket
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-1] INFO  b.s.s.W.CustomHandshakeInterceptor - WebSocket handshake completed with URI: http://localhost:55555/client-websocket/450/aqj1d3ph/websocket
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.web.servlet.DispatcherServlet - Completed 101 SWITCHING_PROTOCOLS
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-1] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - New WebSocketServerSockJsSession[id=aqj1d3ph]
+2024-06-04 09:21:41 [clientInboundChannel-11] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing CONNECT session=aqj1d3ph
+2024-06-04 09:21:41 [clientInboundChannel-14] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing SUBSCRIBE /topic/clients id=sub-0 session=aqj1d3ph
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-7] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - GET "/personActorService/students/username?username=kriss", parameters={masked}
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.PersonActorController#findByUsernameStudent(String)
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-3] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Event{eventName='Donare Plasma ', eventAnnouncementDate=2024-06-03T00:00, eventStartDate=2024-06-03 (truncated)...]
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - GET "/events-dto", parameters={}
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllEventsDTO()
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Event{eventName='Donare Plasma ', eventAnnouncementDate=2024-06-03T00:00, eventStartDate=2024-06-03 (truncated)...]
+2024-06-04 09:21:41 [http-nio-0.0.0.0-55555-exec-9] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - POST "/events/join-event?username=kriss", parameters={masked}
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#joinEvent(String, Event)
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json;charset=UTF-8" to [Event{eventName='hey', eventAnnouncementDate=2024-06-04T00:00, eventStartDate=2024-06-04T01:31:27.04 (truncated)...]
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-5] INFO  b.server.repository.Utils.DBUtils - trying to connect to the database jdbc:sqlite:bpositive.db
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-5] INFO  b.server.repository.Utils.DBUtils - user null
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-5] INFO  b.server.repository.Utils.DBUtils - password null
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing MESSAGE destination=/topic/clients session=null payload=NEW_EVENT: kriss has joined the event hey
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Broadcasting to 1 sessions.
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-5] INFO  b.s.s.WebSockets.NotificationService - Sent message to clients: NEW_EVENT: kriss has joined the event hey
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [Person{personLogInfo=LogInfo{username='kriss', password='tnhPZFu6PhGMTHpCQ+2ZcZpPZywA6KMpKAUkihS9E+w (truncated)...]
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - GET "/events-dto", parameters={}
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.EventController#findAllEventsDTO()
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [[Event{eventName='Donare Plasma ', eventAnnouncementDate=2024-06-03T00:00, eventStartDate=2024-06-03 (truncated)...]
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-5] DEBUG o.s.web.servlet.DispatcherServlet - Completed 201 CREATED
+2024-06-04 09:21:45 [http-nio-0.0.0.0-55555-exec-6] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:21:46 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - GET "/personActorService/students/username?username=kriss", parameters={masked}
+2024-06-04 09:21:46 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to bpos.server.PersonActorController#findByUsernameStudent(String)
+2024-06-04 09:21:46 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/octet-stream', given [*/*] and supported [*/*]
+2024-06-04 09:21:46 [http-nio-0.0.0.0-55555-exec-10] DEBUG o.s.web.servlet.DispatcherServlet - Completed 200 OK
+2024-06-04 09:21:48 [MessageBroker-1] DEBUG o.s.w.s.s.t.h.DefaultSockJsService - Closed 1 sessions: [bkemgc25]
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientOutboundChannel removed SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.w.s.s.t.s.WebSocketServerSockJsSession - Closing SockJS session vpiyskec with CloseStatus[code=1001, reason=null]
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.w.s.a.NativeWebSocketSession - Closing StandardWebSocketSession[id=b050fb85-3dce-e7d3-cd40-ecb71c63088d, uri=ws://localhost:55555/client-websocket/133/vpiyskec/websocket]
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - WebSocketServerSockJsSession[id=vpiyskec] closed with CloseStatus[code=1001, reason=null]
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session vpiyskec
+2024-06-04 09:21:58 [clientInboundChannel-17] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=vpiyskec
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.w.s.s.t.s.WebSocketServerSockJsSession - Closing SockJS session aqj1d3ph with CloseStatus[code=1001, reason=null]
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.w.s.a.NativeWebSocketSession - Closing StandardWebSocketSession[id=38555d92-cac4-78eb-208e-a25a8ad2dd22, uri=ws://localhost:55555/client-websocket/450/aqj1d3ph/websocket]
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.w.s.h.LoggingWebSocketHandlerDecorator - WebSocketServerSockJsSession[id=aqj1d3ph] closed with CloseStatus[code=1001, reason=null]
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.w.s.m.SubProtocolWebSocketHandler - Clearing session aqj1d3ph
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel removed WebSocketAnnotationMethodMessageHandler[prefixes=[/app/]]
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopping...
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@5b4954b2]]
+2024-06-04 09:21:58 [clientInboundChannel-20] DEBUG o.s.m.s.b.SimpleBrokerMessageHandler - Processing DISCONNECT session=aqj1d3ph
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@5b4954b2]
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - brokerChannel removed SimpleBrokerMessageHandler [org.springframework.messaging.simp.broker.DefaultSubscriptionRegistry@5b4954b2]
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] INFO  o.s.m.s.b.SimpleBrokerMessageHandler - Stopped.
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2024-06-04 09:21:58 [SpringApplicationShutdownHook] DEBUG o.s.m.s.ExecutorSubscribableChannel - brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]

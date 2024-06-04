@@ -36,16 +36,12 @@ dependencies {
     }
     implementation 'ch.qos.logback:logback-classic:1.4.11'
 
-    // Exclude other logging implementations
-    configurations.all {
-        exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
-        exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
-        exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
-        exclude group: 'org.slf4j', module: 'slf4j-simple'
-    }
-
     // Include SLF4J bindings for Logback
     implementation 'org.slf4j:slf4j-api:2.0.9'
+
+    // Add Log4j-to-SLF4J bridge to redirect Log4j logging to SLF4J
+    implementation 'org.apache.logging.log4j:log4j-to-slf4j:2.20.0'
+    implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
 
     // Lombok for reducing boilerplate code
     compileOnly 'org.projectlombok:lombok'
