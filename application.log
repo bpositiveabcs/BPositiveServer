@@ -1,0 +1,18 @@
+2024-06-04 08:54:15 [main] INFO  bpos.server.BPositiveServerApplication - Flask server started.
+2024-06-04 09:12:38 [main] INFO  b.server.BPositiveServerApplication - Flask server started.
+2024-06-04 09:12:41 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-0.0.0.0-55555"]
+2024-06-04 09:12:41 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-06-04 09:12:41 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2024-06-04 09:12:41 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-06-04 09:12:41 [main] INFO  b.s.r.I.DBBloodTestRepository - DBBloodTestRepository bean initialized with properties: {bpositive.jdbc.url=jdbc:sqlite:bpositive.db, bpositive.jdbc.driver=org.sqlite.JDBC}
+2024-06-04 09:12:42 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-0.0.0.0-55555"]
+2024-06-04 09:12:45 [http-nio-0.0.0.0-55555-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-06-04 09:12:45 [http-nio-0.0.0.0-55555-exec-3] INFO  b.s.s.W.CustomHandshakeInterceptor - Session ID: 3CDEB487705F13C9A5F4DBCAF8D098F6
+2024-06-04 09:12:45 [http-nio-0.0.0.0-55555-exec-3] INFO  b.s.s.W.CustomHandshakeInterceptor - Custom handshake - Request URI: http://localhost:55555/client-websocket/018/13vcviug/websocket
+2024-06-04 09:12:45 [http-nio-0.0.0.0-55555-exec-3] INFO  b.s.s.W.CustomHandshakeInterceptor - WebSocket handshake completed with URI: http://localhost:55555/client-websocket/018/13vcviug/websocket
+2024-06-04 09:12:45 [http-nio-0.0.0.0-55555-exec-4] INFO  b.s.s.W.CustomHandshakeInterceptor - Session ID: 4812081087D482B9FFC180D273808375
+2024-06-04 09:12:45 [http-nio-0.0.0.0-55555-exec-4] INFO  b.s.s.W.CustomHandshakeInterceptor - Custom handshake - Request URI: http://localhost:55555/client-websocket/538/dtg2w40h/websocket
+2024-06-04 09:12:45 [http-nio-0.0.0.0-55555-exec-4] INFO  b.s.s.W.CustomHandshakeInterceptor - WebSocket handshake completed with URI: http://localhost:55555/client-websocket/538/dtg2w40h/websocket
+2024-06-04 09:12:56 [http-nio-0.0.0.0-55555-exec-10] INFO  b.s.s.W.CustomHandshakeInterceptor - Session ID: 4812081087D482B9FFC180D273808375
+2024-06-04 09:12:56 [http-nio-0.0.0.0-55555-exec-10] INFO  b.s.s.W.CustomHandshakeInterceptor - Custom handshake - Request URI: http://localhost:55555/client-websocket/259/on0h0h0j/websocket
+2024-06-04 09:12:56 [http-nio-0.0.0.0-55555-exec-10] INFO  b.s.s.W.CustomHandshakeInterceptor - WebSocket handshake completed with URI: http://localhost:55555/client-websocket/259/on0h0h0j/websocket
